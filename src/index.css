@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glow utilities: neutral in light mode, neon in dark mode */
+@layer components {
+  .glow-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+  }
+  .dark .glow-card {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 24px 0 var(--glow-color, rgba(56, 189, 248, 0.25));
+  }
+  .glow-card:hover {
+    transform: translateY(-2px);
+  }
+  .dark .glow-card:hover {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 40px 4px var(--glow-color, rgba(56, 189, 248, 0.45));
+  }
+
+  .glow-text {
+    transition: text-shadow 0.25s ease;
+  }
+  .dark .glow-text {
+    text-shadow: 0 0 18px var(--glow-color, rgba(56, 189, 248, 0.6));
+  }
+
+  .glow-ring {
+    transition: box-shadow 0.2s ease;
+  }
+  .dark .glow-ring:focus-visible {
+    box-shadow: 0 0 0 3px var(--glow-color, rgba(56, 189, 248, 0.5));
+  }
+}
