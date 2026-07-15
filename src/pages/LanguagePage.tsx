@@ -62,6 +62,8 @@ export function LanguagePage() {
           { to: "difficult-words", icon: "★", label: "Favorites & Difficult" },
           { to: "frequency", icon: "📊", label: "Common Words" },
           { to: "category/idiom", icon: "🏷️", label: "Categories" },
+          { to: "ai-tutor", icon: "🤖", label: "AI Conversation" },
+          { to: "writing", icon: "📝", label: "AI Writing Feedback" },
         ].map((item) => (
           <Link
             key={item.to}

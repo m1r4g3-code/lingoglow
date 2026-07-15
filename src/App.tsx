@@ -18,6 +18,8 @@ import { ProgressPage } from "./pages/ProgressPage";
 import { MissionsPage } from "./pages/MissionsPage";
 import { BadgesPage } from "./pages/BadgesPage";
 import { LeaderboardPage } from "./pages/LeaderboardPage";
+import { AiTutorPage } from "./pages/AiTutorPage";
+import { WritingPage } from "./pages/WritingPage";
 import { RequireAuth } from "./components/RequireAuth";
 
 export default function App() {
@@ -38,6 +40,22 @@ export default function App() {
         <Route path="/language/:languageId/difficult-words" element={<DifficultWordsPage />} />
         <Route path="/language/:languageId/frequency" element={<FrequencyListPage />} />
         <Route path="/language/:languageId/category/:category" element={<CategoryPage />} />
+        <Route
+          path="/language/:languageId/ai-tutor"
+          element={
+            <RequireAuth>
+              <AiTutorPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/language/:languageId/writing"
+          element={
+            <RequireAuth>
+              <WritingPage />
+            </RequireAuth>
+          }
+        />
         <Route
           path="/progress"
           element={
