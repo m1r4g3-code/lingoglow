@@ -59,12 +59,18 @@ export function ProgressPage() {
         )}
       </div>
 
-      <div className="mt-8 flex gap-3">
+      <div className="mt-8 flex flex-wrap gap-3">
         <Link to="/missions" className="text-sm text-sky-500 hover:underline">
           View missions →
         </Link>
         <Link to="/leaderboard" className="text-sm text-sky-500 hover:underline">
           View leaderboard →
+        </Link>
+        <Link to="/friends" className="text-sm text-sky-500 hover:underline">
+          Friends →
+        </Link>
+        <Link to="/groups" className="text-sm text-sky-500 hover:underline">
+          Study groups →
         </Link>
       </div>
     </div>

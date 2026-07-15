@@ -20,6 +20,9 @@ import { BadgesPage } from "./pages/BadgesPage";
 import { LeaderboardPage } from "./pages/LeaderboardPage";
 import { AiTutorPage } from "./pages/AiTutorPage";
 import { WritingPage } from "./pages/WritingPage";
+import { FriendsPage } from "./pages/FriendsPage";
+import { StudyGroupsPage } from "./pages/StudyGroupsPage";
+import { StudyGroupDetailPage } from "./pages/StudyGroupDetailPage";
 import { RequireAuth } from "./components/RequireAuth";
 
 export default function App() {
@@ -85,6 +88,30 @@ export default function App() {
           element={
             <RequireAuth>
               <LeaderboardPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/friends"
+          element={
+            <RequireAuth>
+              <FriendsPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/groups"
+          element={
+            <RequireAuth>
+              <StudyGroupsPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/groups/:groupId"
+          element={
+            <RequireAuth>
+              <StudyGroupDetailPage />
             </RequireAuth>
           }
         />

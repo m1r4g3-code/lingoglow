@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../lib/supabaseClient";
 import type { LeaderboardEntry } from "../types";
@@ -71,7 +72,16 @@ export function LeaderboardPage() {
           <p className="p-6 text-center text-sm text-slate-500 dark:text-slate-400">Loading…</p>
         ) : entries.length === 0 ? (
           <p className="p-6 text-center text-sm text-slate-500 dark:text-slate-400">
-            {scope === "friends" ? "Add friends to see them here." : "No one's on the leaderboard yet."}
+            {scope === "friends" ? (
+              <>
+                Add friends to see them here.{" "}
+                <Link to="/friends" className="text-sky-500 hover:underline">
+                  Find friends →
+                </Link>
+              </>
+            ) : (
+              "No one's on the leaderboard yet."
+            )}
           </p>
         ) : (
           entries.map((entry, i) => (

@@ -164,3 +164,40 @@ export interface LeaderboardEntry {
   xp: number;
   level: number;
 }
+
+// ───────────────────────── Phase 4: social ─────────────────────────
+
+export interface PublicProfile {
+  id: string;
+  username: string;
+  displayName: string | null;
+  avatarUrl: string | null;
+}
+
+export type FriendshipStatus = "pending" | "accepted" | "blocked";
+
+export interface FriendEntry {
+  friendshipId: string;
+  profile: PublicProfile;
+  status: FriendshipStatus;
+  direction: "incoming" | "outgoing";
+}
+
+export interface StudyGroup {
+  id: string;
+  name: string;
+  description: string | null;
+  ownerId: string;
+  isPublic: boolean;
+  createdAt: string;
+  memberCount?: number;
+}
+
+export interface GroupPost {
+  id: string;
+  groupId: string;
+  authorId: string;
+  authorUsername: string;
+  body: string;
+  createdAt: string;
+}
