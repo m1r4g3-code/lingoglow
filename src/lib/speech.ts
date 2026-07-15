@@ -2,11 +2,50 @@ export function isTTSSupported(): boolean {
   return typeof window !== "undefined" && "speechSynthesis" in window;
 }
 
-export function speak(text: string, lang: string) {
+let cachedVoices: SpeechSynthesisVoice[] = [];
+
+// Chrome/Edge populate the voice list asynchronously; getVoices() can return
+// an empty array on the first call until "voiceschanged" fires.
+function loadVoices(): Promise<SpeechSynthesisVoice[]> {
+  const existing = window.speechSynthesis.getVoices();
+  if (existing.length > 0) {
+    cachedVoices = existing;
+    return Promise.resolve(existing);
+  }
+  return new Promise((resolve) => {
+    const finish = () => {
+      cachedVoices = window.speechSynthesis.getVoices();
+      resolve(cachedVoices);
+    };
+    window.speechSynthesis.addEventListener("voiceschanged", finish, { once: true });
+    // Some engines never fire voiceschanged if there's truly nothing to load.
+    setTimeout(finish, 500);
+  });
+}
+
+// Without an explicit voice, browsers often fall back to the default
+// (usually English) voice and read foreign text with English phonetics —
+// e.g. Spanish spoken with an English accent. Selecting a voice whose lang
+// actually matches fixes that; if none is installed for the language, we
+// still set utterance.lang so the browser has its best shot.
+function pickVoice(voices: SpeechSynthesisVoice[], lang: string): SpeechSynthesisVoice | undefined {
+  const target = lang.toLowerCase();
+  const prefix = target.split("-")[0];
+  const exact = voices.find((v) => v.lang.toLowerCase() === target);
+  if (exact) return exact;
+  const sameLanguage = voices.filter((v) => v.lang.toLowerCase().startsWith(prefix));
+  if (sameLanguage.length === 0) return undefined;
+  return sameLanguage.find((v) => !v.localService) ?? sameLanguage[0];
+}
+
+export async function speak(text: string, lang: string) {
   if (!isTTSSupported()) return;
   window.speechSynthesis.cancel();
+  const voices = cachedVoices.length > 0 ? cachedVoices : await loadVoices();
+  const voice = pickVoice(voices, lang);
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = lang;
+  utterance.lang = voice?.lang ?? lang;
+  if (voice) utterance.voice = voice;
   utterance.rate = 0.9;
   window.speechSynthesis.speak(utterance);
 }

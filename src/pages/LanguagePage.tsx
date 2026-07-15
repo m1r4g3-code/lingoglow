@@ -4,6 +4,23 @@ import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
 import { AI_FEATURES_ENABLED } from "../config";
 
+// Each feature keeps a fixed color across every language, so the icon grid
+// reads as distinct feature "badges" rather than one flat language-tinted block.
+const FEATURE_GLOW: Record<string, string> = {
+  "skill-tree": "rgba(45, 212, 191, 0.35)",
+  grammar: "rgba(96, 165, 250, 0.35)",
+  sentences: "rgba(192, 132, 252, 0.35)",
+  conjugation: "rgba(245, 158, 11, 0.35)",
+  dictation: "rgba(74, 222, 128, 0.35)",
+  comprehension: "rgba(244, 114, 182, 0.35)",
+  "difficult-words": "rgba(250, 204, 21, 0.35)",
+  frequency: "rgba(34, 211, 238, 0.35)",
+  "category/idiom": "rgba(251, 146, 60, 0.35)",
+  "ai-tutor": "rgba(248, 113, 113, 0.35)",
+  writing: "rgba(167, 139, 250, 0.35)",
+  certificate: "rgba(163, 230, 53, 0.35)",
+};
+
 export function LanguagePage() {
   const { languageId = "" } = useParams();
   const language = getLanguage(languageId);
@@ -75,7 +92,7 @@ export function LanguagePage() {
             key={item.to}
             to={`/language/${language.id}/${item.to}`}
             className="glow-card flex flex-col items-center gap-1.5 rounded-xl border border-slate-200 bg-white p-4 text-center dark:border-slate-800 dark:bg-slate-900"
-            style={{ ["--glow-color" as string]: language.glowColor }}
+            style={{ ["--glow-color" as string]: FEATURE_GLOW[item.to] ?? language.glowColor }}
           >
             <span className="text-xl">{item.icon}</span>
             <span className="text-xs font-medium">{item.label}</span>

@@ -9,21 +9,25 @@ const FEATURES = [
     icon: "🧠",
     title: "Spaced Repetition",
     description: "A review system that resurfaces words right before you'd forget them.",
+    glowColor: "rgba(56, 189, 248, 0.35)",
   },
   {
     icon: "🎙️",
     title: "Speech Practice",
     description: "Listen to native pronunciation and practice speaking with instant feedback.",
+    glowColor: "rgba(244, 114, 182, 0.35)",
   },
   {
     icon: "🔥",
     title: "Gamification",
     description: "XP, streaks, badges, missions, and a leaderboard to keep you coming back.",
+    glowColor: "rgba(251, 146, 60, 0.35)",
   },
   {
     icon: "👥",
     title: "Friends & Groups",
     description: "Add friends, join study groups, and learn alongside other people.",
+    glowColor: "rgba(192, 132, 252, 0.35)",
   },
 ];
 
@@ -79,7 +83,7 @@ export function Home() {
           <div
             key={f.title}
             className="glow-card rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
-            style={{ ["--glow-color" as string]: "rgba(56, 189, 248, 0.3)" }}
+            style={{ ["--glow-color" as string]: f.glowColor }}
           >
             <span className="text-2xl">{f.icon}</span>
             <h3 className="mt-3 font-semibold">{f.title}</h3>
