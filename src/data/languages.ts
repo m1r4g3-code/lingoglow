@@ -2,6 +2,16 @@ import type { CefrLevel, Language, Lesson, VocabCategory } from "../types";
 import { esLessons } from "./lessons/es";
 import { frLessons } from "./lessons/fr";
 import { laLessons } from "./lessons/la";
+import { deLessons } from "./lessons/de";
+import { itLessons } from "./lessons/it";
+import { arLessons } from "./lessons/ar";
+import { zhLessons } from "./lessons/zh";
+import { nlLessons } from "./lessons/nl";
+import { yoLessons } from "./lessons/yo";
+import { haLessons } from "./lessons/ha";
+import { ruLessons } from "./lessons/ru";
+import { elLessons } from "./lessons/el";
+import { hiLessons } from "./lessons/hi";
 
 // To add a new language: add an entry here, create src/data/lessons/<id>.ts
 // exporting a `Lesson[]` array (see any existing file for the shape), then
@@ -34,12 +44,112 @@ export const languages: Language[] = [
     speechLang: "la",
     sttSupported: false, // browsers don't ship Latin speech-recognition models
   },
+  {
+    id: "de",
+    name: "German",
+    nativeName: "Deutsch",
+    code: "DE",
+    glowColor: "rgba(245, 158, 11, 0.35)",
+    speechLang: "de-DE",
+    sttSupported: true,
+  },
+  {
+    id: "it",
+    name: "Italian",
+    nativeName: "Italiano",
+    code: "IT",
+    glowColor: "rgba(74, 222, 128, 0.35)",
+    speechLang: "it-IT",
+    sttSupported: true,
+  },
+  {
+    id: "ar",
+    name: "Arabic",
+    nativeName: "العربية",
+    code: "AR",
+    glowColor: "rgba(45, 212, 191, 0.35)",
+    speechLang: "ar-SA",
+    sttSupported: true,
+  },
+  {
+    id: "zh",
+    name: "Mandarin",
+    nativeName: "中文",
+    code: "ZH",
+    glowColor: "rgba(248, 113, 113, 0.35)",
+    speechLang: "zh-CN",
+    sttSupported: true,
+  },
+  {
+    id: "nl",
+    name: "Dutch",
+    nativeName: "Nederlands",
+    code: "NL",
+    glowColor: "rgba(129, 140, 248, 0.35)",
+    speechLang: "nl-NL",
+    sttSupported: true,
+  },
+  {
+    id: "yo",
+    name: "Yoruba",
+    nativeName: "Yorùbá",
+    code: "YO",
+    glowColor: "rgba(192, 132, 252, 0.35)",
+    speechLang: "yo-NG",
+    sttSupported: false, // browsers don't ship Yoruba speech-recognition models
+  },
+  {
+    id: "ha",
+    name: "Hausa",
+    nativeName: "Hausa",
+    code: "HA",
+    glowColor: "rgba(244, 114, 182, 0.35)",
+    speechLang: "ha-NG",
+    sttSupported: false, // browsers don't ship Hausa speech-recognition models
+  },
+  {
+    id: "ru",
+    name: "Russian",
+    nativeName: "Русский",
+    code: "RU",
+    glowColor: "rgba(34, 211, 238, 0.35)",
+    speechLang: "ru-RU",
+    sttSupported: true,
+  },
+  {
+    id: "el",
+    name: "Greek",
+    nativeName: "Ελληνικά",
+    code: "EL",
+    glowColor: "rgba(167, 139, 250, 0.35)",
+    speechLang: "el-GR",
+    sttSupported: true,
+  },
+  {
+    id: "hi",
+    name: "Hindi",
+    nativeName: "हिन्दी",
+    code: "HI",
+    glowColor: "rgba(163, 230, 53, 0.35)",
+    speechLang: "hi-IN",
+    sttSupported: true,
+  },
 ];
 
 export const lessonsByLanguage: Record<string, Lesson[]> = {
   es: esLessons,
   fr: frLessons,
   la: laLessons,
+  de: deLessons,
+  it: itLessons,
+  ar: arLessons,
+  zh: zhLessons,
+  nl: nlLessons,
+  yo: yoLessons,
+  ha: haLessons,
+  ru: ruLessons,
+  el: elLessons,
+  hi: hiLessons,
 };
 
 export const LEVEL_LABELS: Record<CefrLevel, string> = {
