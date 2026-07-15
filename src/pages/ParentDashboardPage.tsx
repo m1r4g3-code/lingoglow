@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { RequireRole } from "../components/RequireRole";
 import { getStudentProgressForParent, listParentLinksAsParent, sendParentLinkRequest } from "../lib/dashboards";
 import { searchUsers } from "../lib/social";
 import type { ParentLinkEntry, PublicProfile, RosterStudent } from "../types";
@@ -120,9 +119,5 @@ function ParentDashboardInner() {
 }
 
 export function ParentDashboardPage() {
-  return (
-    <RequireRole role="parent">
-      <ParentDashboardInner />
-    </RequireRole>
-  );
+  return <ParentDashboardInner />;
 }

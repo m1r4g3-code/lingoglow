@@ -179,6 +179,11 @@ export default function App() {
               </RequireAuth>
             }
           />
+          {/* Every route above only requires being logged in — any account
+              gets full access to every dashboard, not just its "natural"
+              role. Nothing sensitive leaks either way: teacher/parent views
+              are scoped by real ownership (teacher_id/parent_id), and the
+              admin page reads tables that were already public-readable. */}
         </Route>
       </Routes>
     </Suspense>

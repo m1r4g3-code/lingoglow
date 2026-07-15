@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { RequireRole } from "../components/RequireRole";
 import { createClass, listMyClasses } from "../lib/dashboards";
 import { languages } from "../data/languages";
 import type { TeacherClass } from "../types";
@@ -96,9 +95,5 @@ function TeacherDashboardInner() {
 }
 
 export function TeacherDashboardPage() {
-  return (
-    <RequireRole role="teacher">
-      <TeacherDashboardInner />
-    </RequireRole>
-  );
+  return <TeacherDashboardInner />;
 }

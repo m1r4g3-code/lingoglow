@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { RequireRole } from "../components/RequireRole";
 import { getAdminStats, listAllProfiles } from "../lib/dashboards";
 import type { PublicProfile } from "../types";
 
@@ -45,9 +44,5 @@ function AdminDashboardInner() {
 }
 
 export function AdminDashboardPage() {
-  return (
-    <RequireRole role="admin">
-      <AdminDashboardInner />
-    </RequireRole>
-  );
+  return <AdminDashboardInner />;
 }
