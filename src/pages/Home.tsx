@@ -5,26 +5,30 @@ import { LanguageCard } from "../components/LanguageCard";
 import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
 
-const FEATURES: { icon: LucideIcon; title: string; description: string }[] = [
+const FEATURES: { icon: LucideIcon; title: string; description: string; to: string }[] = [
   {
     icon: Brain,
     title: "Spaced Repetition",
     description: "A review system that resurfaces words right before you'd forget them.",
+    to: "#languages",
   },
   {
     icon: Mic,
     title: "Speech Practice",
     description: "Listen to native pronunciation and practice speaking with instant feedback.",
+    to: "#languages",
   },
   {
     icon: Flame,
     title: "Gamification",
     description: "XP, streaks, badges, missions, and a leaderboard to keep you coming back.",
+    to: "/progress",
   },
   {
     icon: Users,
     title: "Friends & Groups",
     description: "Add friends, join study groups, and learn alongside other people.",
+    to: "/friends",
   },
 ];
 
@@ -76,18 +80,28 @@ export function Home() {
 
       {/* Features */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {FEATURES.map((f) => (
-          <div
-            key={f.title}
-            className="rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-violet-200 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-violet-900"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 dark:bg-violet-500/10">
-              <f.icon className="brand-icon h-5 w-5" strokeWidth={1.75} />
-            </div>
-            <h3 className="mt-3 font-semibold">{f.title}</h3>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{f.description}</p>
-          </div>
-        ))}
+        {FEATURES.map((f) => {
+          const cardClasses =
+            "block rounded-2xl border border-slate-200 bg-white p-5 text-left transition-all hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-violet-900";
+          const inner = (
+            <>
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 dark:bg-violet-500/10">
+                <f.icon className="brand-icon h-5 w-5" strokeWidth={1.75} />
+              </div>
+              <h3 className="mt-3 font-semibold">{f.title}</h3>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{f.description}</p>
+            </>
+          );
+          return f.to.startsWith("#") ? (
+            <a key={f.title} href={f.to} className={cardClasses}>
+              {inner}
+            </a>
+          ) : (
+            <Link key={f.title} to={f.to} className={cardClasses}>
+              {inner}
+            </Link>
+          );
+        })}
       </div>
 
       {/* Language picker */}
