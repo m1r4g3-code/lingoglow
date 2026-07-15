@@ -43,6 +43,7 @@ export function LanguagePage() {
   const totalLessons = levelGroups.reduce((sum, g) => sum + g.lessons.length, 0);
   const vocab = getAllVocab(languageId);
   const srsStates = getAllCardStates();
+  const started = vocab.some((card) => srsStates[card.id] !== undefined);
   const dueCount = vocab.filter((card) => isDue(srsStates[card.id])).length;
 
   return (
@@ -59,12 +60,21 @@ export function LanguagePage() {
           {language.code}
         </span>
         <div>
-          <h1 className="glow-text text-2xl font-bold">{language.name}</h1>
+          <h1 className="glow-text flex items-center gap-2 text-2xl font-bold">
+            <span aria-hidden="true">{language.flag}</span>
+            {language.name}
+          </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
             {language.nativeName} · {totalLessons} lessons
           </p>
         </div>
       </div>
+
+      <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
+        {started
+          ? "Pick up where you left off, or jump into any lesson below."
+          : `New to ${language.name}? Start with the first lesson below, or dive into a specific skill.`}
+      </p>
 
       <Link
         to={`/language/${language.id}/review`}
@@ -72,9 +82,15 @@ export function LanguagePage() {
         style={{ ["--glow-color" as string]: language.glowColor }}
       >
         Review flashcards
-        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-          {dueCount} due
-        </span>
+        {started ? (
+          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+            {dueCount} due
+          </span>
+        ) : (
+          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+            Get started
+          </span>
+        )}
       </Link>
 
       <h2 className="mt-10 mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">

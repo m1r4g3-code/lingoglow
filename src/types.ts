@@ -3,6 +3,7 @@ export interface Language {
   name: string;
   nativeName: string;
   code: string; // short badge label, e.g. "ES"
+  flag: string; // flag emoji for quick visual scanning, e.g. "🇪🇸"
   glowColor: string; // rgba() used for dark-mode glow accent
   speechLang: string; // BCP47 code for TTS, e.g. "es-ES"
   sttSupported: boolean; // whether speech-recognition practice is offered for this language

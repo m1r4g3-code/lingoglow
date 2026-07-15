@@ -50,18 +50,18 @@ export function Home() {
           curriculum built to be finished, not just started.
         </p>
         {!user && (
-          <div className="mt-9 flex items-center justify-center gap-3">
+          <div className="mt-9 flex flex-col items-center justify-center gap-3">
             <a
               href="#languages"
-              className="brand-gradient-bg rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-transform hover:scale-[1.02]"
+              className="brand-gradient-bg rounded-xl px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-violet-500/25 transition-transform hover:scale-[1.02]"
             >
               Start learning free
             </a>
             <Link
               to="/login"
-              className="rounded-xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-600 transition-colors hover:border-slate-300 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-700"
+              className="text-sm text-slate-500 hover:text-slate-700 hover:underline dark:text-slate-400 dark:hover:text-slate-200"
             >
-              Create an account
+              Already know what you want? Create an account
             </Link>
           </div>
         )}
@@ -118,6 +118,7 @@ export function Home() {
         <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
           {languages.map((language) => {
             const vocab = getAllVocab(language.id);
+            const started = vocab.some((card) => srsStates[card.id] !== undefined);
             const dueCount = vocab.filter((card) => isDue(srsStates[card.id])).length;
             return (
               <LanguageCard
@@ -125,6 +126,7 @@ export function Home() {
                 language={language}
                 lessonCount={getLessons(language.id).length}
                 dueCount={dueCount}
+                started={started}
               />
             );
           })}
