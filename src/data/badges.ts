@@ -1,0 +1,60 @@
+import type { Badge } from "../types";
+
+export const BADGES: Badge[] = [
+  {
+    code: "first-steps",
+    name: "First Steps",
+    description: "Reviewed your first word",
+    icon: "🌱",
+    criteriaType: "totalReviews",
+    threshold: 1,
+  },
+  {
+    code: "getting-started",
+    name: "Getting Started",
+    description: "Reviewed 25 words",
+    icon: "📚",
+    criteriaType: "totalReviews",
+    threshold: 25,
+  },
+  {
+    code: "century-club",
+    name: "Century Club",
+    description: "Reviewed 100 words",
+    icon: "💯",
+    criteriaType: "totalReviews",
+    threshold: 100,
+  },
+  {
+    code: "dedicated",
+    name: "Dedicated",
+    description: "Reached a 3-day streak",
+    icon: "🔥",
+    criteriaType: "streakLongest",
+    threshold: 3,
+  },
+  {
+    code: "week-warrior",
+    name: "Week Warrior",
+    description: "Reached a 7-day streak",
+    icon: "⚡",
+    criteriaType: "streakLongest",
+    threshold: 7,
+  },
+  {
+    code: "xp-100",
+    name: "Rising Star",
+    description: "Earned 100 XP",
+    icon: "⭐",
+    criteriaType: "xp",
+    threshold: 100,
+  },
+  {
+    code: "xp-500",
+    name: "Polyglot in Training",
+    description: "Earned 500 XP",
+    icon: "🏆",
+    criteriaType: "xp",
+    threshold: 500,
+  },
+];

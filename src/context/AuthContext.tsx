@@ -1,7 +1,13 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabaseClient";
-import { hydrateFromSupabase, setSyncUserId } from "../lib/storage";
+import {
+  hydrateBadgesFromSupabase,
+  hydrateFromSupabase,
+  hydrateMissionsFromSupabase,
+  hydrateProgressFromSupabase,
+  setSyncUserId,
+} from "../lib/storage";
 import type { Profile } from "../types";
 
 interface AuthContextValue {
@@ -53,7 +59,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setSyncUserId(nextUser?.id ?? null);
 
     if (nextUser) {
-      const [profileResult] = await Promise.all([fetchProfile(nextUser.id), hydrateFromSupabase(nextUser.id)]);
+      const [profileResult] = await Promise.all([
+        fetchProfile(nextUser.id),
+        hydrateFromSupabase(nextUser.id),
+        hydrateProgressFromSupabase(nextUser.id),
+        hydrateMissionsFromSupabase(nextUser.id),
+        hydrateBadgesFromSupabase(nextUser.id),
+      ]);
       setProfile(profileResult);
       setIsHydrated(true);
     } else {

@@ -14,6 +14,11 @@ import { ComprehensionPage } from "./pages/ComprehensionPage";
 import { DifficultWordsPage } from "./pages/DifficultWordsPage";
 import { FrequencyListPage } from "./pages/FrequencyListPage";
 import { CategoryPage } from "./pages/CategoryPage";
+import { ProgressPage } from "./pages/ProgressPage";
+import { MissionsPage } from "./pages/MissionsPage";
+import { BadgesPage } from "./pages/BadgesPage";
+import { LeaderboardPage } from "./pages/LeaderboardPage";
+import { RequireAuth } from "./components/RequireAuth";
 
 export default function App() {
   return (
@@ -33,6 +38,38 @@ export default function App() {
         <Route path="/language/:languageId/difficult-words" element={<DifficultWordsPage />} />
         <Route path="/language/:languageId/frequency" element={<FrequencyListPage />} />
         <Route path="/language/:languageId/category/:category" element={<CategoryPage />} />
+        <Route
+          path="/progress"
+          element={
+            <RequireAuth>
+              <ProgressPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/missions"
+          element={
+            <RequireAuth>
+              <MissionsPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/badges"
+          element={
+            <RequireAuth>
+              <BadgesPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/leaderboard"
+          element={
+            <RequireAuth>
+              <LeaderboardPage />
+            </RequireAuth>
+          }
+        />
       </Route>
     </Routes>
   );

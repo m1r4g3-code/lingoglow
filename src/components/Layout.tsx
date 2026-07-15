@@ -1,10 +1,13 @@
 import { Link, Outlet } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 import { ClaimProgressModal } from "./ClaimProgressModal";
+import { RewardToast } from "./RewardToast";
+import { XpBar } from "./XpBar";
+import { StreakBadge } from "./StreakBadge";
 import { useAuth } from "../context/AuthContext";
 
 export function Layout() {
-  const { user, profile, signOut } = useAuth();
+  const { user, profile, signOut, isHydrated } = useAuth();
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
@@ -16,7 +19,15 @@ export function Layout() {
           <div className="flex items-center gap-4">
             {user ? (
               <div className="flex items-center gap-3 text-sm">
-                <span className="text-slate-500 dark:text-slate-400">{profile?.username ?? user.email}</span>
+                {isHydrated && (
+                  <>
+                    <StreakBadge />
+                    <XpBar />
+                  </>
+                )}
+                <span className="hidden text-slate-500 sm:inline dark:text-slate-400">
+                  {profile?.username ?? user.email}
+                </span>
                 <button
                   type="button"
                   onClick={() => void signOut()}
@@ -38,6 +49,7 @@ export function Layout() {
         <Outlet />
       </main>
       <ClaimProgressModal />
+      <RewardToast />
     </div>
   );
 }

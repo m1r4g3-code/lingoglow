@@ -113,3 +113,54 @@ export interface ComprehensionPassage {
   text: string;
   questions: ComprehensionQuestion[];
 }
+
+// ───────────────────────── Phase 2: gamification ─────────────────────────
+
+export interface UserProgress {
+  xp: number;
+  coins: number;
+  level: number;
+  streakCurrent: number;
+  streakLongest: number;
+  lastStudyDate: string | null; // "YYYY-MM-DD"
+  totalReviews: number;
+}
+
+export type MissionType = "daily" | "weekly";
+export type MissionTargetType = "reviews" | "xp";
+
+export interface Mission {
+  code: string;
+  title: string;
+  description: string;
+  type: MissionType;
+  targetType: MissionTargetType;
+  targetCount: number;
+  xpReward: number;
+  coinReward: number;
+}
+
+export interface MissionState {
+  progress: number;
+  periodKey: string;
+  completedAt: string | null;
+}
+
+export type BadgeCriteriaType = "totalReviews" | "streakLongest" | "xp";
+
+export interface Badge {
+  code: string;
+  name: string;
+  description: string;
+  icon: string;
+  criteriaType: BadgeCriteriaType;
+  threshold: number;
+}
+
+export interface LeaderboardEntry {
+  userId: string;
+  username: string;
+  avatarUrl: string | null;
+  xp: number;
+  level: number;
+}

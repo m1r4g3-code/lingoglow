@@ -4,11 +4,16 @@ import { getLanguage, getAllVocab } from "../data/languages";
 import { Flashcard } from "../components/Flashcard";
 import { getAllCardStates, getCardState, setCardState } from "../lib/storage";
 import { isDue, nextState } from "../lib/srs";
+import { awardReviewXp } from "../lib/gamification";
+import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import type { SrsGrade } from "../types";
 
 export function ReviewPage() {
   const { languageId = "" } = useParams();
   const language = getLanguage(languageId);
+  const { user } = useAuth();
+  const { pushEvents } = useToast();
 
   const initialQueue = useMemo(() => {
     if (!language) return [];
@@ -27,6 +32,7 @@ export function ReviewPage() {
   const handleGrade = (grade: SrsGrade) => {
     const current = getCardState(currentCard.id);
     setCardState(currentCard.id, nextState(current, grade));
+    pushEvents(awardReviewXp(user?.id ?? null, grade));
     setReviewedCount((c) => c + 1);
     setQueue((q) => q.slice(1));
   };
