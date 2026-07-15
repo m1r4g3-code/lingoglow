@@ -18,13 +18,8 @@ body,
 
 body {
   margin: 0;
-  font-family: "Inter", -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
   -webkit-font-smoothing: antialiased;
-}
-
-h1, h2, h3,
-.glow-text {
-  font-family: "Space Grotesk", "Inter", -apple-system, sans-serif;
 }
 
 /* Glow utilities: neutral in light mode, neon in dark mode */

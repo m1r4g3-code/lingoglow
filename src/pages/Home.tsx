@@ -4,6 +4,7 @@ import { languages, getLessons, getAllVocab } from "../data/languages";
 import { LanguageCard } from "../components/LanguageCard";
 import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
+import { useAuth } from "../context/AuthContext";
 
 const FEATURES: { icon: LucideIcon; title: string; description: string; to: string }[] = [
   {
@@ -33,6 +34,7 @@ const FEATURES: { icon: LucideIcon; title: string; description: string; to: stri
 ];
 
 export function Home() {
+  const { user } = useAuth();
   const srsStates = getAllCardStates();
   const totalLessons = languages.reduce((sum, l) => sum + getLessons(l.id).length, 0);
   const totalVocab = languages.reduce((sum, l) => sum + getAllVocab(l.id).length, 0);
@@ -47,20 +49,22 @@ export function Home() {
           Learn languages that actually stick — spaced repetition, real speech practice, and a
           curriculum built to be finished, not just started.
         </p>
-        <div className="mt-9 flex items-center justify-center gap-3">
-          <a
-            href="#languages"
-            className="brand-gradient-bg rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-transform hover:scale-[1.02]"
-          >
-            Start learning free
-          </a>
-          <Link
-            to="/login"
-            className="rounded-xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-600 transition-colors hover:border-slate-300 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-700"
-          >
-            Create an account
-          </Link>
-        </div>
+        {!user && (
+          <div className="mt-9 flex items-center justify-center gap-3">
+            <a
+              href="#languages"
+              className="brand-gradient-bg rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-transform hover:scale-[1.02]"
+            >
+              Start learning free
+            </a>
+            <Link
+              to="/login"
+              className="rounded-xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-600 transition-colors hover:border-slate-300 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-700"
+            >
+              Create an account
+            </Link>
+          </div>
+        )}
 
         <div className="mt-12 flex items-center justify-center gap-10 text-sm text-slate-500 dark:text-slate-400">
           <div>
