@@ -39,8 +39,8 @@ export function ConjugationDrill({ entry, glowColor }: ConjugationDrillProps) {
               className={`glow-ring w-full rounded-lg border px-3 py-1.5 text-sm outline-none dark:bg-slate-800 ${
                 checked
                   ? isCorrect(i)
-                    ? "border-emerald-400 bg-emerald-50 dark:border-emerald-500 dark:bg-emerald-500/10"
-                    : "border-rose-300 bg-rose-50 dark:border-rose-500 dark:bg-rose-500/10"
+                    ? "anim-pop border-emerald-400 bg-emerald-50 dark:border-emerald-500 dark:bg-emerald-500/10"
+                    : "anim-shake border-rose-300 bg-rose-50 dark:border-rose-500 dark:bg-rose-500/10"
                   : "border-slate-200 bg-white dark:border-slate-700"
               }`}
             />
@@ -51,7 +51,7 @@ export function ConjugationDrill({ entry, glowColor }: ConjugationDrillProps) {
       <button
         type="button"
         onClick={() => setChecked(true)}
-        className="mt-4 rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white"
+        className="brand-gradient-bg mt-4 rounded-lg px-4 py-2 text-sm font-semibold text-white"
       >
         Check
       </button>

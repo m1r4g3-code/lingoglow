@@ -81,12 +81,20 @@ export function SentenceBuilder({ exercise, glowColor, onNext }: SentenceBuilder
         ))}
       </div>
 
-      {checked === "correct" && <p className="mt-4 text-center font-semibold text-emerald-500">✓ Correct!</p>}
-      {checked === "incorrect" && <p className="mt-4 text-center font-semibold text-rose-500">Not quite — try again.</p>}
+      {checked === "correct" && (
+        <p className="anim-pop mt-4 text-center font-semibold text-emerald-500">✓ Correct!</p>
+      )}
+      {checked === "incorrect" && (
+        <p className="anim-shake mt-4 text-center font-semibold text-rose-500">Not quite — try again.</p>
+      )}
 
       <div className="mt-5 flex justify-center gap-2">
         {checked === "correct" ? (
-          <button type="button" onClick={reset} className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white">
+          <button
+            type="button"
+            onClick={reset}
+            className="brand-gradient-bg rounded-lg px-5 py-2.5 text-sm font-semibold text-white"
+          >
             Next sentence
           </button>
         ) : (
@@ -94,7 +102,7 @@ export function SentenceBuilder({ exercise, glowColor, onNext }: SentenceBuilder
             type="button"
             onClick={check}
             disabled={picked.length === 0}
-            className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+            className="brand-gradient-bg rounded-lg px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
           >
             Check
           </button>

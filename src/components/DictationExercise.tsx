@@ -68,18 +68,18 @@ export function DictationExercise({ card, speechLang, glowColor, onNext }: Dicta
           checked === "correct"
             ? "border-emerald-400 dark:border-emerald-500"
             : checked === "incorrect"
-              ? "border-rose-300 dark:border-rose-500"
+              ? "border-rose-300 dark:border-rose-500 anim-shake"
               : "border-slate-200 dark:border-slate-700"
         }`}
       />
 
       {checked === "correct" && (
-        <p className="mt-3 inline-flex items-center gap-1 font-semibold text-emerald-500">
+        <p className="anim-pop mt-3 inline-flex items-center gap-1 font-semibold text-emerald-500">
           <Check className="h-4 w-4" strokeWidth={2} /> Correct! It was "{card.front}"
         </p>
       )}
       {checked === "incorrect" && (
-        <p className="mt-3 inline-flex items-center gap-1 font-semibold text-rose-500">
+        <p className="anim-fade-in mt-3 inline-flex items-center gap-1 font-semibold text-rose-500">
           <X className="h-4 w-4" strokeWidth={2} /> Not quite — it was "{card.front}"
         </p>
       )}

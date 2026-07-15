@@ -18,19 +18,38 @@ const GRADES: { grade: SrsGrade; label: string; classes: string }[] = [
   { grade: "easy", label: "Easy", classes: "bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:hover:bg-emerald-500/25" },
 ];
 
+// Brief pause after a grade is tapped so the feedback animation actually
+// registers before the next card swaps in — short enough to not read as lag.
+const FEEDBACK_DELAY_MS = 220;
+
+const FLASH_CLASSES: Record<SrsGrade, string> = {
+  again: "ring-2 ring-rose-400 dark:ring-rose-500 anim-shake",
+  hard: "ring-2 ring-amber-400 dark:ring-amber-500 anim-pop",
+  good: "ring-2 ring-sky-400 dark:ring-sky-500 anim-pop",
+  easy: "ring-2 ring-emerald-400 dark:ring-emerald-500 anim-pop",
+};
+
 export function Flashcard({ card, glowColor, speechLang, onGrade }: FlashcardProps) {
   const [revealed, setRevealed] = useState(false);
+  const [feedback, setFeedback] = useState<SrsGrade | null>(null);
   const voiceAvailable = useVoiceAvailable(speechLang);
 
   const handleGrade = (grade: SrsGrade) => {
-    onGrade(grade);
-    setRevealed(false);
+    if (feedback) return;
+    setFeedback(grade);
+    setTimeout(() => {
+      onGrade(grade);
+      setRevealed(false);
+      setFeedback(null);
+    }, FEEDBACK_DELAY_MS);
   };
 
   return (
     <div className="mx-auto max-w-md">
       <div
-        className="glow-card relative flex h-56 w-full flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 text-center dark:border-slate-800 dark:bg-slate-900"
+        className={`glow-card relative flex h-56 w-full flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 text-center dark:border-slate-800 dark:bg-slate-900 ${
+          feedback ? FLASH_CLASSES[feedback] : ""
+        }`}
         style={{ ["--glow-color" as string]: glowColor }}
       >
         {isTTSSupported() && voiceAvailable && (
@@ -74,7 +93,10 @@ export function Flashcard({ card, glowColor, speechLang, onGrade }: FlashcardPro
               key={grade}
               type="button"
               onClick={() => handleGrade(grade)}
-              className={`rounded-lg px-2 py-2 text-sm font-medium transition-colors ${classes}`}
+              disabled={feedback !== null}
+              className={`rounded-lg px-2 py-2 text-sm font-medium transition-colors disabled:opacity-60 ${classes} ${
+                feedback === grade ? "anim-pop" : ""
+              }`}
             >
               {label}
             </button>

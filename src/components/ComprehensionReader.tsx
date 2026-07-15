@@ -66,9 +66,9 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
                     onClick={() => selectAnswer(qi, ci)}
                     className={`rounded-lg border px-3 py-2 text-left text-sm ${
                       isRight
-                        ? "border-emerald-400 bg-emerald-50 dark:border-emerald-500 dark:bg-emerald-500/10"
+                        ? "anim-pop border-emerald-400 bg-emerald-50 dark:border-emerald-500 dark:bg-emerald-500/10"
                         : isWrong
-                          ? "border-rose-300 bg-rose-50 dark:border-rose-500 dark:bg-rose-500/10"
+                          ? "anim-shake border-rose-300 bg-rose-50 dark:border-rose-500 dark:bg-rose-500/10"
                           : selected
                             ? "border-violet-400 bg-violet-50 dark:border-violet-500 dark:bg-violet-500/10"
                             : "border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800"
