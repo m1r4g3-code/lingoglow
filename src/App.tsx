@@ -23,6 +23,12 @@ import { WritingPage } from "./pages/WritingPage";
 import { FriendsPage } from "./pages/FriendsPage";
 import { StudyGroupsPage } from "./pages/StudyGroupsPage";
 import { StudyGroupDetailPage } from "./pages/StudyGroupDetailPage";
+import { AccountPage } from "./pages/AccountPage";
+import { TeacherDashboardPage } from "./pages/TeacherDashboardPage";
+import { TeacherClassDetailPage } from "./pages/TeacherClassDetailPage";
+import { ParentDashboardPage } from "./pages/ParentDashboardPage";
+import { AdminDashboardPage } from "./pages/AdminDashboardPage";
+import { CertificatePage } from "./pages/CertificatePage";
 import { RequireAuth } from "./components/RequireAuth";
 
 export default function App() {
@@ -56,6 +62,14 @@ export default function App() {
           element={
             <RequireAuth>
               <WritingPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/language/:languageId/certificate"
+          element={
+            <RequireAuth>
+              <CertificatePage />
             </RequireAuth>
           }
         />
@@ -112,6 +126,46 @@ export default function App() {
           element={
             <RequireAuth>
               <StudyGroupDetailPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <RequireAuth>
+              <AccountPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/teacher"
+          element={
+            <RequireAuth>
+              <TeacherDashboardPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/teacher/classes/:classId"
+          element={
+            <RequireAuth>
+              <TeacherClassDetailPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/parent"
+          element={
+            <RequireAuth>
+              <ParentDashboardPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <RequireAuth>
+              <AdminDashboardPage />
             </RequireAuth>
           }
         />

@@ -2,20 +2,26 @@ import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getLanguage } from "../data/languages";
 import { getWritingFeedback } from "../lib/ai";
+import { useAuth } from "../context/AuthContext";
+import { canUseAi, FREE_AI_DAILY_LIMIT, getAiUsageToday, incrementAiUsage } from "../lib/premium";
 
 export function WritingPage() {
   const { languageId = "" } = useParams();
   const language = getLanguage(languageId);
+  const { profile } = useAuth();
   const [text, setText] = useState("");
   const [feedback, setFeedback] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [notConfigured, setNotConfigured] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [usage, setUsage] = useState(getAiUsageToday);
 
-  if (!language) return <Navigate to="/" replace />;
+  if (!language || !profile) return <Navigate to="/" replace />;
+
+  const capped = !canUseAi(profile.tier);
 
   const handleSubmit = async () => {
-    if (!text.trim() || submitting) return;
+    if (!text.trim() || submitting || capped) return;
     setError(null);
     setFeedback(null);
     setSubmitting(true);
@@ -31,6 +37,8 @@ export function WritingPage() {
       setError(result.error);
       return;
     }
+    incrementAiUsage();
+    setUsage(getAiUsageToday());
     setFeedback(result.reply ?? "");
   };
 
@@ -44,11 +52,27 @@ export function WritingPage() {
       <p className="mt-1 text-slate-500 dark:text-slate-400">
         Write a few sentences in {language.name} and get feedback on grammar and vocabulary.
       </p>
+      {profile.tier === "free" && (
+        <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
+          {usage}/{FREE_AI_DAILY_LIMIT} free messages used today (shared with AI Conversation) ·{" "}
+          <Link to="/account" className="text-sky-500 hover:underline">
+            Upgrade for unlimited
+          </Link>
+        </p>
+      )}
 
       {notConfigured ? (
         <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
           AI writing feedback isn't turned on yet — the site owner needs to add an Anthropic API key. Everything else
           still works!
+        </div>
+      ) : capped ? (
+        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+          You've used today's {FREE_AI_DAILY_LIMIT} free AI messages.{" "}
+          <Link to="/account" className="text-sky-500 hover:underline">
+            Upgrade to Premium
+          </Link>{" "}
+          for unlimited access, or come back tomorrow.
         </div>
       ) : (
         <>

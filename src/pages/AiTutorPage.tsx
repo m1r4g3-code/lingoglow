@@ -2,21 +2,27 @@ import { useState, type FormEvent } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getLanguage } from "../data/languages";
 import { sendChatMessage, type ChatMessage } from "../lib/ai";
+import { useAuth } from "../context/AuthContext";
+import { canUseAi, FREE_AI_DAILY_LIMIT, getAiUsageToday, incrementAiUsage } from "../lib/premium";
 
 export function AiTutorPage() {
   const { languageId = "" } = useParams();
   const language = getLanguage(languageId);
+  const { profile } = useAuth();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [notConfigured, setNotConfigured] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [usage, setUsage] = useState(getAiUsageToday);
 
-  if (!language) return <Navigate to="/" replace />;
+  if (!language || !profile) return <Navigate to="/" replace />;
+
+  const capped = !canUseAi(profile.tier);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || sending) return;
+    if (!input.trim() || sending || capped) return;
     setError(null);
 
     const nextMessages: ChatMessage[] = [...messages, { role: "user", content: input.trim() }];
@@ -35,6 +41,8 @@ export function AiTutorPage() {
       setError(result.error);
       return;
     }
+    incrementAiUsage();
+    setUsage(getAiUsageToday());
     setMessages((m) => [...m, { role: "assistant", content: result.reply ?? "" }]);
   };
 
@@ -48,11 +56,27 @@ export function AiTutorPage() {
       <p className="mt-1 text-slate-500 dark:text-slate-400">
         Practice a casual chat in {language.name}. Mistakes get gently corrected.
       </p>
+      {profile.tier === "free" && (
+        <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
+          {usage}/{FREE_AI_DAILY_LIMIT} free messages used today ·{" "}
+          <Link to="/account" className="text-sky-500 hover:underline">
+            Upgrade for unlimited
+          </Link>
+        </p>
+      )}
 
       {notConfigured ? (
         <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
           The AI tutor isn't turned on yet — the site owner needs to add an Anthropic API key. Everything else still
           works!
+        </div>
+      ) : capped ? (
+        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+          You've used today's {FREE_AI_DAILY_LIMIT} free AI messages.{" "}
+          <Link to="/account" className="text-sky-500 hover:underline">
+            Upgrade to Premium
+          </Link>{" "}
+          for unlimited access, or come back tomorrow.
         </div>
       ) : (
         <>

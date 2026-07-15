@@ -44,6 +44,7 @@ export interface SrsState {
 export type SrsGrade = "again" | "hard" | "good" | "easy";
 
 export type UserRole = "student" | "teacher" | "parent" | "admin";
+export type UserTier = "free" | "premium";
 
 export interface Profile {
   id: string;
@@ -52,6 +53,7 @@ export interface Profile {
   avatarUrl: string | null;
   role: UserRole;
   hasClaimedLocal: boolean;
+  tier: UserTier;
 }
 
 // ───────────────────────── Phase 1: pedagogy features ─────────────────────────
@@ -201,3 +203,34 @@ export interface GroupPost {
   body: string;
   createdAt: string;
 }
+
+// ───────────────────────── Phase 5: teacher/parent/admin ─────────────────────────
+
+export interface TeacherClass {
+  id: string;
+  name: string;
+  teacherId: string;
+  languageId: string;
+  joinCode: string;
+  createdAt: string;
+  studentCount?: number;
+}
+
+export interface RosterStudent {
+  profile: PublicProfile;
+  xp: number;
+  level: number;
+  streakCurrent: number;
+  totalReviews: number;
+}
+
+export type ParentLinkStatus = "pending" | "accepted";
+
+export interface ParentLinkEntry {
+  linkId: string;
+  parentId: string;
+  studentId: string;
+  status: ParentLinkStatus;
+  otherProfile: PublicProfile;
+}
+

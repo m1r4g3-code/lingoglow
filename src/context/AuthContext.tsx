@@ -30,6 +30,7 @@ function rowToProfile(row: {
   avatar_url: string | null;
   role: Profile["role"];
   has_claimed_local: boolean;
+  tier: Profile["tier"];
 }): Profile {
   return {
     id: row.id,
@@ -38,6 +39,7 @@ function rowToProfile(row: {
     avatarUrl: row.avatar_url,
     role: row.role,
     hasClaimedLocal: row.has_claimed_local,
+    tier: row.tier,
   };
 }
 

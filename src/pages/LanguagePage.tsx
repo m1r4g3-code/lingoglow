@@ -64,6 +64,7 @@ export function LanguagePage() {
           { to: "category/idiom", icon: "🏷️", label: "Categories" },
           { to: "ai-tutor", icon: "🤖", label: "AI Conversation" },
           { to: "writing", icon: "📝", label: "AI Writing Feedback" },
+          { to: "certificate", icon: "🎓", label: "Certificates" },
         ].map((item) => (
           <Link
             key={item.to}

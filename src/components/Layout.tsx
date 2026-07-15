@@ -25,9 +25,17 @@ export function Layout() {
                     <XpBar />
                   </>
                 )}
-                <span className="hidden text-slate-500 sm:inline dark:text-slate-400">
+                {profile && profile.role !== "student" && (
+                  <Link
+                    to={profile.role === "teacher" ? "/teacher" : profile.role === "parent" ? "/parent" : "/admin"}
+                    className="hidden text-slate-500 hover:underline sm:inline dark:text-slate-400"
+                  >
+                    Dashboard
+                  </Link>
+                )}
+                <Link to="/account" className="hidden text-slate-500 hover:underline sm:inline dark:text-slate-400">
                   {profile?.username ?? user.email}
-                </span>
+                </Link>
                 <button
                   type="button"
                   onClick={() => void signOut()}
