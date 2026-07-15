@@ -33,3 +33,14 @@ export interface SrsState {
 }
 
 export type SrsGrade = "again" | "hard" | "good" | "easy";
+
+export type UserRole = "student" | "teacher" | "parent" | "admin";
+
+export interface Profile {
+  id: string;
+  username: string;
+  displayName: string | null;
+  avatarUrl: string | null;
+  role: UserRole;
+  hasClaimedLocal: boolean;
+}
