@@ -1,35 +1,39 @@
 import { Link } from "react-router-dom";
-import { Brain, Flame, Mic, Users, type LucideIcon } from "lucide-react";
+import { Brain, Flame, Lock, Mic, Users, type LucideIcon } from "lucide-react";
 import { languages, getLessons, getAllVocab } from "../data/languages";
 import { LanguageCard } from "../components/LanguageCard";
 import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
 import { useAuth } from "../context/AuthContext";
 
-const FEATURES: { icon: LucideIcon; title: string; description: string; to: string }[] = [
+const FEATURES: { icon: LucideIcon; title: string; description: string; to: string; requiresAuth: boolean }[] = [
   {
     icon: Brain,
     title: "Spaced Repetition",
     description: "A review system that resurfaces words right before you'd forget them.",
     to: "#languages",
+    requiresAuth: false,
   },
   {
     icon: Mic,
     title: "Speech Practice",
     description: "Listen to native pronunciation and practice speaking with instant feedback.",
     to: "#languages",
+    requiresAuth: false,
   },
   {
     icon: Flame,
     title: "Gamification",
     description: "XP, streaks, badges, missions, and a leaderboard to keep you coming back.",
     to: "/progress",
+    requiresAuth: true,
   },
   {
     icon: Users,
     title: "Friends & Groups",
     description: "Add friends, join study groups, and learn alongside other people.",
     to: "/friends",
+    requiresAuth: true,
   },
 ];
 
@@ -87,6 +91,7 @@ export function Home() {
         {FEATURES.map((f) => {
           const cardClasses =
             "block rounded-2xl border border-slate-200 bg-white p-5 text-left transition-all hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-violet-900";
+          const lockedForGuest = f.requiresAuth && !user;
           const inner = (
             <>
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 dark:bg-violet-500/10">
@@ -94,6 +99,17 @@ export function Home() {
               </div>
               <h3 className="mt-3 font-semibold">{f.title}</h3>
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{f.description}</p>
+              <p className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-violet-600 dark:text-violet-400">
+                {lockedForGuest ? (
+                  <>
+                    <Lock className="h-3 w-3" strokeWidth={2} /> Sign in to unlock
+                  </>
+                ) : f.to.startsWith("#") ? (
+                  "Pick a language →"
+                ) : (
+                  "Open →"
+                )}
+              </p>
             </>
           );
           return f.to.startsWith("#") ? (

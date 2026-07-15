@@ -1,10 +1,24 @@
 import { useState, type FormEvent } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+
+// Shown instead of the generic subtitle when RequireAuth bounced the user
+// here from a specific gated page, so it doesn't feel like a dead end.
+const REASON_BY_PATH: Record<string, string> = {
+  "/progress": "Sign in to track your XP, streaks, and badges.",
+  "/missions": "Sign in to track your daily and weekly missions.",
+  "/leaderboard": "Sign in to see how you rank against friends.",
+  "/friends": "Sign in to add friends and learn alongside other people.",
+  "/groups": "Sign in to join or create a study group.",
+  "/account": "Sign in to manage your account.",
+};
 
 export function AuthPage() {
   const { user, signUp, signIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = (location.state as { from?: string } | null)?.from;
+  const reason = from ? REASON_BY_PATH[from] : undefined;
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +62,7 @@ export function AuthPage() {
         setError(result.error);
         return;
       }
-      navigate("/");
+      navigate(from ?? "/");
       return;
     }
 
@@ -62,14 +76,16 @@ export function AuthPage() {
       setAwaitingConfirmation(true);
       return;
     }
-    navigate("/");
+    navigate(from ?? "/");
   };
 
   return (
     <div className="mx-auto max-w-sm">
       <h1 className="glow-text text-2xl font-bold">{mode === "signin" ? "Log in" : "Sign up"}</h1>
       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-        {mode === "signin" ? "Sync your progress across devices." : "Create an account to save your progress."}
+        {mode === "signin"
+          ? (reason ?? "Sync your progress across devices.")
+          : "Create an account to save your progress."}
       </p>
 
       <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
@@ -94,8 +110,7 @@ export function AuthPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="glow-card mt-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold disabled:opacity-50 dark:border-slate-700 dark:bg-slate-900"
-          style={{ ["--glow-color" as string]: "rgba(56, 189, 248, 0.4)" }}
+          className="brand-gradient-bg mt-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 disabled:opacity-50"
         >
           {submitting ? "Please wait…" : mode === "signin" ? "Log in" : "Sign up"}
         </button>
