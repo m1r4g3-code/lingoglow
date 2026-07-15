@@ -83,7 +83,7 @@ function Certificate({ title, name, glowColor }: { title: string; name: string; 
       <p className="mt-1 text-sm font-medium">
         {new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })}
       </p>
-      <p className="mt-8 text-lg font-bold tracking-tight">LingoGlow</p>
+      <p className="mt-8 text-lg font-bold tracking-tight">Aether</p>
     </div>
   );
 }
