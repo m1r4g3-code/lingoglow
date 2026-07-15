@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { SrsGrade, VocabCard } from "../types";
 import { isTTSSupported, speak } from "../lib/speech";
+import { useVoiceAvailable } from "../hooks/useVoiceAvailable";
 
 interface FlashcardProps {
   card: VocabCard;
@@ -18,6 +19,7 @@ const GRADES: { grade: SrsGrade; label: string; classes: string }[] = [
 
 export function Flashcard({ card, glowColor, speechLang, onGrade }: FlashcardProps) {
   const [revealed, setRevealed] = useState(false);
+  const voiceAvailable = useVoiceAvailable(speechLang);
 
   const handleGrade = (grade: SrsGrade) => {
     onGrade(grade);
@@ -30,7 +32,7 @@ export function Flashcard({ card, glowColor, speechLang, onGrade }: FlashcardPro
         className="glow-card relative flex h-56 w-full flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 text-center dark:border-slate-800 dark:bg-slate-900"
         style={{ ["--glow-color" as string]: glowColor }}
       >
-        {isTTSSupported() && (
+        {isTTSSupported() && voiceAvailable && (
           <button
             type="button"
             onClick={(e) => {
@@ -42,6 +44,14 @@ export function Flashcard({ card, glowColor, speechLang, onGrade }: FlashcardPro
           >
             🔊
           </button>
+        )}
+        {isTTSSupported() && !voiceAvailable && (
+          <span
+            className="absolute top-3 right-3 text-xs text-slate-400 dark:text-slate-500"
+            title="Native audio not available for this language on your device"
+          >
+            🔇
+          </span>
         )}
         <button
           type="button"

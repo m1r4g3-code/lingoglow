@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { VocabCard } from "../types";
 import { isSTTSupported, isSpeechMatch, isTTSSupported, listenOnce, speak } from "../lib/speech";
 import { getCardState, toggleFavorite } from "../lib/storage";
+import { useVoiceAvailable } from "../hooks/useVoiceAvailable";
 
 interface VocabRowProps {
   card: VocabCard;
@@ -16,7 +17,8 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
   const [heard, setHeard] = useState("");
   const [isFavorite, setIsFavorite] = useState(() => getCardState(card.id)?.isFavorite ?? false);
 
-  const ttsAvailable = isTTSSupported();
+  const voiceAvailable = useVoiceAvailable(speechLang);
+  const ttsAvailable = isTTSSupported() && voiceAvailable;
   const sttAvailable = sttSupported && isSTTSupported();
 
   const handleListen = () => speak(card.front, speechLang);

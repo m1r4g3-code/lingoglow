@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { VocabCard } from "../types";
 import { isTTSSupported, isTextMatch, speak } from "../lib/speech";
+import { useVoiceAvailable } from "../hooks/useVoiceAvailable";
 
 interface DictationExerciseProps {
   card: VocabCard;
@@ -12,6 +13,7 @@ interface DictationExerciseProps {
 export function DictationExercise({ card, speechLang, glowColor, onNext }: DictationExerciseProps) {
   const [input, setInput] = useState("");
   const [checked, setChecked] = useState<"idle" | "correct" | "incorrect">("idle");
+  const voiceAvailable = useVoiceAvailable(speechLang);
 
   const handleListen = () => speak(card.front, speechLang);
 
@@ -24,6 +26,19 @@ export function DictationExercise({ card, speechLang, glowColor, onNext }: Dicta
     setChecked("idle");
     onNext();
   };
+
+  if (isTTSSupported() && !voiceAvailable) {
+    return (
+      <div className="mx-auto max-w-md text-center">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          Dictation needs spoken audio, and this language doesn't have a native voice available on your device yet.
+        </p>
+        <button type="button" onClick={onNext} className="mt-5 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white">
+          Skip word
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-md text-center">

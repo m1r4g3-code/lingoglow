@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { ComprehensionPassage } from "../types";
 import { isTTSSupported, speak } from "../lib/speech";
+import { useVoiceAvailable } from "../hooks/useVoiceAvailable";
 
 interface ComprehensionReaderProps {
   passage: ComprehensionPassage;
@@ -11,6 +12,7 @@ interface ComprehensionReaderProps {
 export function ComprehensionReader({ passage, speechLang, glowColor }: ComprehensionReaderProps) {
   const [answers, setAnswers] = useState<(number | null)[]>(passage.questions.map(() => null));
   const [checked, setChecked] = useState(false);
+  const voiceAvailable = useVoiceAvailable(speechLang);
 
   const selectAnswer = (qIndex: number, choiceIndex: number) => {
     setAnswers((a) => a.map((x, i) => (i === qIndex ? choiceIndex : x)));
@@ -26,7 +28,7 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
     >
       <div className="flex items-center gap-2">
         <h2 className="text-lg font-semibold">{passage.title}</h2>
-        {isTTSSupported() && (
+        {isTTSSupported() && voiceAvailable && (
           <button
             type="button"
             onClick={() => speak(passage.text, speechLang)}
@@ -35,6 +37,14 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
           >
             🔊
           </button>
+        )}
+        {isTTSSupported() && !voiceAvailable && (
+          <span
+            className="text-xs text-slate-400 dark:text-slate-500"
+            title="Native audio not available for this language on your device"
+          >
+            🔇 audio unavailable
+          </span>
         )}
       </div>
       <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">{passage.text}</p>

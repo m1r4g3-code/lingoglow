@@ -50,6 +50,16 @@ export async function speak(text: string, lang: string) {
   window.speechSynthesis.speak(utterance);
 }
 
+// Whether this browser/device actually has a voice for `lang`, rather than
+// just supporting the speechSynthesis API in general. No installed voice
+// means speak() can only fall back to a mismatched one (e.g. an English
+// voice reading Russian or Yoruba text) — better to say so than to play it.
+export async function hasVoiceFor(lang: string): Promise<boolean> {
+  if (!isTTSSupported()) return false;
+  const voices = cachedVoices.length > 0 ? cachedVoices : await loadVoices();
+  return pickVoice(voices, lang) !== undefined;
+}
+
 type SpeechRecognitionCtor = new () => SpeechRecognition;
 
 function getRecognitionCtor(): SpeechRecognitionCtor | undefined {
