@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { VocabCard } from "../types";
 import { isSTTSupported, isSpeechMatch, isTTSSupported, listenOnce, speak } from "../lib/speech";
+import { getCardState, toggleFavorite } from "../lib/storage";
 
 interface VocabRowProps {
   card: VocabCard;
@@ -13,6 +14,7 @@ type PracticeState = "idle" | "listening" | "correct" | "incorrect";
 export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
   const [practiceState, setPracticeState] = useState<PracticeState>("idle");
   const [heard, setHeard] = useState("");
+  const [isFavorite, setIsFavorite] = useState(() => getCardState(card.id)?.isFavorite ?? false);
 
   const ttsAvailable = isTTSSupported();
   const sttAvailable = sttSupported && isSTTSupported();
@@ -30,10 +32,25 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
     }
   };
 
+  const handleToggleFavorite = () => {
+    const next = toggleFavorite(card.id);
+    setIsFavorite(next.isFavorite ?? false);
+  };
+
   return (
     <div className="flex items-center justify-between gap-3 bg-white px-5 py-3 dark:bg-slate-900">
       <div className="min-w-0">
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleToggleFavorite}
+            aria-label={isFavorite ? `Unfavorite ${card.front}` : `Favorite ${card.front}`}
+            className={`glow-ring rounded-full p-1 ${
+              isFavorite ? "text-amber-400" : "text-slate-300 hover:text-amber-400 dark:text-slate-600"
+            }`}
+          >
+            {isFavorite ? "★" : "☆"}
+          </button>
           <span className="font-medium">{card.front}</span>
           {ttsAvailable && (
             <button

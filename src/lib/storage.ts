@@ -1,5 +1,6 @@
 import type { SrsState } from "../types";
 import { supabase } from "./supabaseClient";
+import { newCardState } from "./srs";
 
 const SRS_KEY = "lingoglow:srs";
 const THEME_KEY = "lingoglow:theme";
@@ -25,6 +26,25 @@ function writeSrsStore(store: SrsStore) {
   localStorage.setItem(SRS_KEY, JSON.stringify(store));
 }
 
+function syncCardState(cardId: string, state: SrsState) {
+  if (!syncUserId) return;
+  void supabase
+    .from("srs_states")
+    .upsert({
+      user_id: syncUserId,
+      card_id: cardId,
+      interval: state.interval,
+      ease: state.ease,
+      reps: state.reps,
+      due_date: state.dueDate,
+      is_favorite: state.isFavorite ?? false,
+      updated_at: new Date().toISOString(),
+    })
+    .then(({ error }) => {
+      if (error) console.error("srs_states upsert failed", error);
+    });
+}
+
 export function getCardState(cardId: string): SrsState | undefined {
   return readSrsStore()[cardId];
 }
@@ -33,24 +53,17 @@ export function setCardState(cardId: string, state: SrsState) {
   const store = readSrsStore();
   store[cardId] = state;
   writeSrsStore(store);
+  syncCardState(cardId, state);
+}
 
-  if (syncUserId) {
-    const userId = syncUserId;
-    void supabase
-      .from("srs_states")
-      .upsert({
-        user_id: userId,
-        card_id: cardId,
-        interval: state.interval,
-        ease: state.ease,
-        reps: state.reps,
-        due_date: state.dueDate,
-        updated_at: new Date().toISOString(),
-      })
-      .then(({ error }) => {
-        if (error) console.error("srs_states upsert failed", error);
-      });
-  }
+export function toggleFavorite(cardId: string): SrsState {
+  const store = readSrsStore();
+  const current = store[cardId] ?? newCardState();
+  const next: SrsState = { ...current, isFavorite: !current.isFavorite };
+  store[cardId] = next;
+  writeSrsStore(store);
+  syncCardState(cardId, next);
+  return next;
 }
 
 export function getAllCardStates(): SrsStore {
@@ -67,11 +80,12 @@ interface SrsRow {
   ease: number;
   reps: number;
   due_date: string;
+  is_favorite: boolean;
   updated_at: string;
 }
 
 function rowToState(row: SrsRow): SrsState {
-  return { interval: row.interval, ease: row.ease, reps: row.reps, dueDate: row.due_date };
+  return { interval: row.interval, ease: row.ease, reps: row.reps, dueDate: row.due_date, isFavorite: row.is_favorite };
 }
 
 /** Pulls this user's server-side SRS state and merges it into localStorage
@@ -104,6 +118,7 @@ export async function claimLocalProgress(userId: string): Promise<number> {
     ease: local[cardId].ease,
     reps: local[cardId].reps,
     due_date: local[cardId].dueDate,
+    is_favorite: local[cardId].isFavorite ?? false,
     updated_at: new Date().toISOString(),
   }));
 

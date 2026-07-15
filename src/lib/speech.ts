@@ -48,7 +48,7 @@ export function listenOnce(lang: string): Promise<string> {
   });
 }
 
-function normalize(text: string): string {
+export function normalize(text: string): string {
   return text
     .toLowerCase()
     .normalize("NFD")
@@ -62,4 +62,12 @@ export function isSpeechMatch(spoken: string, expected: string): boolean {
   // expected may contain alternates like "primo / prima" — accept any one
   const alternates = expected.split("/").map((alt) => normalize(alt));
   return alternates.some((alt) => alt.length > 0 && (normSpoken.includes(alt) || alt.includes(normSpoken)));
+}
+
+/** Stricter than isSpeechMatch: for typed answers (dictation), require an
+ * exact match after normalization rather than substring tolerance. */
+export function isTextMatch(input: string, expected: string): boolean {
+  const normInput = normalize(input);
+  const alternates = expected.split("/").map((alt) => normalize(alt));
+  return alternates.some((alt) => alt.length > 0 && alt === normInput);
 }

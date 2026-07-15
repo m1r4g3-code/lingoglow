@@ -1,4 +1,4 @@
-import type { CefrLevel, Language, Lesson } from "../types";
+import type { CefrLevel, Language, Lesson, VocabCategory } from "../types";
 import { esLessons } from "./lessons/es";
 import { frLessons } from "./lessons/fr";
 import { laLessons } from "./lessons/la";
@@ -72,4 +72,31 @@ export function getAllVocab(languageId: string) {
   return getLessons(languageId).flatMap((lesson) =>
     lesson.vocab.map((card) => ({ ...card, lessonId: lesson.id, lessonTitle: lesson.title }))
   );
+}
+
+// Category/frequency are derived rather than hand-tagged on ~1,400 cards:
+// category from the lesson's topic, frequency from teaching order (earlier
+// lessons cover more common words, by design of the curriculum).
+const CATEGORY_BY_LESSON: Record<string, VocabCategory> = {
+  idioms: "idiom",
+  travel: "travel",
+  airport: "travel",
+  professions: "business",
+  health: "medical",
+};
+
+export function getVocabCategory(lessonId: string): VocabCategory {
+  return CATEGORY_BY_LESSON[lessonId] ?? "general";
+}
+
+export function getVocabWithMeta(languageId: string) {
+  return getAllVocab(languageId).map((card, index) => ({
+    ...card,
+    category: card.category ?? getVocabCategory(card.lessonId),
+    frequencyRank: card.frequencyRank ?? index + 1,
+  }));
+}
+
+export function getVocabByCategory(languageId: string, category: VocabCategory) {
+  return getVocabWithMeta(languageId).filter((card) => card.category === category);
 }

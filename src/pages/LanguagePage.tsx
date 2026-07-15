@@ -46,6 +46,35 @@ export function LanguagePage() {
         </span>
       </Link>
 
+      <h2 className="mt-10 mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+        Practice
+      </h2>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        {[
+          { to: "skill-tree", icon: "🗺️", label: "Skill Tree" },
+          { to: "grammar", icon: "📘", label: "Grammar" },
+          { to: "sentences", icon: "🧩", label: "Sentence Building" },
+          ...(language.id === "es" || language.id === "fr"
+            ? [{ to: "conjugation", icon: "🔤", label: "Conjugation Drills" }]
+            : []),
+          { to: "dictation", icon: "✍️", label: "Dictation" },
+          { to: "comprehension", icon: "📖", label: "Reading & Listening" },
+          { to: "difficult-words", icon: "★", label: "Favorites & Difficult" },
+          { to: "frequency", icon: "📊", label: "Common Words" },
+          { to: "category/idiom", icon: "🏷️", label: "Categories" },
+        ].map((item) => (
+          <Link
+            key={item.to}
+            to={`/language/${language.id}/${item.to}`}
+            className="glow-card flex flex-col items-center gap-1.5 rounded-xl border border-slate-200 bg-white p-4 text-center dark:border-slate-800 dark:bg-slate-900"
+            style={{ ["--glow-color" as string]: language.glowColor }}
+          >
+            <span className="text-xl">{item.icon}</span>
+            <span className="text-xs font-medium">{item.label}</span>
+          </Link>
+        ))}
+      </div>
+
       {levelGroups.length === 0 ? (
         <div className="mt-10 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
           No lessons yet for {language.name}. Add some in{" "}

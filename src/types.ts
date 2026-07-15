@@ -8,11 +8,17 @@ export interface Language {
   sttSupported: boolean; // whether speech-recognition practice is offered for this language
 }
 
+export type VocabCategory = "idiom" | "slang" | "business" | "travel" | "medical" | "general";
+
 export interface VocabCard {
   id: string;
   front: string;
   back: string;
   notes?: string;
+  partOfSpeech?: string;
+  frequencyRank?: number;
+  category?: VocabCategory;
+  exampleSentence?: string;
 }
 
 export type CefrLevel = "A1" | "A2" | "B1";
@@ -23,6 +29,8 @@ export interface Lesson {
   description: string;
   level: CefrLevel;
   vocab: VocabCard[];
+  skillId?: string;
+  grammarNotes?: string;
 }
 
 export interface SrsState {
@@ -30,6 +38,7 @@ export interface SrsState {
   ease: number; // ease factor, starts at 2.5
   reps: number;
   dueDate: string; // ISO date string
+  isFavorite?: boolean;
 }
 
 export type SrsGrade = "again" | "hard" | "good" | "easy";
@@ -43,4 +52,64 @@ export interface Profile {
   avatarUrl: string | null;
   role: UserRole;
   hasClaimedLocal: boolean;
+}
+
+// ───────────────────────── Phase 1: pedagogy features ─────────────────────────
+
+export interface SkillNode {
+  id: string;
+  languageId: string;
+  lessonId: string;
+  level: CefrLevel;
+  prerequisiteIds: string[];
+}
+
+export interface GrammarSection {
+  heading: string;
+  body: string;
+  examples: string[];
+}
+
+export interface GrammarSheet {
+  id: string;
+  languageId: string;
+  level: CefrLevel;
+  title: string;
+  sections: GrammarSection[];
+}
+
+export interface SentenceExercise {
+  id: string;
+  languageId: string;
+  level: CefrLevel;
+  prompt: string; // English prompt to translate/build
+  tokens: string[]; // shuffled word bank
+  correctOrder: string[]; // tokens in correct order
+}
+
+export interface ConjugationForm {
+  pronoun: string;
+  form: string;
+}
+
+export interface ConjugationEntry {
+  infinitive: string;
+  translation: string;
+  tense: string;
+  forms: ConjugationForm[];
+}
+
+export interface ComprehensionQuestion {
+  prompt: string;
+  choices: string[];
+  correctIndex: number;
+}
+
+export interface ComprehensionPassage {
+  id: string;
+  languageId: string;
+  level: CefrLevel;
+  title: string;
+  text: string;
+  questions: ComprehensionQuestion[];
 }

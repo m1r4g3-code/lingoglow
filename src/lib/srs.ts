@@ -5,6 +5,7 @@ const DEFAULT_STATE: SrsState = {
   ease: 2.5,
   reps: 0,
   dueDate: new Date().toISOString(),
+  isFavorite: false,
 };
 
 export function newCardState(): SrsState {
@@ -38,5 +39,19 @@ export function nextState(state: SrsState | undefined, grade: SrsGrade): SrsStat
   const dueDate = new Date();
   dueDate.setDate(dueDate.getDate() + Math.max(interval, grade === "again" ? 0 : 1));
 
-  return { interval, ease, reps, dueDate: dueDate.toISOString() };
+  return { interval, ease, reps, dueDate: dueDate.toISOString(), isFavorite: current.isFavorite };
+}
+
+/** 0-100 mastery estimate from review history: more reps and a longer
+ * interval (proven long-term retention) push the score up. */
+export function masteryScore(state: SrsState | undefined): number {
+  if (!state) return 0;
+  const raw = state.reps * 12 + Math.min(state.interval, 60) * 1.2;
+  return Math.max(0, Math.min(100, Math.round(raw)));
+}
+
+/** Cards the learner has reviewed at least once but keeps missing. */
+export function isDifficult(state: SrsState | undefined): boolean {
+  if (!state) return false;
+  return state.reps > 0 && state.ease <= 2.0;
 }
