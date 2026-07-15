@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Volume2, VolumeX } from "lucide-react";
 import type { ComprehensionPassage } from "../types";
 import { isTTSSupported, speak } from "../lib/speech";
 import { useVoiceAvailable } from "../hooks/useVoiceAvailable";
@@ -33,17 +34,17 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
             type="button"
             onClick={() => speak(passage.text, speechLang)}
             aria-label="Listen to passage"
-            className="glow-ring rounded-full p-1 text-slate-400 hover:text-sky-500 dark:text-slate-500 dark:hover:text-sky-300"
+            className="glow-ring rounded-full p-1 text-slate-400 hover:text-violet-500 dark:text-slate-500 dark:hover:text-violet-300"
           >
-            🔊
+            <Volume2 className="h-4 w-4" strokeWidth={1.75} />
           </button>
         )}
         {isTTSSupported() && !voiceAvailable && (
           <span
-            className="text-xs text-slate-400 dark:text-slate-500"
+            className="inline-flex items-center gap-1 text-xs text-slate-400 dark:text-slate-500"
             title="Native audio not available for this language on your device"
           >
-            🔇 audio unavailable
+            <VolumeX className="h-3.5 w-3.5" strokeWidth={1.75} /> audio unavailable
           </span>
         )}
       </div>
@@ -69,7 +70,7 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
                         : isWrong
                           ? "border-rose-300 bg-rose-50 dark:border-rose-500 dark:bg-rose-500/10"
                           : selected
-                            ? "border-sky-400 bg-sky-50 dark:border-sky-500 dark:bg-sky-500/10"
+                            ? "border-violet-400 bg-violet-50 dark:border-violet-500 dark:bg-violet-500/10"
                             : "border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800"
                     }`}
                   >
@@ -86,7 +87,7 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
         type="button"
         onClick={() => setChecked(true)}
         disabled={answers.some((a) => a === null)}
-        className="mt-5 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+        className="brand-gradient-bg mt-5 rounded-lg px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
       >
         Check answers
       </button>

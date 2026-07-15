@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from "react-router-dom";
+﻿import { Link, Navigate, useParams } from "react-router-dom";
 import { getLanguage, getVocabByCategory } from "../data/languages";
 import { VocabRow } from "../components/VocabRow";
 import type { VocabCategory } from "../types";
@@ -34,7 +34,7 @@ export function CategoryPage() {
             to={`/language/${languageId}/category/${c.value}`}
             className={`rounded-full px-4 py-1.5 text-sm font-medium ${
               category === c.value
-                ? "bg-sky-500 text-white"
+                ? "bg-violet-500 text-white"
                 : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
             }`}
           >

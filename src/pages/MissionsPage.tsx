@@ -1,4 +1,4 @@
-import { MISSIONS } from "../data/missions";
+﻿import { MISSIONS } from "../data/missions";
 import { getMissionState } from "../lib/storage";
 import { currentPeriodKey } from "../lib/gamification";
 
@@ -34,7 +34,7 @@ export function MissionsPage() {
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{mission.description}</p>
               <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                 <div
-                  className={`h-full rounded-full ${completed ? "bg-emerald-500" : "bg-sky-500"}`}
+                  className={`h-full rounded-full ${completed ? "bg-emerald-500" : "bg-violet-500"}`}
                   style={{ width: `${pct}%` }}
                 />
               </div>

@@ -1,33 +1,30 @@
 import { Link } from "react-router-dom";
+import { Brain, Flame, Mic, Users, type LucideIcon } from "lucide-react";
 import { languages, getLessons, getAllVocab } from "../data/languages";
 import { LanguageCard } from "../components/LanguageCard";
 import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
 
-const FEATURES = [
+const FEATURES: { icon: LucideIcon; title: string; description: string }[] = [
   {
-    icon: "🧠",
+    icon: Brain,
     title: "Spaced Repetition",
     description: "A review system that resurfaces words right before you'd forget them.",
-    glowColor: "rgba(56, 189, 248, 0.35)",
   },
   {
-    icon: "🎙️",
+    icon: Mic,
     title: "Speech Practice",
     description: "Listen to native pronunciation and practice speaking with instant feedback.",
-    glowColor: "rgba(244, 114, 182, 0.35)",
   },
   {
-    icon: "🔥",
+    icon: Flame,
     title: "Gamification",
     description: "XP, streaks, badges, missions, and a leaderboard to keep you coming back.",
-    glowColor: "rgba(251, 146, 60, 0.35)",
   },
   {
-    icon: "👥",
+    icon: Users,
     title: "Friends & Groups",
     description: "Add friends, join study groups, and learn alongside other people.",
-    glowColor: "rgba(192, 132, 252, 0.35)",
   },
 ];
 
@@ -39,39 +36,39 @@ export function Home() {
   return (
     <div>
       {/* Hero */}
-      <div className="py-10 text-center sm:py-16">
-        <h1 className="glow-text text-5xl font-extrabold tracking-tight sm:text-6xl">Aether</h1>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-slate-600 dark:text-slate-300">
+      <div className="relative overflow-hidden py-14 text-center sm:py-20">
+        <div className="aurora-backdrop" aria-hidden="true" />
+        <h1 className="brand-gradient-text text-5xl font-extrabold tracking-tight sm:text-7xl">Aether</h1>
+        <p className="mx-auto mt-5 max-w-xl text-lg text-slate-600 dark:text-slate-300">
           Learn languages that actually stick — spaced repetition, real speech practice, and a
           curriculum built to be finished, not just started.
         </p>
-        <div className="mt-8 flex items-center justify-center gap-3">
+        <div className="mt-9 flex items-center justify-center gap-3">
           <a
             href="#languages"
-            className="glow-card rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold dark:border-slate-800 dark:bg-slate-900"
-            style={{ ["--glow-color" as string]: "rgba(56, 189, 248, 0.45)" }}
+            className="brand-gradient-bg rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-transform hover:scale-[1.02]"
           >
             Start learning free
           </a>
           <Link
             to="/login"
-            className="rounded-xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-600 dark:border-slate-800 dark:text-slate-300"
+            className="rounded-xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-600 transition-colors hover:border-slate-300 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-700"
           >
             Create an account
           </Link>
         </div>
 
-        <div className="mt-10 flex items-center justify-center gap-8 text-sm text-slate-500 dark:text-slate-400">
+        <div className="mt-12 flex items-center justify-center gap-10 text-sm text-slate-500 dark:text-slate-400">
           <div>
-            <p className="glow-text text-2xl font-bold text-slate-800 dark:text-slate-100">{languages.length}</p>
+            <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">{languages.length}</p>
             <p>Languages</p>
           </div>
           <div>
-            <p className="glow-text text-2xl font-bold text-slate-800 dark:text-slate-100">{totalLessons}</p>
+            <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">{totalLessons}</p>
             <p>Lessons</p>
           </div>
           <div>
-            <p className="glow-text text-2xl font-bold text-slate-800 dark:text-slate-100">{totalVocab}+</p>
+            <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">{totalVocab}+</p>
             <p>Words & phrases</p>
           </div>
         </div>
@@ -82,10 +79,11 @@ export function Home() {
         {FEATURES.map((f) => (
           <div
             key={f.title}
-            className="glow-card rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
-            style={{ ["--glow-color" as string]: f.glowColor }}
+            className="rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-violet-200 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-violet-900"
           >
-            <span className="text-2xl">{f.icon}</span>
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 dark:bg-violet-500/10">
+              <f.icon className="brand-icon h-5 w-5" strokeWidth={1.75} />
+            </div>
             <h3 className="mt-3 font-semibold">{f.title}</h3>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{f.description}</p>
           </div>
@@ -94,7 +92,7 @@ export function Home() {
 
       {/* Language picker */}
       <div id="languages" className="mt-16 scroll-mt-20">
-        <h2 className="glow-text text-2xl font-bold tracking-tight">Choose your language</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Choose your language</h2>
         <p className="mt-1 text-slate-500 dark:text-slate-400">
           Work through lessons, then review with spaced-repetition flashcards.
         </p>

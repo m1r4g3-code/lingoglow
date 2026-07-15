@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { CircleCheck, Lock, Star } from "lucide-react";
 import type { Lesson } from "../types";
 
 interface SkillTreeNodeProps {
@@ -20,7 +21,13 @@ export function SkillTreeNode({ lesson, languageId, glowColor, status }: SkillTr
       }`}
       style={locked ? undefined : { ["--glow-color" as string]: glowColor }}
     >
-      <span className="text-xl">{status === "cleared" ? "✅" : locked ? "🔒" : "⭐"}</span>
+      {status === "cleared" ? (
+        <CircleCheck className="h-5 w-5 shrink-0 text-emerald-500" strokeWidth={1.75} />
+      ) : locked ? (
+        <Lock className="h-5 w-5 shrink-0 text-slate-400 dark:text-slate-600" strokeWidth={1.75} />
+      ) : (
+        <Star className="h-5 w-5 shrink-0 text-amber-400" strokeWidth={1.75} fill="currentColor" fillOpacity={0.2} />
+      )}
       <div className="min-w-0">
         <p className="truncate font-medium">{lesson.title}</p>
         <p className="text-xs text-slate-500 dark:text-slate-400">

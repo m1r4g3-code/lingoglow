@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Volume2, VolumeX } from "lucide-react";
 import type { SrsGrade, VocabCard } from "../types";
 import { isTTSSupported, speak } from "../lib/speech";
 import { useVoiceAvailable } from "../hooks/useVoiceAvailable";
@@ -40,17 +41,17 @@ export function Flashcard({ card, glowColor, speechLang, onGrade }: FlashcardPro
               speak(card.front, speechLang);
             }}
             aria-label={`Listen to ${card.front}`}
-            className="glow-ring absolute top-3 right-3 rounded-full p-1.5 text-slate-400 hover:text-sky-500 dark:text-slate-500 dark:hover:text-sky-300"
+            className="glow-ring absolute top-3 right-3 rounded-full p-1.5 text-slate-400 hover:text-violet-500 dark:text-slate-500 dark:hover:text-violet-300"
           >
-            🔊
+            <Volume2 className="h-4 w-4" strokeWidth={1.75} />
           </button>
         )}
         {isTTSSupported() && !voiceAvailable && (
           <span
-            className="absolute top-3 right-3 text-xs text-slate-400 dark:text-slate-500"
+            className="absolute top-3 right-3 text-slate-300 dark:text-slate-600"
             title="Native audio not available for this language on your device"
           >
-            🔇
+            <VolumeX className="h-4 w-4" strokeWidth={1.75} />
           </span>
         )}
         <button

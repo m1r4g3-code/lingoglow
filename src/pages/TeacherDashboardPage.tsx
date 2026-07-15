@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { createClass, listMyClasses } from "../lib/dashboards";
@@ -35,7 +35,7 @@ function TeacherDashboardInner() {
     <div>
       <div className="flex items-center justify-between">
         <h1 className="glow-text text-2xl font-bold">Teacher Dashboard</h1>
-        <button type="button" onClick={() => setShowCreate((s) => !s)} className="rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white">
+        <button type="button" onClick={() => setShowCreate((s) => !s)} className="rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white">
           {showCreate ? "Cancel" : "New Class"}
         </button>
       </div>
@@ -63,7 +63,7 @@ function TeacherDashboardInner() {
             type="button"
             onClick={handleCreate}
             disabled={creating || !name.trim()}
-            className="mt-1 self-start rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+            className="mt-1 self-start rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
           >
             Create
           </button>

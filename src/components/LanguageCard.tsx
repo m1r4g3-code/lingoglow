@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import type { Language } from "../types";
 
 interface LanguageCardProps {
@@ -22,7 +22,7 @@ export function LanguageCard({ language, lessonCount, dueCount }: LanguageCardPr
           {language.code}
         </span>
         {dueCount > 0 && (
-          <span className="rounded-full bg-sky-100 px-2.5 py-1 text-xs font-semibold text-sky-700 dark:bg-sky-500/15 dark:text-sky-300">
+          <span className="rounded-full bg-violet-100 px-2.5 py-1 text-xs font-semibold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">
             {dueCount} due
           </span>
         )}

@@ -3,6 +3,11 @@
 
 :root {
   color-scheme: light dark;
+  /* Signature brand accent — used anywhere outside a specific language's
+     color-coded section (hero, header, generic CTAs, feature cards). */
+  --brand-from: #8b5cf6;
+  --brand-to: #22d3ee;
+  --brand-glow: rgba(139, 92, 246, 0.35);
 }
 
 html,
@@ -29,26 +34,63 @@ h1, h2, h3,
     transition: box-shadow 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
   }
   .dark .glow-card {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 24px 0 var(--glow-color, rgba(56, 189, 248, 0.25));
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 24px 0 var(--glow-color, var(--brand-glow));
   }
   .glow-card:hover {
     transform: translateY(-2px);
   }
   .dark .glow-card:hover {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 40px 4px var(--glow-color, rgba(56, 189, 248, 0.45));
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 40px 4px var(--glow-color, var(--brand-glow));
   }
 
   .glow-text {
     transition: text-shadow 0.25s ease;
   }
   .dark .glow-text {
-    text-shadow: 0 0 18px var(--glow-color, rgba(56, 189, 248, 0.6));
+    text-shadow: 0 0 18px var(--glow-color, var(--brand-glow));
   }
 
   .glow-ring {
     transition: box-shadow 0.2s ease;
   }
   .dark .glow-ring:focus-visible {
-    box-shadow: 0 0 0 3px var(--glow-color, rgba(56, 189, 248, 0.5));
+    box-shadow: 0 0 0 3px var(--glow-color, var(--brand-glow));
+  }
+
+  /* Brand wordmark / hero title: a fixed violet-to-cyan gradient, distinct
+     from the language-specific glow colors used elsewhere in the app. */
+  .brand-gradient-text {
+    background: linear-gradient(120deg, var(--brand-from), var(--brand-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .brand-gradient-bg {
+    background: linear-gradient(120deg, var(--brand-from), var(--brand-to));
+  }
+
+  .brand-icon {
+    color: var(--brand-from);
+  }
+
+  /* Soft aurora backdrop for the hero — one blurred gradient orb, not a
+     grid of mismatched card glows. */
+  .aurora-backdrop {
+    position: absolute;
+    inset: -10% -10% auto -10%;
+    height: 32rem;
+    background: radial-gradient(closest-side, var(--brand-from), transparent),
+      radial-gradient(closest-side, var(--brand-to), transparent);
+    background-position: 30% 0%, 80% 20%;
+    background-repeat: no-repeat;
+    background-size: 45% 100%, 40% 90%;
+    opacity: 0;
+    filter: blur(64px);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .dark .aurora-backdrop {
+    opacity: 0.22;
   }
 }

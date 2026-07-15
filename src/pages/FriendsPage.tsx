@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import {
   listFriendships,
@@ -61,7 +61,7 @@ export function FriendsPage() {
           type="button"
           onClick={handleSearch}
           disabled={searching || !query.trim()}
-          className="rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+          className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
         >
           Search
         </button>
@@ -79,7 +79,7 @@ export function FriendsPage() {
               {knownIds.has(p.id) ? (
                 <span className="text-xs text-slate-400">Already connected</span>
               ) : (
-                <button type="button" onClick={() => handleAdd(p.id)} className="text-sm text-sky-500 hover:underline">
+                <button type="button" onClick={() => handleAdd(p.id)} className="text-sm text-violet-500 hover:underline">
                   Add friend
                 </button>
               )}

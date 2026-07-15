@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from "react-router-dom";
+﻿import { Link, Navigate, useParams } from "react-router-dom";
 import { getLanguage, getLessonsByLevel } from "../data/languages";
 import { getAllCardStates } from "../lib/storage";
 import { isLessonCleared } from "../lib/progress";
@@ -35,7 +35,7 @@ export function CertificatePage() {
       {completedLevels.length === 0 ? (
         <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400 print:hidden">
           No certificates yet — keep reviewing! Check your{" "}
-          <Link to={`/language/${language.id}/skill-tree`} className="text-sky-500 hover:underline">
+          <Link to={`/language/${language.id}/skill-tree`} className="text-violet-500 hover:underline">
             skill tree
           </Link>{" "}
           to see what's left.
@@ -60,7 +60,7 @@ export function CertificatePage() {
         <button
           type="button"
           onClick={() => window.print()}
-          className="mt-6 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white print:hidden"
+          className="mt-6 rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white print:hidden"
         >
           Print / Save as PDF
         </button>

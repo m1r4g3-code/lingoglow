@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
+import { Flame } from "lucide-react";
 import { RequireRole } from "../components/RequireRole";
 import { getClass, getClassRoster } from "../lib/dashboards";
 import type { RosterStudent, TeacherClass } from "../types";
@@ -46,7 +47,10 @@ function TeacherClassDetailInner() {
               <div className="flex gap-4 text-sm text-slate-500 dark:text-slate-400">
                 <span>Lv {s.level}</span>
                 <span>{s.xp} XP</span>
-                <span>🔥 {s.streakCurrent}</span>
+                <span className="inline-flex items-center gap-1">
+                  <Flame className="h-3.5 w-3.5 text-amber-500" strokeWidth={2} />
+                  {s.streakCurrent}
+                </span>
                 <span>{s.totalReviews} reviews</span>
               </div>
             </div>

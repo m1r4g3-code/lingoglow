@@ -1,5 +1,6 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
+import { Star } from "lucide-react";
 import { getLanguage, getAllVocab } from "../data/languages";
 import { getAllCardStates } from "../lib/storage";
 import { isDifficult, masteryScore } from "../lib/srs";
@@ -37,18 +38,21 @@ export function DifficultWordsPage() {
           onClick={() => setTab("favorites")}
           className={`rounded-full px-4 py-1.5 text-sm font-medium ${
             tab === "favorites"
-              ? "bg-sky-500 text-white"
+              ? "bg-violet-500 text-white"
               : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
           }`}
         >
-          ★ Favorites ({favorites.length})
+          <span className="inline-flex items-center gap-1">
+            <Star className="h-3.5 w-3.5" strokeWidth={1.75} fill={tab === "favorites" ? "currentColor" : "none"} />
+            Favorites ({favorites.length})
+          </span>
         </button>
         <button
           type="button"
           onClick={() => setTab("difficult")}
           className={`rounded-full px-4 py-1.5 text-sm font-medium ${
             tab === "difficult"
-              ? "bg-sky-500 text-white"
+              ? "bg-violet-500 text-white"
               : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
           }`}
         >

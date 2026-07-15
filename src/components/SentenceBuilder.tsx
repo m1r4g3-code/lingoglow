@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import type { SentenceExercise } from "../types";
 
 function shuffle<T>(items: T[]): T[] {
@@ -61,7 +61,7 @@ export function SentenceBuilder({ exercise, glowColor, onNext }: SentenceBuilder
             key={`${word}-${i}`}
             type="button"
             onClick={() => removePicked(i)}
-            className="rounded-lg bg-sky-100 px-3 py-1.5 text-sm font-medium text-sky-700 dark:bg-sky-500/15 dark:text-sky-300"
+            className="rounded-lg bg-violet-100 px-3 py-1.5 text-sm font-medium text-violet-700 dark:bg-violet-500/15 dark:text-violet-300"
           >
             {word}
           </button>
@@ -86,7 +86,7 @@ export function SentenceBuilder({ exercise, glowColor, onNext }: SentenceBuilder
 
       <div className="mt-5 flex justify-center gap-2">
         {checked === "correct" ? (
-          <button type="button" onClick={reset} className="rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white">
+          <button type="button" onClick={reset} className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white">
             Next sentence
           </button>
         ) : (
@@ -94,7 +94,7 @@ export function SentenceBuilder({ exercise, glowColor, onNext }: SentenceBuilder
             type="button"
             onClick={check}
             disabled={picked.length === 0}
-            className="rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+            className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
           >
             Check
           </button>

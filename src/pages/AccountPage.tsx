@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../lib/supabaseClient";
 import { joinClassByCode, listParentLinksAsStudent, respondToParentLink } from "../lib/dashboards";
@@ -63,7 +63,7 @@ export function AccountPage() {
               onClick={() => handleRoleChange(r.value)}
               className={`rounded-full px-4 py-1.5 text-sm font-medium ${
                 profile.role === r.value
-                  ? "bg-sky-500 text-white"
+                  ? "bg-violet-500 text-white"
                   : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
               }`}
             >
@@ -73,12 +73,12 @@ export function AccountPage() {
         </div>
         {profile.role === "teacher" && (
           <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
-            Head to the <a href="/teacher" className="text-sky-500 hover:underline">Teacher dashboard</a> to create a class.
+            Head to the <a href="/teacher" className="text-violet-500 hover:underline">Teacher dashboard</a> to create a class.
           </p>
         )}
         {profile.role === "parent" && (
           <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
-            Head to the <a href="/parent" className="text-sky-500 hover:underline">Parent dashboard</a> to link a student.
+            Head to the <a href="/parent" className="text-violet-500 hover:underline">Parent dashboard</a> to link a student.
           </p>
         )}
       </div>
@@ -120,7 +120,7 @@ export function AccountPage() {
             placeholder="Class code"
             className="glow-ring flex-1 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none dark:border-slate-700 dark:bg-slate-900"
           />
-          <button type="button" onClick={handleJoinClass} className="rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white">
+          <button type="button" onClick={handleJoinClass} className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white">
             Join
           </button>
         </div>
@@ -141,7 +141,7 @@ export function AccountPage() {
           <button
             type="button"
             onClick={handleTogglePremium}
-            className="mt-3 rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white"
+            className="mt-3 rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white"
           >
             {profile.tier === "premium" ? "Downgrade to Free" : "Upgrade to Premium (demo)"}
           </button>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getLanguage } from "../data/languages";
 import { getWritingFeedback } from "../lib/ai";
@@ -69,7 +69,7 @@ export function WritingPage() {
       {profile.tier === "free" && (
         <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
           {usage}/{FREE_AI_DAILY_LIMIT} free messages used today (shared with AI Conversation) ·{" "}
-          <Link to="/account" className="text-sky-500 hover:underline">
+          <Link to="/account" className="text-violet-500 hover:underline">
             Upgrade for unlimited
           </Link>
         </p>
@@ -83,7 +83,7 @@ export function WritingPage() {
       ) : capped ? (
         <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
           You've used today's {FREE_AI_DAILY_LIMIT} free AI messages.{" "}
-          <Link to="/account" className="text-sky-500 hover:underline">
+          <Link to="/account" className="text-violet-500 hover:underline">
             Upgrade to Premium
           </Link>{" "}
           for unlimited access, or come back tomorrow.
@@ -101,7 +101,7 @@ export function WritingPage() {
             type="button"
             onClick={handleSubmit}
             disabled={submitting || !text.trim()}
-            className="mt-3 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+            className="mt-3 rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
           >
             {submitting ? "Reviewing…" : "Get feedback"}
           </button>

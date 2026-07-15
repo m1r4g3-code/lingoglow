@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+﻿import { useState, type FormEvent } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getLanguage } from "../data/languages";
 import { sendChatMessage, type ChatMessage } from "../lib/ai";
@@ -73,7 +73,7 @@ export function AiTutorPage() {
       {profile.tier === "free" && (
         <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
           {usage}/{FREE_AI_DAILY_LIMIT} free messages used today ·{" "}
-          <Link to="/account" className="text-sky-500 hover:underline">
+          <Link to="/account" className="text-violet-500 hover:underline">
             Upgrade for unlimited
           </Link>
         </p>
@@ -87,7 +87,7 @@ export function AiTutorPage() {
       ) : capped ? (
         <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
           You've used today's {FREE_AI_DAILY_LIMIT} free AI messages.{" "}
-          <Link to="/account" className="text-sky-500 hover:underline">
+          <Link to="/account" className="text-violet-500 hover:underline">
             Upgrade to Premium
           </Link>{" "}
           for unlimited access, or come back tomorrow.
@@ -103,7 +103,7 @@ export function AiTutorPage() {
                 <div
                   className={`max-w-[80%] rounded-xl px-4 py-2 text-sm ${
                     m.role === "user"
-                      ? "bg-sky-500 text-white"
+                      ? "bg-violet-500 text-white"
                       : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200"
                   }`}
                 >
@@ -126,7 +126,7 @@ export function AiTutorPage() {
             <button
               type="submit"
               disabled={sending || !input.trim()}
-              className="rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+              className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
             >
               Send
             </button>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Check, Mic, Star, Volume2, X } from "lucide-react";
 import type { VocabCard } from "../types";
 import { isSTTSupported, isSpeechMatch, isTTSSupported, listenOnce, speak } from "../lib/speech";
 import { getCardState, toggleFavorite } from "../lib/storage";
@@ -51,7 +52,7 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
               isFavorite ? "text-amber-400" : "text-slate-300 hover:text-amber-400 dark:text-slate-600"
             }`}
           >
-            {isFavorite ? "★" : "☆"}
+            <Star className="h-4 w-4" strokeWidth={1.75} fill={isFavorite ? "currentColor" : "none"} />
           </button>
           <span className="font-medium">{card.front}</span>
           {ttsAvailable && (
@@ -59,9 +60,9 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
               type="button"
               onClick={handleListen}
               aria-label={`Listen to ${card.front}`}
-              className="glow-ring rounded-full p-1 text-slate-400 hover:text-sky-500 dark:text-slate-500 dark:hover:text-sky-300"
+              className="glow-ring rounded-full p-1 text-slate-400 hover:text-violet-500 dark:text-slate-500 dark:hover:text-violet-300"
             >
-              🔊
+              <Volume2 className="h-4 w-4" strokeWidth={1.75} />
             </button>
           )}
           {sttAvailable && (
@@ -69,15 +70,24 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
               type="button"
               onClick={handlePractice}
               aria-label={`Practice speaking ${card.front}`}
-              className="glow-ring rounded-full p-1 text-slate-400 hover:text-emerald-500 dark:text-slate-500 dark:hover:text-emerald-300"
+              className={`glow-ring rounded-full p-1 text-slate-400 hover:text-emerald-500 dark:text-slate-500 dark:hover:text-emerald-300 ${
+                practiceState === "listening" ? "text-emerald-500 dark:text-emerald-300" : ""
+              }`}
             >
-              {practiceState === "listening" ? "🎙️" : "🎤"}
+              <Mic className="h-4 w-4" strokeWidth={1.75} />
             </button>
           )}
-          {practiceState === "correct" && <span className="text-xs font-semibold text-emerald-500">✓ nice!</span>}
+          {practiceState === "correct" && (
+            <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-emerald-500">
+              <Check className="h-3.5 w-3.5" strokeWidth={2} /> nice!
+            </span>
+          )}
           {practiceState === "incorrect" && (
-            <span className="text-xs font-semibold text-rose-500" title={`Heard: "${heard}"`}>
-              ✗ try again
+            <span
+              className="inline-flex items-center gap-0.5 text-xs font-semibold text-rose-500"
+              title={`Heard: "${heard}"`}
+            >
+              <X className="h-3.5 w-3.5" strokeWidth={2} /> try again
             </span>
           )}
         </div>

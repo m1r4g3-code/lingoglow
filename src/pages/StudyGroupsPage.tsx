@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { createGroup, listMyGroups, listPublicGroups } from "../lib/social";
@@ -43,7 +43,7 @@ export function StudyGroupsPage() {
         <button
           type="button"
           onClick={() => setShowCreate((s) => !s)}
-          className="rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white"
+          className="rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white"
         >
           {showCreate ? "Cancel" : "Create Group"}
         </button>
@@ -72,7 +72,7 @@ export function StudyGroupsPage() {
             type="button"
             onClick={handleCreate}
             disabled={creating || !name.trim()}
-            className="mt-1 self-start rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+            className="mt-1 self-start rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
           >
             Create
           </button>

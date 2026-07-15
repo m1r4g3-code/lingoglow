@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
+import { Flame } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { getStudentProgressForParent, listParentLinksAsParent, sendParentLinkRequest } from "../lib/dashboards";
 import { searchUsers } from "../lib/social";
@@ -60,7 +61,7 @@ function ParentDashboardInner() {
           placeholder="Search your child's username..."
           className="glow-ring flex-1 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none dark:border-slate-700 dark:bg-slate-900"
         />
-        <button type="button" onClick={handleSearch} className="rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white">
+        <button type="button" onClick={handleSearch} className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white">
           Search
         </button>
       </div>
@@ -74,7 +75,7 @@ function ParentDashboardInner() {
               {knownIds.has(p.id) ? (
                 <span className="text-xs text-slate-400">Already linked</span>
               ) : (
-                <button type="button" onClick={() => handleRequest(p.id)} className="text-sm text-sky-500 hover:underline">
+                <button type="button" onClick={() => handleRequest(p.id)} className="text-sm text-violet-500 hover:underline">
                   Send link request
                 </button>
               )}
@@ -105,7 +106,10 @@ function ParentDashboardInner() {
                   <div className="flex gap-4 text-sm text-slate-500 dark:text-slate-400">
                     <span>Lv {stats.level}</span>
                     <span>{stats.xp} XP</span>
-                    <span>🔥 {stats.streakCurrent}</span>
+                    <span className="inline-flex items-center gap-1">
+                      <Flame className="h-3.5 w-3.5 text-amber-500" strokeWidth={2} />
+                      {stats.streakCurrent}
+                    </span>
                     <span>{stats.totalReviews} reviews</span>
                   </div>
                 )}

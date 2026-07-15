@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../lib/supabaseClient";
@@ -59,7 +59,7 @@ export function LeaderboardPage() {
             type="button"
             onClick={() => setScope(s)}
             className={`rounded-full px-4 py-1.5 text-sm font-medium capitalize ${
-              scope === s ? "bg-sky-500 text-white" : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+              scope === s ? "bg-violet-500 text-white" : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
             }`}
           >
             {s}
@@ -75,7 +75,7 @@ export function LeaderboardPage() {
             {scope === "friends" ? (
               <>
                 Add friends to see them here.{" "}
-                <Link to="/friends" className="text-sky-500 hover:underline">
+                <Link to="/friends" className="text-violet-500 hover:underline">
                   Find friends →
                 </Link>
               </>
@@ -88,13 +88,13 @@ export function LeaderboardPage() {
             <div
               key={entry.userId}
               className={`flex items-center justify-between px-5 py-3 ${
-                entry.userId === user?.id ? "bg-sky-50 dark:bg-sky-500/10" : "bg-white dark:bg-slate-900"
+                entry.userId === user?.id ? "bg-violet-50 dark:bg-violet-500/10" : "bg-white dark:bg-slate-900"
               }`}
             >
               <div className="flex items-center gap-3">
                 <span className="w-6 text-sm font-semibold text-slate-400">{i + 1}</span>
                 <span className="font-medium">{entry.username}</span>
-                {entry.userId === user?.id && <span className="text-xs text-sky-500">(you)</span>}
+                {entry.userId === user?.id && <span className="text-xs text-violet-500">(you)</span>}
               </div>
               <div className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
                 <span>Lv {entry.level}</span>

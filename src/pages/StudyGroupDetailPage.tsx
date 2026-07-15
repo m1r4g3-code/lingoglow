@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
@@ -85,7 +85,7 @@ export function StudyGroupDetailPage() {
             Leave
           </button>
         ) : (
-          <button type="button" onClick={handleJoin} className="rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white">
+          <button type="button" onClick={handleJoin} className="rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white">
             Join
           </button>
         )}
@@ -108,7 +108,7 @@ export function StudyGroupDetailPage() {
             type="button"
             onClick={handlePost}
             disabled={posting || !newPost.trim()}
-            className="rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+            className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
           >
             Post
           </button>

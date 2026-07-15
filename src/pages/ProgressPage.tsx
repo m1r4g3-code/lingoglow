@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { getUserProgress, getEarnedBadges } from "../lib/storage";
 import { levelForXp } from "../lib/gamification";
 import { BADGES } from "../data/badges";
@@ -39,7 +39,7 @@ export function ProgressPage() {
         <h2 className="text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
           Badges ({earnedBadges.length}/{BADGES.length})
         </h2>
-        <Link to="/badges" className="text-sm text-sky-500 hover:underline">
+        <Link to="/badges" className="text-sm text-violet-500 hover:underline">
           View all
         </Link>
       </div>
@@ -60,16 +60,16 @@ export function ProgressPage() {
       </div>
 
       <div className="mt-8 flex flex-wrap gap-3">
-        <Link to="/missions" className="text-sm text-sky-500 hover:underline">
+        <Link to="/missions" className="text-sm text-violet-500 hover:underline">
           View missions →
         </Link>
-        <Link to="/leaderboard" className="text-sm text-sky-500 hover:underline">
+        <Link to="/leaderboard" className="text-sm text-violet-500 hover:underline">
           View leaderboard →
         </Link>
-        <Link to="/friends" className="text-sm text-sky-500 hover:underline">
+        <Link to="/friends" className="text-sm text-violet-500 hover:underline">
           Friends →
         </Link>
-        <Link to="/groups" className="text-sm text-sky-500 hover:underline">
+        <Link to="/groups" className="text-sm text-violet-500 hover:underline">
           Study groups →
         </Link>
       </div>

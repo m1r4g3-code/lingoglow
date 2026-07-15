@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import type { ConjugationEntry } from "../types";
 import { normalize } from "../lib/speech";
 
@@ -51,7 +51,7 @@ export function ConjugationDrill({ entry, glowColor }: ConjugationDrillProps) {
       <button
         type="button"
         onClick={() => setChecked(true)}
-        className="mt-4 rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white"
+        className="mt-4 rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white"
       >
         Check
       </button>

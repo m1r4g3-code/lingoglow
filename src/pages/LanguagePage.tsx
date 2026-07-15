@@ -1,24 +1,37 @@
 import { Link, Navigate, useParams } from "react-router-dom";
+import {
+  Bot,
+  BarChart3,
+  BookOpen,
+  Bookmark,
+  GraduationCap,
+  Headphones,
+  Map,
+  NotebookPen,
+  PenLine,
+  Puzzle,
+  Repeat2,
+  Tags,
+  type LucideIcon,
+} from "lucide-react";
 import { getLanguage, getLessonsByLevel, getAllVocab, LEVEL_LABELS } from "../data/languages";
 import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
 import { AI_FEATURES_ENABLED } from "../config";
 
-// Each feature keeps a fixed color across every language, so the icon grid
-// reads as distinct feature "badges" rather than one flat language-tinted block.
-const FEATURE_GLOW: Record<string, string> = {
-  "skill-tree": "rgba(45, 212, 191, 0.35)",
-  grammar: "rgba(96, 165, 250, 0.35)",
-  sentences: "rgba(192, 132, 252, 0.35)",
-  conjugation: "rgba(245, 158, 11, 0.35)",
-  dictation: "rgba(74, 222, 128, 0.35)",
-  comprehension: "rgba(244, 114, 182, 0.35)",
-  "difficult-words": "rgba(250, 204, 21, 0.35)",
-  frequency: "rgba(34, 211, 238, 0.35)",
-  "category/idiom": "rgba(251, 146, 60, 0.35)",
-  "ai-tutor": "rgba(248, 113, 113, 0.35)",
-  writing: "rgba(167, 139, 250, 0.35)",
-  certificate: "rgba(163, 230, 53, 0.35)",
+const PRACTICE_ICONS: Record<string, LucideIcon> = {
+  "skill-tree": Map,
+  grammar: BookOpen,
+  sentences: Puzzle,
+  conjugation: Repeat2,
+  dictation: PenLine,
+  comprehension: Headphones,
+  "difficult-words": Bookmark,
+  frequency: BarChart3,
+  "category/idiom": Tags,
+  "ai-tutor": Bot,
+  writing: NotebookPen,
+  certificate: GraduationCap,
 };
 
 export function LanguagePage() {
@@ -69,35 +82,36 @@ export function LanguagePage() {
       </h2>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {[
-          { to: "skill-tree", icon: "🗺️", label: "Skill Tree" },
-          { to: "grammar", icon: "📘", label: "Grammar" },
-          { to: "sentences", icon: "🧩", label: "Sentence Building" },
-          ...(language.id === "es" || language.id === "fr"
-            ? [{ to: "conjugation", icon: "🔤", label: "Conjugation Drills" }]
-            : []),
-          { to: "dictation", icon: "✍️", label: "Dictation" },
-          { to: "comprehension", icon: "📖", label: "Reading & Listening" },
-          { to: "difficult-words", icon: "★", label: "Favorites & Difficult" },
-          { to: "frequency", icon: "📊", label: "Common Words" },
-          { to: "category/idiom", icon: "🏷️", label: "Categories" },
+          { to: "skill-tree", label: "Skill Tree" },
+          { to: "grammar", label: "Grammar" },
+          { to: "sentences", label: "Sentence Building" },
+          ...(language.id === "es" || language.id === "fr" ? [{ to: "conjugation", label: "Conjugation Drills" }] : []),
+          { to: "dictation", label: "Dictation" },
+          { to: "comprehension", label: "Reading & Listening" },
+          { to: "difficult-words", label: "Favorites & Difficult" },
+          { to: "frequency", label: "Common Words" },
+          { to: "category/idiom", label: "Categories" },
           ...(AI_FEATURES_ENABLED
             ? [
-                { to: "ai-tutor", icon: "🤖", label: "AI Conversation" },
-                { to: "writing", icon: "📝", label: "AI Writing Feedback" },
+                { to: "ai-tutor", label: "AI Conversation" },
+                { to: "writing", label: "AI Writing Feedback" },
               ]
             : []),
-          { to: "certificate", icon: "🎓", label: "Certificates" },
-        ].map((item) => (
-          <Link
-            key={item.to}
-            to={`/language/${language.id}/${item.to}`}
-            className="glow-card flex flex-col items-center gap-1.5 rounded-xl border border-slate-200 bg-white p-4 text-center dark:border-slate-800 dark:bg-slate-900"
-            style={{ ["--glow-color" as string]: FEATURE_GLOW[item.to] ?? language.glowColor }}
-          >
-            <span className="text-xl">{item.icon}</span>
-            <span className="text-xs font-medium">{item.label}</span>
-          </Link>
-        ))}
+          { to: "certificate", label: "Certificates" },
+        ].map((item) => {
+          const Icon = PRACTICE_ICONS[item.to];
+          return (
+            <Link
+              key={item.to}
+              to={`/language/${language.id}/${item.to}`}
+              className="glow-card flex flex-col items-center gap-1.5 rounded-xl border border-slate-200 bg-white p-4 text-center dark:border-slate-800 dark:bg-slate-900"
+              style={{ ["--glow-color" as string]: language.glowColor }}
+            >
+              <Icon className="h-5 w-5 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
+              <span className="text-xs font-medium">{item.label}</span>
+            </Link>
+          );
+        })}
       </div>
 
       {levelGroups.length === 0 ? (

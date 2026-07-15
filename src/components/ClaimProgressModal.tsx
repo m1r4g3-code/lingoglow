@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { claimLocalProgress, hasLocalProgress } from "../lib/storage";
 import { supabase } from "../lib/supabaseClient";
@@ -46,7 +46,7 @@ export function ClaimProgressModal() {
                 type="button"
                 onClick={handleAccept}
                 disabled={claiming}
-                className="flex-1 rounded-lg bg-sky-500 px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                className="flex-1 rounded-lg bg-violet-500 px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
               >
                 {claiming ? "Syncing…" : "Yes, sync it"}
               </button>
@@ -68,7 +68,7 @@ export function ClaimProgressModal() {
             <button
               type="button"
               onClick={() => setVisible(false)}
-              className="mt-5 w-full rounded-lg bg-sky-500 px-4 py-2.5 text-sm font-semibold text-white"
+              className="mt-5 w-full rounded-lg bg-violet-500 px-4 py-2.5 text-sm font-semibold text-white"
             >
               Done
             </button>
