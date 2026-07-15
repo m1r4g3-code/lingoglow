@@ -2,6 +2,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { getLanguage, getLessonsByLevel, getAllVocab, LEVEL_LABELS } from "../data/languages";
 import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
+import { AI_FEATURES_ENABLED } from "../config";
 
 export function LanguagePage() {
   const { languageId = "" } = useParams();
@@ -62,8 +63,12 @@ export function LanguagePage() {
           { to: "difficult-words", icon: "★", label: "Favorites & Difficult" },
           { to: "frequency", icon: "📊", label: "Common Words" },
           { to: "category/idiom", icon: "🏷️", label: "Categories" },
-          { to: "ai-tutor", icon: "🤖", label: "AI Conversation" },
-          { to: "writing", icon: "📝", label: "AI Writing Feedback" },
+          ...(AI_FEATURES_ENABLED
+            ? [
+                { to: "ai-tutor", icon: "🤖", label: "AI Conversation" },
+                { to: "writing", icon: "📝", label: "AI Writing Feedback" },
+              ]
+            : []),
           { to: "certificate", icon: "🎓", label: "Certificates" },
         ].map((item) => (
           <Link

@@ -4,6 +4,7 @@ import { getLanguage } from "../data/languages";
 import { getWritingFeedback } from "../lib/ai";
 import { useAuth } from "../context/AuthContext";
 import { canUseAi, FREE_AI_DAILY_LIMIT, getAiUsageToday, incrementAiUsage } from "../lib/premium";
+import { AI_FEATURES_ENABLED } from "../config";
 
 export function WritingPage() {
   const { languageId = "" } = useParams();
@@ -17,6 +18,19 @@ export function WritingPage() {
   const [usage, setUsage] = useState(getAiUsageToday);
 
   if (!language || !profile) return <Navigate to="/" replace />;
+
+  if (!AI_FEATURES_ENABLED) {
+    return (
+      <div>
+        <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+          ← {language.name}
+        </Link>
+        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+          AI Writing Feedback is paused for now. Everything else still works!
+        </div>
+      </div>
+    );
+  }
 
   const capped = !canUseAi(profile.tier);
 
