@@ -5,6 +5,8 @@ import { LanguageCard } from "../components/LanguageCard";
 import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
 import { useAuth } from "../context/AuthContext";
+import { buttonVariants } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
 
 const FEATURES: { icon: LucideIcon; title: string; description: string; to: string; requiresAuth: boolean }[] = [
   {
@@ -48,39 +50,36 @@ export function Home() {
       {/* Hero */}
       <div className="relative overflow-hidden py-14 text-center sm:py-20">
         <div className="aurora-backdrop" aria-hidden="true" />
-        <h1 className="brand-gradient-text text-5xl font-extrabold tracking-tight sm:text-7xl">Aether</h1>
-        <p className="mx-auto mt-5 max-w-xl text-lg text-slate-600 dark:text-slate-300">
+        <h1 className="font-heading text-5xl font-extrabold tracking-tight text-foreground sm:text-7xl">Aether</h1>
+        <p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">
           Learn languages that actually stick — spaced repetition, real speech practice, and a
           curriculum built to be finished, not just started.
         </p>
         {!user && (
           <div className="mt-9 flex flex-col items-center justify-center gap-3">
-            <a
-              href="#languages"
-              className="brand-gradient-bg rounded-xl px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-violet-500/25 transition-transform hover:scale-[1.02]"
-            >
+            {/* Links styled with buttonVariants directly, not <Button render=...> —
+                Base UI's Button enforces button semantics and its own docs say not
+                to render links through it; see @base-ui/react button.md. */}
+            <a href="#languages" className={buttonVariants({ size: "lg", className: "h-auto px-8 py-3.5 text-base" })}>
               Start learning free
             </a>
-            <Link
-              to="/login"
-              className="text-sm text-slate-500 hover:text-slate-700 hover:underline dark:text-slate-400 dark:hover:text-slate-200"
-            >
+            <Link to="/login" className={buttonVariants({ variant: "link", size: "sm", className: "text-muted-foreground" })}>
               Already know what you want? Create an account
             </Link>
           </div>
         )}
 
-        <div className="mt-12 flex items-center justify-center gap-10 text-sm text-slate-500 dark:text-slate-400">
+        <div className="mt-12 flex items-center justify-center gap-10 text-sm text-muted-foreground">
           <div>
-            <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">{languages.length}</p>
+            <p className="text-2xl font-bold text-foreground">{languages.length}</p>
             <p>Languages</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">{totalLessons}</p>
+            <p className="text-2xl font-bold text-foreground">{totalLessons}</p>
             <p>Lessons</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">{totalVocab}+</p>
+            <p className="text-2xl font-bold text-foreground">{totalVocab}+</p>
             <p>Words & phrases</p>
           </div>
         </div>
@@ -89,17 +88,15 @@ export function Home() {
       {/* Features */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {FEATURES.map((f) => {
-          const cardClasses =
-            "block rounded-2xl border border-slate-200 bg-white p-5 text-left transition-all hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-violet-900";
           const lockedForGuest = f.requiresAuth && !user;
           const inner = (
-            <>
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 dark:bg-violet-500/10">
-                <f.icon className="brand-icon h-5 w-5" strokeWidth={1.75} />
+            <CardContent>
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                <f.icon className="h-5 w-5 text-primary" strokeWidth={1.75} />
               </div>
-              <h3 className="mt-3 font-semibold">{f.title}</h3>
-              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{f.description}</p>
-              <p className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-violet-600 dark:text-violet-400">
+              <h3 className="font-heading mt-3 font-semibold text-card-foreground">{f.title}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{f.description}</p>
+              <p className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary">
                 {lockedForGuest ? (
                   <>
                     <Lock className="h-3 w-3" strokeWidth={2} /> Sign in to unlock
@@ -110,15 +107,16 @@ export function Home() {
                   "Open →"
                 )}
               </p>
-            </>
+            </CardContent>
           );
+          const cardClasses = "transition-all hover:-translate-y-0.5 hover:ring-primary/40";
           return f.to.startsWith("#") ? (
-            <a key={f.title} href={f.to} className={cardClasses}>
-              {inner}
+            <a key={f.title} href={f.to} className="block">
+              <Card className={cardClasses}>{inner}</Card>
             </a>
           ) : (
-            <Link key={f.title} to={f.to} className={cardClasses}>
-              {inner}
+            <Link key={f.title} to={f.to} className="block">
+              <Card className={cardClasses}>{inner}</Card>
             </Link>
           );
         })}
@@ -126,8 +124,8 @@ export function Home() {
 
       {/* Language picker */}
       <div id="languages" className="mt-16 scroll-mt-20">
-        <h2 className="text-2xl font-bold tracking-tight">Choose your language</h2>
-        <p className="mt-1 text-slate-500 dark:text-slate-400">
+        <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground">Choose your language</h2>
+        <p className="mt-1 text-muted-foreground">
           Work through lessons, then review with spaced-repetition flashcards.
         </p>
 
