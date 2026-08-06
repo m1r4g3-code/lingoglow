@@ -15,22 +15,20 @@ export function SkillTreeNode({ lesson, languageId, glowColor, status }: SkillTr
   const content = (
     <div
       className={`glow-card flex items-center gap-3 rounded-xl border p-4 ${
-        locked
-          ? "border-slate-200 bg-slate-100 opacity-60 dark:border-slate-800 dark:bg-slate-900/50"
-          : "border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
+        locked ? "border-border bg-muted opacity-60" : "border-border bg-card"
       }`}
       style={locked ? undefined : { ["--glow-color" as string]: glowColor }}
     >
       {status === "cleared" ? (
         <CircleCheck className="h-5 w-5 shrink-0 text-emerald-500" strokeWidth={1.75} />
       ) : locked ? (
-        <Lock className="h-5 w-5 shrink-0 text-slate-400 dark:text-slate-600" strokeWidth={1.75} />
+        <Lock className="h-5 w-5 shrink-0 text-muted-foreground" strokeWidth={1.75} />
       ) : (
         <Star className="h-5 w-5 shrink-0 text-amber-400" strokeWidth={1.75} fill="currentColor" fillOpacity={0.2} />
       )}
       <div className="min-w-0">
         <p className="truncate font-medium">{lesson.title}</p>
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-xs text-muted-foreground">
           {locked ? "Complete the previous lesson to unlock" : `${lesson.vocab.length} words`}
         </p>
       </div>

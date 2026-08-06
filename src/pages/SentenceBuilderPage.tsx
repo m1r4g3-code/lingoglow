@@ -24,12 +24,12 @@ export function SentenceBuilderPage() {
 
   return (
     <div>
-      <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
         ← {language.name}
       </Link>
 
       <h1 className="glow-text mt-3 text-2xl font-bold">Sentence Building</h1>
-      <p className="mt-1 text-slate-500 dark:text-slate-400">
+      <p className="mt-1 text-muted-foreground">
         Sentence {(index % exercises.length) + 1} of {exercises.length}
       </p>
 
@@ -37,7 +37,7 @@ export function SentenceBuilderPage() {
         {exercise ? (
           <SentenceBuilder key={exercise.id} exercise={exercise} glowColor={language.glowColor} onNext={() => setIndex((i) => i + 1)} />
         ) : (
-          <p className="text-center text-slate-500 dark:text-slate-400">No exercises yet for {language.name}.</p>
+          <p className="text-center text-muted-foreground">No exercises yet for {language.name}.</p>
         )}
       </div>
     </div>

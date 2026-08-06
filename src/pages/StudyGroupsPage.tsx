@@ -43,28 +43,28 @@ export function StudyGroupsPage() {
         <button
           type="button"
           onClick={() => setShowCreate((s) => !s)}
-          className="rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white"
+          className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
           {showCreate ? "Cancel" : "Create Group"}
         </button>
       </div>
 
       {showCreate && (
-        <div className="mt-4 flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+        <div className="mt-4 flex flex-col gap-2 rounded-xl border border-border bg-card p-4">
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Group name"
-            className="glow-ring rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm outline-none dark:border-slate-700 dark:bg-slate-800"
+            className="glow-ring rounded-lg border border-border bg-secondary px-4 py-2 text-sm outline-none"
           />
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description (optional)"
             rows={2}
-            className="glow-ring rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm outline-none dark:border-slate-700 dark:bg-slate-800"
+            className="glow-ring rounded-lg border border-border bg-secondary px-4 py-2 text-sm outline-none"
           />
-          <label className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+          <label className="flex items-center gap-2 text-sm text-muted-foreground">
             <input type="checkbox" checked={isPublic} onChange={(e) => setIsPublic(e.target.checked)} />
             Public (anyone can find and join)
           </label>
@@ -72,7 +72,7 @@ export function StudyGroupsPage() {
             type="button"
             onClick={handleCreate}
             disabled={creating || !name.trim()}
-            className="mt-1 self-start rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+            className="mt-1 self-start rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50"
           >
             Create
           </button>
@@ -81,7 +81,7 @@ export function StudyGroupsPage() {
 
       {myGroups.length > 0 && (
         <div className="mt-8">
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
             My Groups
           </h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -89,11 +89,11 @@ export function StudyGroupsPage() {
               <Link
                 key={g.id}
                 to={`/groups/${g.id}`}
-                className="glow-card rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                className="glow-card rounded-xl border border-border bg-card p-4"
                 style={{ ["--glow-color" as string]: "rgba(56, 189, 248, 0.35)" }}
               >
                 <h3 className="font-semibold">{g.name}</h3>
-                {g.description && <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{g.description}</p>}
+                {g.description && <p className="mt-1 text-sm text-muted-foreground">{g.description}</p>}
               </Link>
             ))}
           </div>
@@ -101,11 +101,11 @@ export function StudyGroupsPage() {
       )}
 
       <div className="mt-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
           Discover
         </h2>
         {publicGroups.length === 0 ? (
-          <p className="text-sm text-slate-500 dark:text-slate-400">No public groups yet — be the first to create one.</p>
+          <p className="text-sm text-muted-foreground">No public groups yet — be the first to create one.</p>
         ) : (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {publicGroups
@@ -114,11 +114,11 @@ export function StudyGroupsPage() {
                 <Link
                   key={g.id}
                   to={`/groups/${g.id}`}
-                  className="glow-card rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                  className="glow-card rounded-xl border border-border bg-card p-4"
                   style={{ ["--glow-color" as string]: "rgba(56, 189, 248, 0.35)" }}
                 >
                   <h3 className="font-semibold">{g.name}</h3>
-                  {g.description && <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{g.description}</p>}
+                  {g.description && <p className="mt-1 text-sm text-muted-foreground">{g.description}</p>}
                 </Link>
               ))}
           </div>

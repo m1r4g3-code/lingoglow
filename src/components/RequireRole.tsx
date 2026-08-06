@@ -14,16 +14,16 @@ export function RequireRole({ role, children }: { role: UserRole; children: Reac
     // account page here would promise a toggle that doesn't exist.
     if (role === "admin") {
       return (
-        <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <div className="rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           Admin access is granted manually and isn't available to switch to from your account. Contact the site owner
           if you believe you should have access.
         </div>
       );
     }
     return (
-      <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+      <div className="rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
         This page is for {role} accounts. You're currently a {profile.role}.{" "}
-        <Link to="/account" className="text-violet-500 hover:underline">
+        <Link to="/account" className="text-primary hover:underline">
           Update your account →
         </Link>
       </div>

@@ -23,17 +23,17 @@ export function DictationPage() {
 
   return (
     <div>
-      <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
         ← {language.name}
       </Link>
 
       <h1 className="glow-text mt-3 text-2xl font-bold">Dictation</h1>
-      <p className="mt-1 text-slate-500 dark:text-slate-400">
+      <p className="mt-1 text-muted-foreground">
         Word {(index % deck.length) + 1} of {deck.length}
       </p>
 
       {!language.speechLang || deck.length === 0 ? (
-        <p className="mt-6 text-slate-500 dark:text-slate-400">No vocab available yet.</p>
+        <p className="mt-6 text-muted-foreground">No vocab available yet.</p>
       ) : (
         <div className="mt-8">
           <DictationExercise

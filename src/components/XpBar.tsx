@@ -13,11 +13,11 @@ export function XpBar() {
 
   return (
     <Link to="/progress" className="glow-ring flex items-center gap-2 rounded-full px-2 py-1 text-xs font-medium">
-      <span className="text-slate-500 dark:text-slate-400">Lv {level}</span>
-      <span className="h-1.5 w-16 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
-        <span className="block h-full rounded-full bg-violet-500 transition-all" style={{ width: `${xpIntoLevel}%` }} />
+      <span className="text-muted-foreground">Lv {level}</span>
+      <span className="h-1.5 w-16 overflow-hidden rounded-full bg-secondary">
+        <span className="block h-full rounded-full bg-primary transition-all" style={{ width: `${xpIntoLevel}%` }} />
       </span>
-      <span className="text-slate-500 dark:text-slate-400">{progress.xp} XP</span>
+      <span className="text-muted-foreground">{progress.xp} XP</span>
     </Link>
   );
 }

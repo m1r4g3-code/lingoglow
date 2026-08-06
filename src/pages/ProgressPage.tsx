@@ -26,32 +26,32 @@ export function ProgressPage() {
         {tiles.map((tile) => (
           <div
             key={tile.label}
-            className="glow-card rounded-xl border border-slate-200 bg-white p-4 text-center dark:border-slate-800 dark:bg-slate-900"
+            className="glow-card rounded-xl border border-border bg-card p-4 text-center"
             style={{ ["--glow-color" as string]: "rgba(56, 189, 248, 0.35)" }}
           >
             <p className="text-2xl font-bold">{tile.value}</p>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{tile.label}</p>
+            <p className="mt-1 text-xs text-muted-foreground">{tile.label}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-8 flex items-center justify-between">
-        <h2 className="text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+        <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
           Badges ({earnedBadges.length}/{BADGES.length})
         </h2>
-        <Link to="/badges" className="text-sm text-violet-500 hover:underline">
+        <Link to="/badges" className="text-sm text-primary hover:underline">
           View all
         </Link>
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {earnedBadges.length === 0 ? (
-          <p className="text-sm text-slate-500 dark:text-slate-400">No badges yet — start reviewing to earn some.</p>
+          <p className="text-sm text-muted-foreground">No badges yet — start reviewing to earn some.</p>
         ) : (
           earnedBadges.map((b) => (
             <span
               key={b.code}
               title={b.description}
-              className="rounded-full bg-slate-100 px-3 py-1.5 text-sm dark:bg-slate-800"
+              className="rounded-full bg-secondary px-3 py-1.5 text-sm"
             >
               {b.icon} {b.name}
             </span>
@@ -60,16 +60,16 @@ export function ProgressPage() {
       </div>
 
       <div className="mt-8 flex flex-wrap gap-3">
-        <Link to="/missions" className="text-sm text-violet-500 hover:underline">
+        <Link to="/missions" className="text-sm text-primary hover:underline">
           View missions →
         </Link>
-        <Link to="/leaderboard" className="text-sm text-violet-500 hover:underline">
+        <Link to="/leaderboard" className="text-sm text-primary hover:underline">
           View leaderboard →
         </Link>
-        <Link to="/friends" className="text-sm text-violet-500 hover:underline">
+        <Link to="/friends" className="text-sm text-primary hover:underline">
           Friends →
         </Link>
-        <Link to="/groups" className="text-sm text-violet-500 hover:underline">
+        <Link to="/groups" className="text-sm text-primary hover:underline">
           Study groups →
         </Link>
       </div>

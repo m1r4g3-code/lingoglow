@@ -59,23 +59,23 @@ function ParentDashboardInner() {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           placeholder="Search your child's username..."
-          className="glow-ring flex-1 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none dark:border-slate-700 dark:bg-slate-900"
+          className="glow-ring flex-1 rounded-lg border border-border bg-card px-4 py-2.5 text-sm outline-none"
         />
-        <button type="button" onClick={handleSearch} className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white">
+        <button type="button" onClick={handleSearch} className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
           Search
         </button>
       </div>
-      {message && <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{message}</p>}
+      {message && <p className="mt-2 text-sm text-muted-foreground">{message}</p>}
 
       {results.length > 0 && (
         <div className="mt-4 flex flex-col gap-2">
           {results.map((p) => (
-            <div key={p.id} className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-2.5 dark:border-slate-700 dark:bg-slate-900">
+            <div key={p.id} className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-2.5">
               <span className="text-sm font-medium">{p.username}</span>
               {knownIds.has(p.id) ? (
-                <span className="text-xs text-slate-400">Already linked</span>
+                <span className="text-xs text-muted-foreground">Already linked</span>
               ) : (
-                <button type="button" onClick={() => handleRequest(p.id)} className="text-sm text-violet-500 hover:underline">
+                <button type="button" onClick={() => handleRequest(p.id)} className="text-sm text-primary hover:underline">
                   Send link request
                 </button>
               )}
@@ -85,25 +85,25 @@ function ParentDashboardInner() {
       )}
 
       {pending.length > 0 && (
-        <p className="mt-6 text-sm text-slate-500 dark:text-slate-400">
+        <p className="mt-6 text-sm text-muted-foreground">
           Waiting on: {pending.map((p) => p.otherProfile.username).join(", ")}
         </p>
       )}
 
-      <h2 className="mt-8 mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+      <h2 className="mt-8 mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
         Linked Students ({accepted.length})
       </h2>
       {accepted.length === 0 ? (
-        <p className="text-sm text-slate-500 dark:text-slate-400">No linked students yet.</p>
+        <p className="text-sm text-muted-foreground">No linked students yet.</p>
       ) : (
-        <div className="divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 dark:divide-slate-800 dark:border-slate-800">
+        <div className="divide-y divide-border overflow-hidden rounded-2xl border border-border">
           {accepted.map((l) => {
             const stats = studentStats[l.studentId];
             return (
-              <div key={l.linkId} className="flex items-center justify-between bg-white px-5 py-3 dark:bg-slate-900">
+              <div key={l.linkId} className="flex items-center justify-between bg-card px-5 py-3">
                 <span className="font-medium">{l.otherProfile.username}</span>
                 {stats && (
-                  <div className="flex gap-4 text-sm text-slate-500 dark:text-slate-400">
+                  <div className="flex gap-4 text-sm text-muted-foreground">
                     <span>Lv {stats.level}</span>
                     <span>{stats.xp} XP</span>
                     <span className="inline-flex items-center gap-1">

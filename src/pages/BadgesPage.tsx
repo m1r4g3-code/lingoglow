@@ -7,7 +7,7 @@ export function BadgesPage() {
   return (
     <div>
       <h1 className="glow-text text-2xl font-bold">Badges</h1>
-      <p className="mt-1 text-slate-500 dark:text-slate-400">
+      <p className="mt-1 text-muted-foreground">
         {earned.size} of {BADGES.length} unlocked
       </p>
 
@@ -18,15 +18,13 @@ export function BadgesPage() {
             <div
               key={badge.code}
               className={`glow-card rounded-xl border p-4 text-center ${
-                isEarned
-                  ? "border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
-                  : "border-slate-200 bg-slate-100 opacity-50 dark:border-slate-800 dark:bg-slate-900/50"
+                isEarned ? "border-border bg-card" : "border-border bg-muted opacity-50"
               }`}
               style={isEarned ? { ["--glow-color" as string]: "rgba(250, 204, 21, 0.4)" } : undefined}
             >
               <p className="text-3xl">{isEarned ? badge.icon : "🔒"}</p>
               <p className="mt-2 text-sm font-semibold">{badge.name}</p>
-              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{badge.description}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{badge.description}</p>
             </div>
           );
         })}

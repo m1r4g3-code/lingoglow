@@ -31,7 +31,7 @@ export function DictationExercise({ card, speechLang, glowColor, onNext }: Dicta
   if (isTTSSupported() && !voiceAvailable) {
     return (
       <div className="mx-auto max-w-md text-center">
-        <p className="text-sm text-slate-500 dark:text-slate-400">
+        <p className="text-sm text-muted-foreground">
           Dictation needs spoken audio, and this language doesn't have a native voice available on your device yet.
         </p>
         <button
@@ -47,16 +47,16 @@ export function DictationExercise({ card, speechLang, glowColor, onNext }: Dicta
 
   return (
     <div className="mx-auto max-w-md text-center">
-      <p className="text-sm text-slate-500 dark:text-slate-400">Listen, then type what you hear ({card.back})</p>
+      <p className="text-sm text-muted-foreground">Listen, then type what you hear ({card.back})</p>
 
       <button
         type="button"
         onClick={handleListen}
         disabled={!isTTSSupported()}
-        className="glow-card mx-auto mt-4 flex h-20 w-20 items-center justify-center rounded-full border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
+        className="glow-card mx-auto mt-4 flex h-20 w-20 items-center justify-center rounded-full border border-border bg-card"
         style={{ ["--glow-color" as string]: glowColor }}
       >
-        <Volume2 className="h-8 w-8 text-slate-600 dark:text-slate-300" strokeWidth={1.5} />
+        <Volume2 className="h-8 w-8 text-foreground" strokeWidth={1.5} />
       </button>
 
       <input
@@ -64,12 +64,12 @@ export function DictationExercise({ card, speechLang, glowColor, onNext }: Dicta
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && checked === "idle" && handleCheck()}
         placeholder="Type what you heard..."
-        className={`glow-ring mt-5 w-full rounded-lg border px-4 py-2.5 text-center text-sm outline-none dark:bg-slate-900 ${
+        className={`glow-ring mt-5 w-full rounded-lg border bg-card px-4 py-2.5 text-center text-sm outline-none ${
           checked === "correct"
             ? "border-emerald-400 dark:border-emerald-500"
             : checked === "incorrect"
               ? "border-rose-300 dark:border-rose-500 anim-shake"
-              : "border-slate-200 dark:border-slate-700"
+              : "border-border"
         }`}
       />
 

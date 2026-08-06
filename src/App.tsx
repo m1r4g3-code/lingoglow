@@ -38,7 +38,7 @@ const AdminDashboardPage = lazy(() => import("./pages/AdminDashboardPage").then(
 const CertificatePage = lazy(() => import("./pages/CertificatePage").then((m) => ({ default: m.CertificatePage })));
 
 function PageFallback() {
-  return <div className="py-20 text-center text-sm text-slate-400 dark:text-slate-500">Loading…</div>;
+  return <div className="py-20 text-center text-sm text-muted-foreground">Loading…</div>;
 }
 
 export default function App() {

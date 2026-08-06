@@ -5,7 +5,9 @@ import { frConjugations } from "../data/conjugations/fr";
 import { ConjugationDrill } from "../components/ConjugationDrill";
 import type { ConjugationEntry } from "../types";
 
-const CONJUGATIONS_BY_LANGUAGE: Record<string, ConjugationEntry[]> = {
+// Exported so LanguagePage can decide whether to show a "Conjugation
+// Drills" tile without hardcoding a language-id list of its own.
+export const CONJUGATIONS_BY_LANGUAGE: Record<string, ConjugationEntry[]> = {
   es: esConjugations,
   fr: frConjugations,
 };
@@ -19,14 +21,14 @@ export function ConjugationPage() {
 
   return (
     <div>
-      <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
         ← {language.name}
       </Link>
 
       <h1 className="glow-text mt-3 text-2xl font-bold">Verb Conjugation Drills</h1>
 
       {!entries ? (
-        <p className="mt-4 text-slate-500 dark:text-slate-400">
+        <p className="mt-4 text-muted-foreground">
           Conjugation drills for {language.name} are coming soon — see the Grammar page for its conjugation patterns.
         </p>
       ) : (

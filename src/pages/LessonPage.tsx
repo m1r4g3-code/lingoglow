@@ -10,19 +10,19 @@ export function LessonPage() {
 
   return (
     <div>
-      <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
         ← {language.name}
       </Link>
 
       <h1 className="glow-text mt-3 text-2xl font-bold">{lesson.title}</h1>
-      <p className="mt-1 text-slate-500 dark:text-slate-400">{lesson.description}</p>
+      <p className="mt-1 text-muted-foreground">{lesson.description}</p>
       {!language.sttSupported && (
-        <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
+        <p className="mt-2 text-xs text-muted-foreground">
           Speaking practice isn't available for {language.name} in most browsers — playback still works.
         </p>
       )}
 
-      <div className="mt-6 divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 dark:divide-slate-800 dark:border-slate-800">
+      <div className="mt-6 divide-y divide-border overflow-hidden rounded-2xl border border-border">
         {lesson.vocab.map((card) => (
           <VocabRow key={card.id} card={card} speechLang={language.speechLang} sttSupported={language.sttSupported} />
         ))}

@@ -22,10 +22,10 @@ export function WritingPage() {
   if (!AI_FEATURES_ENABLED) {
     return (
       <div>
-        <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+        <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
           ← {language.name}
         </Link>
-        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <div className="mt-8 rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           AI Writing Feedback is paused for now. Everything else still works!
         </div>
       </div>
@@ -58,32 +58,32 @@ export function WritingPage() {
 
   return (
     <div>
-      <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
         ← {language.name}
       </Link>
 
       <h1 className="glow-text mt-3 text-2xl font-bold">AI Writing Feedback</h1>
-      <p className="mt-1 text-slate-500 dark:text-slate-400">
+      <p className="mt-1 text-muted-foreground">
         Write a few sentences in {language.name} and get feedback on grammar and vocabulary.
       </p>
       {profile.tier === "free" && (
-        <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
+        <p className="mt-1 text-xs text-muted-foreground">
           {usage}/{FREE_AI_DAILY_LIMIT} free messages used today (shared with AI Conversation) ·{" "}
-          <Link to="/account" className="text-violet-500 hover:underline">
+          <Link to="/account" className="text-primary hover:underline">
             Upgrade for unlimited
           </Link>
         </p>
       )}
 
       {notConfigured ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <div className="mt-8 rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           AI writing feedback isn't turned on yet — the site owner needs to add an Anthropic API key. Everything else
           still works!
         </div>
       ) : capped ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <div className="mt-8 rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           You've used today's {FREE_AI_DAILY_LIMIT} free AI messages.{" "}
-          <Link to="/account" className="text-violet-500 hover:underline">
+          <Link to="/account" className="text-primary hover:underline">
             Upgrade to Premium
           </Link>{" "}
           for unlimited access, or come back tomorrow.
@@ -95,22 +95,22 @@ export function WritingPage() {
             onChange={(e) => setText(e.target.value)}
             placeholder={`Write something in ${language.name}...`}
             rows={6}
-            className="glow-ring mt-6 w-full rounded-xl border border-slate-200 bg-white p-4 text-sm outline-none dark:border-slate-700 dark:bg-slate-900"
+            className="glow-ring mt-6 w-full rounded-xl border border-border bg-card p-4 text-sm outline-none"
           />
           <button
             type="button"
             onClick={handleSubmit}
             disabled={submitting || !text.trim()}
-            className="mt-3 rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+            className="mt-3 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
           >
             {submitting ? "Reviewing…" : "Get feedback"}
           </button>
 
-          {error && <p className="mt-3 text-sm text-rose-500">{error}</p>}
+          {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
 
           {feedback && (
             <div
-              className="glow-card mt-5 rounded-xl border border-slate-200 bg-white p-5 text-sm whitespace-pre-wrap dark:border-slate-800 dark:bg-slate-900"
+              className="glow-card mt-5 rounded-xl border border-border bg-card p-5 text-sm whitespace-pre-wrap"
               style={{ ["--glow-color" as string]: language.glowColor }}
             >
               {feedback}

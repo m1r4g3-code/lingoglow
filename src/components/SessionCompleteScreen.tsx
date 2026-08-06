@@ -46,16 +46,14 @@ export function SessionCompleteScreen({
 
       <div
         className={`glow-card rounded-2xl border p-8 ${
-          isPerfect
-            ? "border-amber-300 dark:border-amber-400/60"
-            : "border-slate-200 dark:border-slate-800"
-        } bg-white dark:bg-slate-900`}
+          isPerfect ? "border-amber-300 dark:border-amber-400/60" : "border-border"
+        } bg-card`}
         style={{ ["--glow-color" as string]: isPerfect ? "rgba(251, 191, 36, 0.45)" : glowColor }}
       >
         {isPerfect && (
           <p className="anim-pop mb-1 text-xs font-bold tracking-wide text-amber-500 uppercase">Perfect!</p>
         )}
-        <p className="text-sm text-slate-500 dark:text-slate-400">Session complete</p>
+        <p className="text-sm text-muted-foreground">Session complete</p>
         <p className="brand-gradient-text mt-1 text-5xl font-extrabold tabular-nums">+{xpDisplay} XP</p>
 
         {isSignedIn && streakCurrent > 0 && (
@@ -66,17 +64,17 @@ export function SessionCompleteScreen({
         )}
 
         <div className="mt-6 grid grid-cols-3 gap-3">
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
+          <div className="rounded-xl border border-border bg-muted p-3">
             <p className="text-lg font-bold">{wordsReviewed}</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Words</p>
+            <p className="text-xs text-muted-foreground">Words</p>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
+          <div className="rounded-xl border border-border bg-muted p-3">
             <p className="text-lg font-bold">{accuracyPct}%</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Accuracy</p>
+            <p className="text-xs text-muted-foreground">Accuracy</p>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
+          <div className="rounded-xl border border-border bg-muted p-3">
             <p className="text-lg font-bold">{formatElapsed(elapsedSeconds)}</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Time</p>
+            <p className="text-xs text-muted-foreground">Time</p>
           </div>
         </div>
       </div>
@@ -90,7 +88,7 @@ export function SessionCompleteScreen({
         </Link>
         <Link
           to={`/language/${languageId}`}
-          className="text-sm text-slate-500 hover:underline dark:text-slate-400"
+          className="text-sm text-muted-foreground hover:underline"
         >
           Back to {languageName}
         </Link>

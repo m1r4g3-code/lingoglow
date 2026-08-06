@@ -62,7 +62,7 @@ export function LeaderboardPage() {
             type="button"
             onClick={() => setScope(s)}
             className={`rounded-full px-4 py-1.5 text-sm font-medium capitalize ${
-              scope === s ? "bg-violet-500 text-white" : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+              scope === s ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
             }`}
           >
             {s}
@@ -70,15 +70,15 @@ export function LeaderboardPage() {
         ))}
       </div>
 
-      <div className="mt-6 divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 dark:divide-slate-800 dark:border-slate-800">
+      <div className="mt-6 divide-y divide-border overflow-hidden rounded-2xl border border-border">
         {loading ? (
-          <p className="p-6 text-center text-sm text-slate-500 dark:text-slate-400">Loading…</p>
+          <p className="p-6 text-center text-sm text-muted-foreground">Loading…</p>
         ) : entries.length === 0 ? (
-          <p className="p-6 text-center text-sm text-slate-500 dark:text-slate-400">
+          <p className="p-6 text-center text-sm text-muted-foreground">
             {scope === "friends" ? (
               <>
                 Add friends to see them here.{" "}
-                <Link to="/friends" className="text-violet-500 hover:underline">
+                <Link to="/friends" className="text-primary hover:underline">
                   Find friends →
                 </Link>
               </>
@@ -91,17 +91,17 @@ export function LeaderboardPage() {
             <div
               key={entry.userId}
               className={`flex items-center justify-between px-5 py-3 ${
-                entry.userId === user?.id ? "bg-violet-50 dark:bg-violet-500/10" : "bg-white dark:bg-slate-900"
+                entry.userId === user?.id ? "bg-primary/10" : "bg-card"
               }`}
             >
               <div className="flex items-center gap-3">
-                <span className="w-6 text-sm font-semibold text-slate-400">{i + 1}</span>
+                <span className="w-6 text-sm font-semibold text-muted-foreground">{i + 1}</span>
                 <span className="font-medium">{entry.username}</span>
-                {entry.userId === user?.id && <span className="text-xs text-violet-500">(you)</span>}
+                {entry.userId === user?.id && <span className="text-xs text-primary">(you)</span>}
               </div>
-              <div className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <span>Lv {entry.level}</span>
-                <span className="font-semibold text-slate-700 dark:text-slate-200">{entry.xp} XP</span>
+                <span className="font-semibold text-foreground">{entry.xp} XP</span>
               </div>
             </div>
           ))

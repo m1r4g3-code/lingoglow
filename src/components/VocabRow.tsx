@@ -41,7 +41,7 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
   };
 
   return (
-    <div className="flex items-center justify-between gap-3 bg-white px-5 py-3 dark:bg-slate-900">
+    <div className="flex items-center justify-between gap-3 bg-card px-5 py-3">
       <div className="min-w-0">
         <div className="flex items-center gap-2">
           <button
@@ -49,7 +49,7 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
             onClick={handleToggleFavorite}
             aria-label={isFavorite ? `Unfavorite ${card.front}` : `Favorite ${card.front}`}
             className={`glow-ring rounded-full p-1 ${
-              isFavorite ? "text-amber-400" : "text-slate-300 hover:text-amber-400 dark:text-slate-600"
+              isFavorite ? "text-amber-400" : "text-muted-foreground/60 hover:text-amber-400"
             }`}
           >
             <Star className="h-4 w-4" strokeWidth={1.75} fill={isFavorite ? "currentColor" : "none"} />
@@ -60,7 +60,7 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
               type="button"
               onClick={handleListen}
               aria-label={`Listen to ${card.front}`}
-              className="glow-ring rounded-full p-1 text-slate-400 hover:text-violet-500 dark:text-slate-500 dark:hover:text-violet-300"
+              className="glow-ring rounded-full p-1 text-muted-foreground hover:text-primary"
             >
               <Volume2 className="h-4 w-4" strokeWidth={1.75} />
             </button>
@@ -70,7 +70,7 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
               type="button"
               onClick={handlePractice}
               aria-label={`Practice speaking ${card.front}`}
-              className={`glow-ring rounded-full p-1 text-slate-400 hover:text-emerald-500 dark:text-slate-500 dark:hover:text-emerald-300 ${
+              className={`glow-ring rounded-full p-1 text-muted-foreground hover:text-emerald-500 ${
                 practiceState === "listening" ? "text-emerald-500 dark:text-emerald-300" : ""
               }`}
             >
@@ -91,9 +91,9 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
             </span>
           )}
         </div>
-        {card.notes && <p className="text-xs text-slate-400 dark:text-slate-500">{card.notes}</p>}
+        {card.notes && <p className="text-xs text-muted-foreground">{card.notes}</p>}
       </div>
-      <span className="shrink-0 text-slate-500 dark:text-slate-400">{card.back}</span>
+      <span className="shrink-0 text-muted-foreground">{card.back}</span>
     </div>
   );
 }

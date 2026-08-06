@@ -32,7 +32,7 @@ export function AuthPage() {
     return (
       <div className="mx-auto max-w-sm text-center">
         <h1 className="glow-text text-2xl font-bold">Check your email</h1>
-        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+        <p className="mt-2 text-sm text-muted-foreground">
           We sent a confirmation link to <span className="font-medium">{email}</span>. Click it, then come back and
           log in.
         </p>
@@ -42,7 +42,7 @@ export function AuthPage() {
             setAwaitingConfirmation(false);
             setMode("signin");
           }}
-          className="mt-5 text-sm text-slate-500 hover:underline dark:text-slate-400"
+          className="mt-5 text-sm text-muted-foreground hover:underline"
         >
           Back to log in
         </button>
@@ -82,7 +82,7 @@ export function AuthPage() {
   return (
     <div className="mx-auto max-w-sm">
       <h1 className="glow-text text-2xl font-bold">{mode === "signin" ? "Log in" : "Sign up"}</h1>
-      <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+      <p className="mt-1 text-sm text-muted-foreground">
         {mode === "signin"
           ? (reason ?? "Sync your progress across devices.")
           : "Create an account to save your progress."}
@@ -95,7 +95,7 @@ export function AuthPage() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="glow-ring rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none dark:border-slate-700 dark:bg-slate-900"
+          className="glow-ring rounded-lg border border-border bg-card px-4 py-2.5 text-sm outline-none"
         />
         <input
           type="password"
@@ -104,7 +104,7 @@ export function AuthPage() {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="glow-ring rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none dark:border-slate-700 dark:bg-slate-900"
+          className="glow-ring rounded-lg border border-border bg-card px-4 py-2.5 text-sm outline-none"
         />
         {error && <p className="text-sm text-rose-500">{error}</p>}
         <button
@@ -119,7 +119,7 @@ export function AuthPage() {
       <button
         type="button"
         onClick={() => setMode((m) => (m === "signin" ? "signup" : "signin"))}
-        className="mt-4 text-sm text-slate-500 hover:underline dark:text-slate-400"
+        className="mt-4 text-sm text-muted-foreground hover:underline"
       >
         {mode === "signin" ? "Need an account? Sign up" : "Already have an account? Log in"}
       </button>

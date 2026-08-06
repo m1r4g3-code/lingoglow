@@ -47,7 +47,7 @@ export function Flashcard({ card, glowColor, speechLang, onGrade }: FlashcardPro
   return (
     <div className="mx-auto max-w-md">
       <div
-        className={`glow-card relative flex h-56 w-full flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 text-center dark:border-slate-800 dark:bg-slate-900 ${
+        className={`glow-card relative flex h-56 w-full flex-col items-center justify-center rounded-2xl border border-border bg-card px-6 text-center ${
           feedback ? FLASH_CLASSES[feedback] : ""
         }`}
         style={{ ["--glow-color" as string]: glowColor }}
@@ -60,14 +60,14 @@ export function Flashcard({ card, glowColor, speechLang, onGrade }: FlashcardPro
               speak(card.front, speechLang);
             }}
             aria-label={`Listen to ${card.front}`}
-            className="glow-ring absolute top-3 right-3 rounded-full p-1.5 text-slate-400 hover:text-violet-500 dark:text-slate-500 dark:hover:text-violet-300"
+            className="glow-ring absolute top-3 right-3 rounded-full p-1.5 text-muted-foreground hover:text-primary"
           >
             <Volume2 className="h-4 w-4" strokeWidth={1.75} />
           </button>
         )}
         {isTTSSupported() && !voiceAvailable && (
           <span
-            className="absolute top-3 right-3 text-slate-300 dark:text-slate-600"
+            className="absolute top-3 right-3 text-muted-foreground/60"
             title="Native audio not available for this language on your device"
           >
             <VolumeX className="h-4 w-4" strokeWidth={1.75} />
@@ -80,9 +80,9 @@ export function Flashcard({ card, glowColor, speechLang, onGrade }: FlashcardPro
         >
           <span className="text-2xl font-semibold">{revealed ? card.back : card.front}</span>
           {card.notes && revealed && (
-            <span className="mt-2 text-sm text-slate-500 dark:text-slate-400">{card.notes}</span>
+            <span className="mt-2 text-sm text-muted-foreground">{card.notes}</span>
           )}
-          {!revealed && <span className="mt-4 text-xs text-slate-400 dark:text-slate-500">Tap to reveal</span>}
+          {!revealed && <span className="mt-4 text-xs text-muted-foreground">Tap to reveal</span>}
         </button>
       </div>
 

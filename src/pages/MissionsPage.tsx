@@ -6,7 +6,7 @@ export function MissionsPage() {
   return (
     <div>
       <h1 className="glow-text text-2xl font-bold">Missions</h1>
-      <p className="mt-1 text-slate-500 dark:text-slate-400">Complete missions to earn bonus XP and coins.</p>
+      <p className="mt-1 text-muted-foreground">Complete missions to earn bonus XP and coins.</p>
 
       <div className="mt-6 flex flex-col gap-3">
         {MISSIONS.map((mission) => {
@@ -19,7 +19,7 @@ export function MissionsPage() {
           return (
             <div
               key={mission.code}
-              className="glow-card rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
+              className="glow-card rounded-xl border border-border bg-card p-5"
               style={{ ["--glow-color" as string]: completed ? "rgba(52, 211, 153, 0.4)" : "rgba(56, 189, 248, 0.35)" }}
             >
               <div className="flex items-center justify-between">
@@ -27,18 +27,18 @@ export function MissionsPage() {
                   {completed ? "✅ " : ""}
                   {mission.title}
                 </h3>
-                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500 uppercase dark:bg-slate-800 dark:text-slate-400">
+                <span className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground uppercase">
                   {mission.type}
                 </span>
               </div>
-              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{mission.description}</p>
-              <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+              <p className="mt-1 text-sm text-muted-foreground">{mission.description}</p>
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-secondary">
                 <div
-                  className={`h-full rounded-full ${completed ? "bg-emerald-500" : "bg-violet-500"}`}
+                  className={`h-full rounded-full ${completed ? "bg-emerald-500" : "bg-primary"}`}
                   style={{ width: `${pct}%` }}
                 />
               </div>
-              <p className="mt-1.5 text-xs text-slate-400 dark:text-slate-500">
+              <p className="mt-1.5 text-xs text-muted-foreground">
                 {Math.min(progress, mission.targetCount)} / {mission.targetCount} · +{mission.xpReward} XP, +
                 {mission.coinReward} coins
               </p>

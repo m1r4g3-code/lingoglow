@@ -24,7 +24,7 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
 
   return (
     <div
-      className="glow-card rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900"
+      className="glow-card rounded-2xl border border-border bg-card p-6"
       style={{ ["--glow-color" as string]: glowColor }}
     >
       <div className="flex items-center gap-2">
@@ -34,21 +34,21 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
             type="button"
             onClick={() => speak(passage.text, speechLang)}
             aria-label="Listen to passage"
-            className="glow-ring rounded-full p-1 text-slate-400 hover:text-violet-500 dark:text-slate-500 dark:hover:text-violet-300"
+            className="glow-ring rounded-full p-1 text-muted-foreground hover:text-primary"
           >
             <Volume2 className="h-4 w-4" strokeWidth={1.75} />
           </button>
         )}
         {isTTSSupported() && !voiceAvailable && (
           <span
-            className="inline-flex items-center gap-1 text-xs text-slate-400 dark:text-slate-500"
+            className="inline-flex items-center gap-1 text-xs text-muted-foreground"
             title="Native audio not available for this language on your device"
           >
             <VolumeX className="h-3.5 w-3.5" strokeWidth={1.75} /> audio unavailable
           </span>
         )}
       </div>
-      <p className="mt-3 leading-relaxed text-slate-700 dark:text-slate-300">{passage.text}</p>
+      <p className="mt-3 leading-relaxed text-foreground">{passage.text}</p>
 
       <div className="mt-5 flex flex-col gap-4">
         {passage.questions.map((q, qi) => (
@@ -70,8 +70,8 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
                         : isWrong
                           ? "anim-shake border-rose-300 bg-rose-50 dark:border-rose-500 dark:bg-rose-500/10"
                           : selected
-                            ? "border-violet-400 bg-violet-50 dark:border-violet-500 dark:bg-violet-500/10"
-                            : "border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800"
+                            ? "border-primary bg-primary/10"
+                            : "border-border bg-card"
                     }`}
                   >
                     {choice}
@@ -92,7 +92,7 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
         Check answers
       </button>
       {checked && (
-        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+        <p className="mt-2 text-sm text-muted-foreground">
           {score} / {passage.questions.length} correct
         </p>
       )}

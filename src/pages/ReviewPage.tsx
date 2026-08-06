@@ -61,7 +61,7 @@ export function ReviewPage() {
 
   return (
     <div>
-      <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
         ← {language.name}
       </Link>
 
@@ -70,15 +70,15 @@ export function ReviewPage() {
       <div className="mt-8">
         {currentCard ? (
           <>
-            <div className="mx-auto mb-2 flex max-w-md items-center justify-between text-xs text-slate-400 dark:text-slate-500">
+            <div className="mx-auto mb-2 flex max-w-md items-center justify-between text-xs text-muted-foreground">
               <span>
                 Card {reviewedCount + 1} of {sessionTotal}
               </span>
               <span>{queue.length} left</span>
             </div>
-            <div className="mx-auto mb-4 h-1.5 max-w-md overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+            <div className="mx-auto mb-4 h-1.5 max-w-md overflow-hidden rounded-full bg-secondary">
               <div
-                className="h-full rounded-full bg-violet-500 transition-all duration-300 ease-out"
+                className="h-full rounded-full bg-primary transition-all duration-300 ease-out"
                 style={{ width: `${(reviewedCount / sessionTotal) * 100}%` }}
               />
             </div>
@@ -104,9 +104,9 @@ export function ReviewPage() {
             isSignedIn={!!user}
           />
         ) : (
-          <div className="rounded-2xl border border-dashed border-slate-300 p-10 text-center dark:border-slate-700">
+          <div className="rounded-2xl border border-dashed border-border p-10 text-center">
             <p className="text-lg font-semibold">Nothing due for review yet</p>
-            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+            <p className="mt-2 text-sm text-muted-foreground">
               Add vocab to lessons in src/data/lessons/{language.id}.ts, then come back here.
             </p>
           </div>

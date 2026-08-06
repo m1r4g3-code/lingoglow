@@ -20,7 +20,7 @@ export function GrammarPage() {
 
   return (
     <div>
-      <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
         ← {language.name}
       </Link>
 
@@ -28,21 +28,21 @@ export function GrammarPage() {
 
       {sheets.map((sheet) => (
         <div key={sheet.id} className="mt-8">
-          <h2 className="text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+          <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
             {LEVEL_LABELS[sheet.level]} · {sheet.title}
           </h2>
           <div className="mt-3 flex flex-col gap-3">
             {sheet.sections.map((section) => (
               <div
                 key={section.heading}
-                className="glow-card rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
+                className="glow-card rounded-xl border border-border bg-card p-5"
                 style={{ ["--glow-color" as string]: language.glowColor }}
               >
                 <h3 className="font-semibold">{section.heading}</h3>
-                <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{section.body}</p>
+                <p className="mt-1 text-sm text-foreground">{section.body}</p>
                 <ul className="mt-2 space-y-1">
                   {section.examples.map((ex) => (
-                    <li key={ex} className="text-sm text-slate-500 dark:text-slate-400">
+                    <li key={ex} className="text-sm text-muted-foreground">
                       • {ex}
                     </li>
                   ))}

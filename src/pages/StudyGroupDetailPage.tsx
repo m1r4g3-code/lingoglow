@@ -67,31 +67,31 @@ export function StudyGroupDetailPage() {
 
   return (
     <div>
-      <Link to="/groups" className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to="/groups" className="text-sm text-muted-foreground hover:underline">
         ← Study Groups
       </Link>
 
       <div className="mt-3 flex items-center justify-between">
         <div>
           <h1 className="glow-text text-2xl font-bold">{group.name}</h1>
-          {group.description && <p className="mt-1 text-slate-500 dark:text-slate-400">{group.description}</p>}
+          {group.description && <p className="mt-1 text-muted-foreground">{group.description}</p>}
         </div>
         {isMember ? (
           <button
             type="button"
             onClick={handleLeave}
-            className="rounded-lg border border-slate-200 px-4 py-2 text-sm dark:border-slate-700"
+            className="rounded-lg border border-border px-4 py-2 text-sm"
           >
             Leave
           </button>
         ) : (
-          <button type="button" onClick={handleJoin} className="rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white">
+          <button type="button" onClick={handleJoin} className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
             Join
           </button>
         )}
       </div>
 
-      <p className="mt-2 text-sm text-slate-400 dark:text-slate-500">
+      <p className="mt-2 text-sm text-muted-foreground">
         {members.length} member{members.length === 1 ? "" : "s"}: {members.map((m) => m.username).join(", ")}
       </p>
 
@@ -102,13 +102,13 @@ export function StudyGroupDetailPage() {
             onChange={(e) => setNewPost(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handlePost()}
             placeholder="Share something with the group..."
-            className="glow-ring flex-1 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none dark:border-slate-700 dark:bg-slate-900"
+            className="glow-ring flex-1 rounded-lg border border-border bg-card px-4 py-2.5 text-sm outline-none"
           />
           <button
             type="button"
             onClick={handlePost}
             disabled={posting || !newPost.trim()}
-            className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
           >
             Post
           </button>
@@ -117,15 +117,15 @@ export function StudyGroupDetailPage() {
 
       <div className="mt-6 flex flex-col gap-3">
         {posts.length === 0 ? (
-          <p className="text-sm text-slate-500 dark:text-slate-400">No posts yet.</p>
+          <p className="text-sm text-muted-foreground">No posts yet.</p>
         ) : (
           posts.map((p) => (
-            <div key={p.id} className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <div key={p.id} className="rounded-xl border border-border bg-card p-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold">{p.authorUsername}</span>
-                <span className="text-xs text-slate-400">{new Date(p.createdAt).toLocaleString()}</span>
+                <span className="text-xs text-muted-foreground">{new Date(p.createdAt).toLocaleString()}</span>
               </div>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{p.body}</p>
+              <p className="mt-1 text-sm text-foreground">{p.body}</p>
             </div>
           ))
         )}

@@ -21,7 +21,7 @@ export function CategoryPage() {
 
   return (
     <div>
-      <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
         ← {language.name}
       </Link>
 
@@ -33,9 +33,7 @@ export function CategoryPage() {
             key={c.value}
             to={`/language/${languageId}/category/${c.value}`}
             className={`rounded-full px-4 py-1.5 text-sm font-medium ${
-              category === c.value
-                ? "bg-violet-500 text-white"
-                : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+              category === c.value ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
             }`}
           >
             {c.label}
@@ -44,11 +42,11 @@ export function CategoryPage() {
       </div>
 
       {vocab.length === 0 ? (
-        <div className="mt-6 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <div className="mt-6 rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           No words tagged in this category yet.
         </div>
       ) : (
-        <div className="mt-6 divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 dark:divide-slate-800 dark:border-slate-800">
+        <div className="mt-6 divide-y divide-border overflow-hidden rounded-2xl border border-border">
           {vocab.map((card) => (
             <VocabRow key={card.id} card={card} speechLang={language.speechLang} sttSupported={language.sttSupported} />
           ))}

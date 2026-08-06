@@ -22,10 +22,10 @@ export function AiTutorPage() {
   if (!AI_FEATURES_ENABLED) {
     return (
       <div>
-        <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+        <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
           ← {language.name}
         </Link>
-        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <div className="mt-8 rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           AI Conversation is paused for now. Everything else still works!
         </div>
       </div>
@@ -62,71 +62,69 @@ export function AiTutorPage() {
 
   return (
     <div>
-      <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
         ← {language.name}
       </Link>
 
       <h1 className="glow-text mt-3 text-2xl font-bold">AI Conversation Partner</h1>
-      <p className="mt-1 text-slate-500 dark:text-slate-400">
+      <p className="mt-1 text-muted-foreground">
         Practice a casual chat in {language.name}. Mistakes get gently corrected.
       </p>
       {profile.tier === "free" && (
-        <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
+        <p className="mt-1 text-xs text-muted-foreground">
           {usage}/{FREE_AI_DAILY_LIMIT} free messages used today ·{" "}
-          <Link to="/account" className="text-violet-500 hover:underline">
+          <Link to="/account" className="text-primary hover:underline">
             Upgrade for unlimited
           </Link>
         </p>
       )}
 
       {notConfigured ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <div className="mt-8 rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           The AI tutor isn't turned on yet — the site owner needs to add an Anthropic API key. Everything else still
           works!
         </div>
       ) : capped ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <div className="mt-8 rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           You've used today's {FREE_AI_DAILY_LIMIT} free AI messages.{" "}
-          <Link to="/account" className="text-violet-500 hover:underline">
+          <Link to="/account" className="text-primary hover:underline">
             Upgrade to Premium
           </Link>{" "}
           for unlimited access, or come back tomorrow.
         </div>
       ) : (
         <>
-          <div className="mt-6 flex min-h-[300px] flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+          <div className="mt-6 flex min-h-[300px] flex-col gap-3 rounded-2xl border border-border bg-card p-5">
             {messages.length === 0 && (
-              <p className="text-sm text-slate-400 dark:text-slate-500">Say hello to get started…</p>
+              <p className="text-sm text-muted-foreground">Say hello to get started…</p>
             )}
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
                   className={`max-w-[80%] rounded-xl px-4 py-2 text-sm ${
-                    m.role === "user"
-                      ? "bg-violet-500 text-white"
-                      : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                    m.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
                   }`}
                 >
                   {m.content}
                 </div>
               </div>
             ))}
-            {sending && <p className="text-sm text-slate-400 dark:text-slate-500">Thinking…</p>}
+            {sending && <p className="text-sm text-muted-foreground">Thinking…</p>}
           </div>
 
-          {error && <p className="mt-2 text-sm text-rose-500">{error}</p>}
+          {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
 
           <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={`Type in ${language.name}...`}
-              className="glow-ring flex-1 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none dark:border-slate-700 dark:bg-slate-900"
+              className="glow-ring flex-1 rounded-lg border border-border bg-card px-4 py-2.5 text-sm outline-none"
             />
             <button
               type="submit"
               disabled={sending || !input.trim()}
-              className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+              className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
             >
               Send
             </button>

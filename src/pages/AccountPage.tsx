@@ -49,10 +49,10 @@ export function AccountPage() {
   return (
     <div className="mx-auto max-w-xl">
       <h1 className="glow-text text-2xl font-bold">Account</h1>
-      <p className="mt-1 text-slate-500 dark:text-slate-400">{profile.username}</p>
+      <p className="mt-1 text-muted-foreground">{profile.username}</p>
 
       <div className="mt-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
           Account type
         </h2>
         <div className="flex gap-2">
@@ -62,9 +62,7 @@ export function AccountPage() {
               type="button"
               onClick={() => handleRoleChange(r.value)}
               className={`rounded-full px-4 py-1.5 text-sm font-medium ${
-                profile.role === r.value
-                  ? "bg-violet-500 text-white"
-                  : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                profile.role === r.value ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
               }`}
             >
               {r.label}
@@ -72,34 +70,34 @@ export function AccountPage() {
           ))}
         </div>
         {profile.role === "teacher" && (
-          <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
-            Head to the <a href="/teacher" className="text-violet-500 hover:underline">Teacher dashboard</a> to create a class.
+          <p className="mt-2 text-xs text-muted-foreground">
+            Head to the <a href="/teacher" className="text-primary hover:underline">Teacher dashboard</a> to create a class.
           </p>
         )}
         {profile.role === "parent" && (
-          <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
-            Head to the <a href="/parent" className="text-violet-500 hover:underline">Parent dashboard</a> to link a student.
+          <p className="mt-2 text-xs text-muted-foreground">
+            Head to the <a href="/parent" className="text-primary hover:underline">Parent dashboard</a> to link a student.
           </p>
         )}
       </div>
 
       {pendingLinks.length > 0 && (
         <div className="mt-8">
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
             Parent link requests
           </h2>
           <div className="flex flex-col gap-2">
             {pendingLinks.map((link) => (
               <div
                 key={link.linkId}
-                className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-2.5 dark:border-slate-700 dark:bg-slate-900"
+                className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-2.5"
               >
                 <span className="text-sm">{link.otherProfile.username} wants to link as your parent</span>
                 <div className="flex gap-3">
                   <button type="button" onClick={() => handleRespondLink(link, true)} className="text-sm text-emerald-500 hover:underline">
                     Accept
                   </button>
-                  <button type="button" onClick={() => handleRespondLink(link, false)} className="text-sm text-slate-400 hover:underline">
+                  <button type="button" onClick={() => handleRespondLink(link, false)} className="text-sm text-muted-foreground hover:underline">
                     Decline
                   </button>
                 </div>
@@ -110,7 +108,7 @@ export function AccountPage() {
       )}
 
       <div className="mt-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
           Join a class
         </h2>
         <div className="flex gap-2">
@@ -118,30 +116,30 @@ export function AccountPage() {
             value={classCode}
             onChange={(e) => setClassCode(e.target.value.toUpperCase())}
             placeholder="Class code"
-            className="glow-ring flex-1 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none dark:border-slate-700 dark:bg-slate-900"
+            className="glow-ring flex-1 rounded-lg border border-border bg-card px-4 py-2.5 text-sm outline-none"
           />
-          <button type="button" onClick={handleJoinClass} className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white">
+          <button type="button" onClick={handleJoinClass} className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
             Join
           </button>
         </div>
-        {joinMessage && <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{joinMessage}</p>}
+        {joinMessage && <p className="mt-2 text-sm text-muted-foreground">{joinMessage}</p>}
       </div>
 
       <div className="mt-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
           Premium
         </h2>
-        <div className="glow-card rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+        <div className="glow-card rounded-xl border border-border bg-card p-4">
           <p className="text-sm">
             You're on the <span className="font-semibold">{profile.tier === "premium" ? "Premium" : "Free"}</span> plan.
           </p>
-          <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
+          <p className="mt-1 text-xs text-muted-foreground">
             Demo toggle only — no real payment is processed. Premium removes the daily cap on AI tutor/writing messages.
           </p>
           <button
             type="button"
             onClick={handleTogglePremium}
-            className="mt-3 rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-white"
+            className="mt-3 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
           >
             {profile.tier === "premium" ? "Downgrade to Free" : "Upgrade to Premium (demo)"}
           </button>

@@ -21,8 +21,8 @@ export function Layout() {
   }, [pushError]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
-      <header className="sticky top-0 z-20 border-b border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+      <header className="sticky top-0 z-20 border-b border-border bg-background">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-1.5 text-xl font-bold tracking-tight">
             <Sparkles className="brand-icon h-5 w-5" strokeWidth={1.75} />
@@ -40,24 +40,24 @@ export function Layout() {
                 {profile && profile.role !== "student" && (
                   <Link
                     to={profile.role === "teacher" ? "/teacher" : profile.role === "parent" ? "/parent" : "/admin"}
-                    className="hidden text-slate-500 hover:underline sm:inline dark:text-slate-400"
+                    className="hidden text-muted-foreground hover:underline sm:inline"
                   >
                     Dashboard
                   </Link>
                 )}
-                <Link to="/account" className="hidden text-slate-500 hover:underline sm:inline dark:text-slate-400">
+                <Link to="/account" className="hidden text-muted-foreground hover:underline sm:inline">
                   {profile?.username ?? user.email}
                 </Link>
                 <button
                   type="button"
                   onClick={() => void signOut()}
-                  className="text-slate-500 hover:underline dark:text-slate-400"
+                  className="text-muted-foreground hover:underline"
                 >
                   Log out
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+              <Link to="/login" className="text-sm text-muted-foreground hover:underline">
                 Log in
               </Link>
             )}

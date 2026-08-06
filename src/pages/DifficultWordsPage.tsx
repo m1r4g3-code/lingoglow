@@ -26,7 +26,7 @@ export function DifficultWordsPage() {
 
   return (
     <div>
-      <Link to={`/language/${language.id}`} className="text-sm text-slate-500 hover:underline dark:text-slate-400">
+      <Link to={`/language/${language.id}`} className="text-sm text-muted-foreground hover:underline">
         ← {language.name}
       </Link>
 
@@ -37,9 +37,7 @@ export function DifficultWordsPage() {
           type="button"
           onClick={() => setTab("favorites")}
           className={`rounded-full px-4 py-1.5 text-sm font-medium ${
-            tab === "favorites"
-              ? "bg-violet-500 text-white"
-              : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+            tab === "favorites" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
           }`}
         >
           <span className="inline-flex items-center gap-1">
@@ -51,9 +49,7 @@ export function DifficultWordsPage() {
           type="button"
           onClick={() => setTab("difficult")}
           className={`rounded-full px-4 py-1.5 text-sm font-medium ${
-            tab === "difficult"
-              ? "bg-violet-500 text-white"
-              : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+            tab === "difficult" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
           }`}
         >
           Struggling with ({difficult.length})
@@ -61,13 +57,13 @@ export function DifficultWordsPage() {
       </div>
 
       {shown.length === 0 ? (
-        <div className="mt-6 rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <div className="mt-6 rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           {tab === "favorites"
             ? "Tap the star next to any word in a lesson to save it here."
             : "Nothing here yet — words you keep missing during review will show up here."}
         </div>
       ) : (
-        <div className="mt-6 divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 dark:divide-slate-800 dark:border-slate-800">
+        <div className="mt-6 divide-y divide-border overflow-hidden rounded-2xl border border-border">
           {shown.map((card) => (
             <VocabRow key={card.id} card={card} speechLang={language.speechLang} sttSupported={language.sttSupported} />
           ))}

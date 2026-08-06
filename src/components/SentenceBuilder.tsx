@@ -48,20 +48,20 @@ export function SentenceBuilder({ exercise, glowColor, onNext }: SentenceBuilder
 
   return (
     <div className="mx-auto max-w-lg">
-      <p className="text-center text-sm text-slate-500 dark:text-slate-400">Build the sentence:</p>
+      <p className="text-center text-sm text-muted-foreground">Build the sentence:</p>
       <p className="mt-1 text-center text-lg font-semibold">{exercise.prompt}</p>
 
       <div
-        className="glow-card mt-5 flex min-h-16 flex-wrap gap-2 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900"
+        className="glow-card mt-5 flex min-h-16 flex-wrap gap-2 rounded-xl border border-border bg-card p-3"
         style={{ ["--glow-color" as string]: glowColor }}
       >
-        {picked.length === 0 && <span className="text-sm text-slate-400 dark:text-slate-500">Tap words below…</span>}
+        {picked.length === 0 && <span className="text-sm text-muted-foreground">Tap words below…</span>}
         {picked.map((word, i) => (
           <button
             key={`${word}-${i}`}
             type="button"
             onClick={() => removePicked(i)}
-            className="rounded-lg bg-violet-100 px-3 py-1.5 text-sm font-medium text-violet-700 dark:bg-violet-500/15 dark:text-violet-300"
+            className="rounded-lg bg-primary/10 px-3 py-1.5 text-sm font-medium text-primary"
           >
             {word}
           </button>
@@ -74,7 +74,7 @@ export function SentenceBuilder({ exercise, glowColor, onNext }: SentenceBuilder
             key={`${word}-${i}`}
             type="button"
             onClick={() => pick(word, i)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium dark:border-slate-700 dark:bg-slate-800"
+            className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium"
           >
             {word}
           </button>

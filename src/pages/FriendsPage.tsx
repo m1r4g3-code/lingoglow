@@ -55,31 +55,31 @@ export function FriendsPage() {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           placeholder="Search by username..."
-          className="glow-ring flex-1 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none dark:border-slate-700 dark:bg-slate-900"
+          className="glow-ring flex-1 rounded-lg border border-border bg-card px-4 py-2.5 text-sm outline-none"
         />
         <button
           type="button"
           onClick={handleSearch}
           disabled={searching || !query.trim()}
-          className="rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+          className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
         >
           Search
         </button>
       </div>
-      {message && <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{message}</p>}
+      {message && <p className="mt-2 text-sm text-muted-foreground">{message}</p>}
 
       {results.length > 0 && (
         <div className="mt-4 flex flex-col gap-2">
           {results.map((p) => (
             <div
               key={p.id}
-              className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-2.5 dark:border-slate-700 dark:bg-slate-900"
+              className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-2.5"
             >
               <span className="text-sm font-medium">{p.username}</span>
               {knownIds.has(p.id) ? (
-                <span className="text-xs text-slate-400">Already connected</span>
+                <span className="text-xs text-muted-foreground">Already connected</span>
               ) : (
-                <button type="button" onClick={() => handleAdd(p.id)} className="text-sm text-violet-500 hover:underline">
+                <button type="button" onClick={() => handleAdd(p.id)} className="text-sm text-primary hover:underline">
                   Add friend
                 </button>
               )}
@@ -90,14 +90,14 @@ export function FriendsPage() {
 
       {incoming.length > 0 && (
         <div className="mt-8">
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
             Requests ({incoming.length})
           </h2>
           <div className="flex flex-col gap-2">
             {incoming.map((e) => (
               <div
                 key={e.friendshipId}
-                className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-2.5 dark:border-slate-700 dark:bg-slate-900"
+                className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-2.5"
               >
                 <span className="text-sm font-medium">{e.profile.username}</span>
                 <div className="flex gap-3">
@@ -111,7 +111,7 @@ export function FriendsPage() {
                   <button
                     type="button"
                     onClick={() => respondToFriendRequest(e.friendshipId, false).then(refresh)}
-                    className="text-sm text-slate-400 hover:underline"
+                    className="text-sm text-muted-foreground hover:underline"
                   >
                     Decline
                   </button>
@@ -123,11 +123,11 @@ export function FriendsPage() {
       )}
 
       <div className="mt-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
           Friends ({friends.length})
         </h2>
         {friends.length === 0 ? (
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-muted-foreground">
             No friends yet — search for someone above to send a request.
           </p>
         ) : (
@@ -135,13 +135,13 @@ export function FriendsPage() {
             {friends.map((e) => (
               <div
                 key={e.friendshipId}
-                className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-2.5 dark:border-slate-700 dark:bg-slate-900"
+                className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-2.5"
               >
                 <span className="text-sm font-medium">{e.profile.username}</span>
                 <button
                   type="button"
                   onClick={() => removeFriendship(e.friendshipId).then(refresh)}
-                  className="text-sm text-slate-400 hover:underline"
+                  className="text-sm text-muted-foreground hover:underline"
                 >
                   Remove
                 </button>
@@ -153,20 +153,20 @@ export function FriendsPage() {
 
       {outgoing.length > 0 && (
         <div className="mt-8">
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
             Sent Requests ({outgoing.length})
           </h2>
           <div className="flex flex-col gap-2">
             {outgoing.map((e) => (
               <div
                 key={e.friendshipId}
-                className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-2.5 dark:border-slate-700 dark:bg-slate-900"
+                className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-2.5"
               >
                 <span className="text-sm font-medium">{e.profile.username}</span>
                 <button
                   type="button"
                   onClick={() => removeFriendship(e.friendshipId).then(refresh)}
-                  className="text-sm text-slate-400 hover:underline"
+                  className="text-sm text-muted-foreground hover:underline"
                 >
                   Cancel
                 </button>
