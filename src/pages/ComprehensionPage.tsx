@@ -3,13 +3,34 @@ import { getLanguage } from "../data/languages";
 import { esComprehension } from "../data/comprehension/es";
 import { frComprehension } from "../data/comprehension/fr";
 import { laComprehension } from "../data/comprehension/la";
+import { deComprehension } from "../data/comprehension/de";
+import { itComprehension } from "../data/comprehension/it";
+import { arComprehension } from "../data/comprehension/ar";
+import { zhComprehension } from "../data/comprehension/zh";
+import { nlComprehension } from "../data/comprehension/nl";
+import { yoComprehension } from "../data/comprehension/yo";
+import { haComprehension } from "../data/comprehension/ha";
+import { ruComprehension } from "../data/comprehension/ru";
+import { elComprehension } from "../data/comprehension/el";
+import { hiComprehension } from "../data/comprehension/hi";
 import { ComprehensionReader } from "../components/ComprehensionReader";
 import type { ComprehensionPassage } from "../types";
 
-const COMPREHENSION_BY_LANGUAGE: Record<string, ComprehensionPassage[]> = {
+// Exported for the content-completeness test (see src/data/languages.test.ts).
+export const COMPREHENSION_BY_LANGUAGE: Record<string, ComprehensionPassage[]> = {
   es: esComprehension,
   fr: frComprehension,
   la: laComprehension,
+  de: deComprehension,
+  it: itComprehension,
+  ar: arComprehension,
+  zh: zhComprehension,
+  nl: nlComprehension,
+  yo: yoComprehension,
+  ha: haComprehension,
+  ru: ruComprehension,
+  el: elComprehension,
+  hi: hiComprehension,
 };
 
 export function ComprehensionPage() {

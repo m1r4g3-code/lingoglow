@@ -78,7 +78,7 @@ export function Flashcard({ card, glowColor, speechLang, onGrade }: FlashcardPro
           onClick={() => setRevealed((r) => !r)}
           className="flex flex-1 w-full flex-col items-center justify-center"
         >
-          <span className="text-2xl font-semibold">{revealed ? card.back : card.front}</span>
+          <span className="text-2xl font-semibold" dir="auto">{revealed ? card.back : card.front}</span>
           {card.notes && revealed && (
             <span className="mt-2 text-sm text-muted-foreground">{card.notes}</span>
           )}

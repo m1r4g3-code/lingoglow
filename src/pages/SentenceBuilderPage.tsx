@@ -4,13 +4,34 @@ import { getLanguage } from "../data/languages";
 import { esSentences } from "../data/sentenceExercises/es";
 import { frSentences } from "../data/sentenceExercises/fr";
 import { laSentences } from "../data/sentenceExercises/la";
+import { deSentences } from "../data/sentenceExercises/de";
+import { itSentences } from "../data/sentenceExercises/it";
+import { arSentences } from "../data/sentenceExercises/ar";
+import { zhSentences } from "../data/sentenceExercises/zh";
+import { nlSentences } from "../data/sentenceExercises/nl";
+import { yoSentences } from "../data/sentenceExercises/yo";
+import { haSentences } from "../data/sentenceExercises/ha";
+import { ruSentences } from "../data/sentenceExercises/ru";
+import { elSentences } from "../data/sentenceExercises/el";
+import { hiSentences } from "../data/sentenceExercises/hi";
 import { SentenceBuilder } from "../components/SentenceBuilder";
 import type { SentenceExercise } from "../types";
 
-const SENTENCES_BY_LANGUAGE: Record<string, SentenceExercise[]> = {
+// Exported for the content-completeness test (see src/data/languages.test.ts).
+export const SENTENCES_BY_LANGUAGE: Record<string, SentenceExercise[]> = {
   es: esSentences,
   fr: frSentences,
   la: laSentences,
+  de: deSentences,
+  it: itSentences,
+  ar: arSentences,
+  zh: zhSentences,
+  nl: nlSentences,
+  yo: yoSentences,
+  ha: haSentences,
+  ru: ruSentences,
+  el: elSentences,
+  hi: hiSentences,
 };
 
 export function SentenceBuilderPage() {

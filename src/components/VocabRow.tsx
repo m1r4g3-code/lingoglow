@@ -54,7 +54,7 @@ export function VocabRow({ card, speechLang, sttSupported }: VocabRowProps) {
           >
             <Star className="h-4 w-4" strokeWidth={1.75} fill={isFavorite ? "currentColor" : "none"} />
           </button>
-          <span className="font-medium">{card.front}</span>
+          <span className="font-medium" dir="auto">{card.front}</span>
           {ttsAvailable && (
             <button
               type="button"

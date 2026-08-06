@@ -18,7 +18,7 @@ import { getLanguage, getLessonsByLevel, getAllVocab, LEVEL_LABELS } from "../da
 import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
 import { AI_FEATURES_ENABLED } from "../config";
-import { CONJUGATIONS_BY_LANGUAGE } from "./ConjugationPage";
+import { CONJUGATION_LANGUAGE_IDS } from "../data/conjugationLanguages";
 
 const PRACTICE_ICONS: Record<string, LucideIcon> = {
   "skill-tree": Map,
@@ -102,7 +102,7 @@ export function LanguagePage() {
           { to: "skill-tree", label: "Skill Tree" },
           { to: "grammar", label: "Grammar" },
           { to: "sentences", label: "Sentence Building" },
-          ...(language.id in CONJUGATIONS_BY_LANGUAGE ? [{ to: "conjugation", label: "Conjugation Drills" }] : []),
+          ...(CONJUGATION_LANGUAGE_IDS.includes(language.id) ? [{ to: "conjugation", label: "Conjugation Drills" }] : []),
           { to: "dictation", label: "Dictation" },
           { to: "comprehension", label: "Reading & Listening" },
           { to: "difficult-words", label: "Favorites & Difficult" },

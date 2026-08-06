@@ -61,6 +61,7 @@ export function SentenceBuilder({ exercise, glowColor, onNext }: SentenceBuilder
             key={`${word}-${i}`}
             type="button"
             onClick={() => removePicked(i)}
+            dir="auto"
             className="rounded-lg bg-primary/10 px-3 py-1.5 text-sm font-medium text-primary"
           >
             {word}
@@ -74,6 +75,7 @@ export function SentenceBuilder({ exercise, glowColor, onNext }: SentenceBuilder
             key={`${word}-${i}`}
             type="button"
             onClick={() => pick(word, i)}
+            dir="auto"
             className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium"
           >
             {word}

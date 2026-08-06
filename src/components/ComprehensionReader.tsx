@@ -48,12 +48,12 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
           </span>
         )}
       </div>
-      <p className="mt-3 leading-relaxed text-foreground">{passage.text}</p>
+      <p className="mt-3 leading-relaxed text-foreground" dir="auto">{passage.text}</p>
 
       <div className="mt-5 flex flex-col gap-4">
         {passage.questions.map((q, qi) => (
           <div key={q.prompt}>
-            <p className="text-sm font-medium">{q.prompt}</p>
+            <p className="text-sm font-medium" dir="auto">{q.prompt}</p>
             <div className="mt-2 flex flex-col gap-1.5">
               {q.choices.map((choice, ci) => {
                 const selected = answers[qi] === ci;
@@ -64,6 +64,7 @@ export function ComprehensionReader({ passage, speechLang, glowColor }: Comprehe
                     key={choice}
                     type="button"
                     onClick={() => selectAnswer(qi, ci)}
+                    dir="auto"
                     className={`rounded-lg border px-3 py-2 text-left text-sm ${
                       isRight
                         ? "anim-pop border-emerald-400 bg-emerald-50 dark:border-emerald-500 dark:bg-emerald-500/10"

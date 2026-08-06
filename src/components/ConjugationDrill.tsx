@@ -23,7 +23,7 @@ export function ConjugationDrill({ entry, glowColor }: ConjugationDrillProps) {
       className="glow-card rounded-xl border border-border bg-card p-5"
       style={{ ["--glow-color" as string]: glowColor }}
     >
-      <h3 className="font-semibold">
+      <h3 className="font-semibold" dir="auto">
         {entry.infinitive} <span className="font-normal text-muted-foreground">— {entry.translation}</span>
       </h3>
       <p className="text-xs text-muted-foreground">{entry.tense} tense</p>
@@ -31,11 +31,12 @@ export function ConjugationDrill({ entry, glowColor }: ConjugationDrillProps) {
       <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {entry.forms.map((f, i) => (
           <div key={f.pronoun} className="flex items-center gap-2">
-            <span className="w-28 shrink-0 text-sm text-muted-foreground">{f.pronoun}</span>
+            <span className="w-28 shrink-0 text-sm text-muted-foreground" dir="auto">{f.pronoun}</span>
             <input
               value={answers[i]}
               onChange={(e) => setAnswer(i, e.target.value)}
               placeholder="..."
+              dir="auto"
               className={`glow-ring w-full rounded-lg border px-3 py-1.5 text-sm outline-none ${
                 checked
                   ? isCorrect(i)
