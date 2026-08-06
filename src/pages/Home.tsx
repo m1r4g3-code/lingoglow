@@ -6,6 +6,7 @@ import {
   CheckCircle2,
   Ear,
   Flame,
+  GraduationCap,
   Layers,
   Lock,
   Map as MapIcon,
@@ -18,14 +19,17 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
+import { m } from "framer-motion";
 import type { ReactNode } from "react";
 import { languages, getLessonsByLevel, getLessons, getAllVocab, LEVEL_LABELS } from "../data/languages";
 import { LanguageCard } from "../components/LanguageCard";
 import { ProgressRing } from "../components/ProgressRing";
+import { AnimatedCounter } from "../components/AnimatedCounter";
+import { FloatingLanguageCards } from "../components/FloatingLanguageCards";
+import { TiltCard } from "../components/TiltCard";
 import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
 import { useAuth } from "../context/AuthContext";
-import { useScrollReveal } from "../hooks/useScrollReveal";
 import { AI_FEATURES_ENABLED } from "../config";
 import { buttonVariants } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
@@ -87,8 +91,10 @@ const FEATURES: { icon: LucideIcon; title: string; description: string; comingSo
 const HOW_IT_WORKS: { step: string; title: string; description: string; icon: LucideIcon }[] = [
   { step: "1", title: "Choose your language", description: "Pick from 13 languages, each with its own curriculum built from scratch.", icon: MapIcon },
   { step: "2", title: "Work the skill tree", description: "Start at the basics and unlock new lessons as you clear the ones before them.", icon: Layers },
-  { step: "3", title: "Practice daily", description: "Flashcards, speaking, dictation, and sentence-building keep every session fresh.", icon: Target },
-  { step: "4", title: "Track your progress", description: "Earn XP, keep your streak alive, and watch your fluency become visible.", icon: TrendingUp },
+  { step: "3", title: "Build vocabulary", description: "Spaced-repetition flashcards resurface words right before you'd forget them.", icon: Repeat2 },
+  { step: "4", title: "Learn the grammar", description: "Cheat sheets and sentence-building drills turn rules into instinct.", icon: BookOpen },
+  { step: "5", title: "Practice speaking", description: "Listen to native audio, then speak it back and get instant feedback.", icon: Mic },
+  { step: "6", title: "Track & certify", description: "Earn XP, keep your streak alive, and unlock a certificate per level.", icon: GraduationCap },
 ];
 
 interface Testimonial {
@@ -138,11 +144,16 @@ function SectionHeading({ eyebrow, title, description }: { eyebrow: string; titl
 }
 
 function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
-  const { ref, className: revealClass } = useScrollReveal<HTMLDivElement>();
   return (
-    <div ref={ref} className={`${revealClass} ${className}`}>
+    <m.div
+      className={className}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10% 0px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
       {children}
-    </div>
+    </m.div>
   );
 }
 
@@ -204,14 +215,20 @@ export function Home() {
       {/* Hero */}
       <div className="relative overflow-hidden pt-8 pb-4 sm:pt-16">
         <div className="aurora-backdrop" aria-hidden="true" />
+        <FloatingLanguageCards />
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-          <div className="text-center lg:text-left">
+          <m.div
+            className="text-center lg:text-left"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             <h1 className="font-heading text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              Learn languages through <span className="brand-gradient-text">real conversations</span>.
+              Speak a new language with <span className="brand-gradient-text">confidence</span>.
             </h1>
             <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground lg:mx-0">
-              Master speaking, listening, reading, and writing with spaced-repetition lessons, real speech practice,
-              and a curriculum built to be finished, not just started.
+              Practice with interactive lessons, pronunciation coaching, and spaced-repetition review that prepares
+              you for real conversations — not just quiz screens.
             </p>
             {!user && (
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
@@ -225,20 +242,26 @@ export function Home() {
             )}
             <div className="mt-10 flex items-center justify-center gap-8 text-sm text-muted-foreground lg:justify-start">
               <div>
-                <p className="text-2xl font-bold text-foreground">{languages.length}</p>
+                <AnimatedCounter value={languages.length} className="block text-2xl font-bold text-foreground" />
                 <p>Languages</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">{totalLessons}</p>
+                <AnimatedCounter value={totalLessons} className="block text-2xl font-bold text-foreground" />
                 <p>Lessons</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">{totalVocab}+</p>
+                <AnimatedCounter value={totalVocab} suffix="+" className="block text-2xl font-bold text-foreground" />
                 <p>Words & phrases</p>
               </div>
             </div>
-          </div>
-          <HeroMockup />
+          </m.div>
+          <m.div
+            initial={{ opacity: 0, y: 20, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+          >
+            <HeroMockup />
+          </m.div>
         </div>
       </div>
 
@@ -254,16 +277,72 @@ export function Home() {
             const difficultyLabel =
               levels.length === 0 ? undefined : levels.length === 1 ? LEVEL_LABELS[levels[0]] : `${LEVEL_LABELS[levels[0]]} → ${LEVEL_LABELS[levels[levels.length - 1]]}`;
             return (
-              <LanguageCard
-                key={language.id}
-                language={language}
-                lessonCount={getLessons(language.id).length}
-                dueCount={dueCount}
-                started={started}
-                difficultyLabel={difficultyLabel}
-              />
+              <TiltCard key={language.id}>
+                <LanguageCard
+                  language={language}
+                  lessonCount={getLessons(language.id).length}
+                  dueCount={dueCount}
+                  started={started}
+                  difficultyLabel={difficultyLabel}
+                />
+              </TiltCard>
             );
           })}
+        </div>
+      </div>
+
+      {/* Product screens */}
+      <div>
+        <SectionHeading eyebrow="See it in action" title="More than flashcards" description="A look at a few of the real screens you'll use." />
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {[
+            {
+              title: "Progress Dashboard",
+              body: (
+                <div className="flex items-center gap-3">
+                  <ProgressRing percent={82} size={48} strokeWidth={5} />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Level 8</p>
+                    <p className="text-xs text-muted-foreground">1,230 XP this week</p>
+                  </div>
+                </div>
+              ),
+            },
+            {
+              title: "Grammar Cheat Sheet",
+              body: (
+                <div>
+                  <p className="text-sm font-semibold text-foreground">Ser vs. Estar</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Soy alto — I am tall (permanent)</p>
+                  <p className="text-xs text-muted-foreground">Estoy cansado — I am tired (temporary)</p>
+                </div>
+              ),
+            },
+            {
+              title: "Missions & Badges",
+              body: (
+                <div className="flex items-center gap-2">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-500/15 text-lg">🏆</span>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Week Warrior</p>
+                    <p className="text-xs text-muted-foreground">7-day streak unlocked</p>
+                  </div>
+                </div>
+              ),
+            },
+          ].map((screen, i) => (
+            <m.div
+              key={screen.title}
+              className="glow-card rounded-2xl border border-border bg-card p-5"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10% 0px" }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
+            >
+              <p className="text-xs font-semibold text-muted-foreground uppercase">{screen.title}</p>
+              <div className="mt-3 rounded-xl border border-border p-4">{screen.body}</div>
+            </m.div>
+          ))}
         </div>
       </div>
 
@@ -297,7 +376,7 @@ export function Home() {
       {/* How it works */}
       <div id="how-it-works" className="scroll-mt-20">
         <SectionHeading eyebrow="Getting started" title="How it works" />
-        <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {HOW_IT_WORKS.map((s, i) => (
             <Reveal key={s.step} className="relative text-center">
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
@@ -306,7 +385,7 @@ export function Home() {
               <p className="mt-4 text-sm font-semibold text-primary">Step {s.step}</p>
               <h3 className="font-heading mt-1 font-semibold text-foreground">{s.title}</h3>
               <p className="mt-1.5 text-sm text-muted-foreground">{s.description}</p>
-              {i < HOW_IT_WORKS.length - 1 && (
+              {(i + 1) % 3 !== 0 && i < HOW_IT_WORKS.length - 1 && (
                 <div className="absolute top-7 left-[calc(50%+2.5rem)] hidden h-px w-[calc(100%-5rem)] bg-border lg:block" aria-hidden="true" />
               )}
             </Reveal>
@@ -337,7 +416,7 @@ export function Home() {
 
       {/* Testimonials */}
       <div>
-        <SectionHeading eyebrow="Illustrative examples" title="What learners are working toward" description="Aether is early — these are representative examples, not collected reviews yet." />
+        <SectionHeading eyebrow="Illustrative examples" title="What learners are working toward" description="LingoGlow is early — these are representative examples, not collected reviews yet." />
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
           {TESTIMONIALS.map((t) => (
             <Reveal key={t.role}>
@@ -402,7 +481,7 @@ export function Home() {
       <footer className="border-t border-border pt-12 pb-8">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           <div className="col-span-2 sm:col-span-1">
-            <span className="brand-gradient-text text-lg font-bold">Aether</span>
+            <span className="brand-gradient-text text-lg font-bold">LingoGlow</span>
             <p className="mt-2 text-sm text-muted-foreground">Language learning built to be finished.</p>
           </div>
           {FOOTER_COLUMNS.map((col) => (
@@ -427,7 +506,7 @@ export function Home() {
             </div>
           ))}
         </div>
-        <p className="mt-10 text-xs text-muted-foreground">© {new Date().getFullYear()} Aether. All rights reserved.</p>
+        <p className="mt-10 text-xs text-muted-foreground">© {new Date().getFullYear()} LingoGlow. All rights reserved.</p>
       </footer>
     </div>
   );

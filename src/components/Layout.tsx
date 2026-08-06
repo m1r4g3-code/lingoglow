@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { Sparkles } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -26,6 +26,13 @@ export function Layout() {
   const { user, profile, signOut, isHydrated } = useAuth();
   const location = useLocation();
   const { pushError } = useToast();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     setSyncErrorHandler(pushError);
@@ -34,18 +41,27 @@ export function Layout() {
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
-      <header className="sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <header
+        className={`sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur-md transition-[padding] duration-200 ease-out ${
+          scrolled ? "py-2" : "py-4"
+        }`}
+      >
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
           <Link to="/" className="flex items-center gap-1.5 text-xl font-bold tracking-tight">
             <Sparkles className="brand-icon h-5 w-5" strokeWidth={1.75} />
-            <span className="brand-gradient-text">Aether</span>
+            <span className="brand-gradient-text">LingoGlow</span>
           </Link>
 
           {!user && (
             <nav className="hidden items-center gap-6 md:flex">
               {MARKETING_NAV_LINKS.map((link) => (
-                <a key={link.href} href={link.href} className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="group relative py-1 text-sm font-medium text-muted-foreground hover:text-foreground"
+                >
                   {link.label}
+                  <span className="absolute inset-x-0 -bottom-0.5 h-px scale-x-0 bg-primary transition-transform duration-200 ease-out group-hover:scale-x-100" />
                 </a>
               ))}
             </nav>

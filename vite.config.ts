@@ -18,8 +18,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'Aether',
-        short_name: 'Aether',
+        name: 'LingoGlow',
+        short_name: 'LingoGlow',
         description: 'Learn Spanish, French, and Latin with spaced repetition and speech practice.',
         theme_color: '#2563eb',
         background_color: '#f8fafc',
