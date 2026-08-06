@@ -45,7 +45,7 @@ function periodKeyFor(type: MissionType): string {
 }
 
 export interface RewardEvent {
-  type: "xp" | "levelup" | "mission" | "badge";
+  type: "xp" | "levelup" | "mission" | "badge" | "error";
   message: string;
 }
 

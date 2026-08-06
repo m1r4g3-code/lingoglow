@@ -16,6 +16,7 @@ import {
   hydrateFromSupabase,
   setCardState,
   setMissionState,
+  setSyncErrorHandler,
   setSyncUserId,
   setTheme,
   setUserProgress,
@@ -184,5 +185,30 @@ describe('storage (Supabase sync merge/conflict logic)', () => {
       expect(count).toBe(0);
       expect(fromMock).not.toHaveBeenCalled();
     });
+  });
+
+  it('reports a user-facing message through the sync-error handler when a background upsert fails', async () => {
+    const onError = vi.fn();
+    setSyncErrorHandler(onError);
+    fromMock.mockReturnValue({
+      upsert: () => Promise.resolve({ error: { message: 'network down' } }),
+    });
+
+    setCardState('card-1', CARD);
+    await new Promise((resolve) => setTimeout(resolve, 0)); // flush the un-awaited upsert().then()
+
+    expect(onError).toHaveBeenCalledWith(expect.stringContaining("couldn't sync"));
+    setSyncErrorHandler(null);
+  });
+
+  it('does not report anything when the handler is unset', async () => {
+    setSyncErrorHandler(null);
+    fromMock.mockReturnValue({
+      upsert: () => Promise.resolve({ error: { message: 'network down' } }),
+    });
+
+    // Should not throw even with no handler registered.
+    setCardState('card-1', CARD);
+    await new Promise((resolve) => setTimeout(resolve, 0));
   });
 });

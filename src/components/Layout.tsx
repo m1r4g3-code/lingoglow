@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { Sparkles } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -6,10 +7,18 @@ import { RewardToast } from "./RewardToast";
 import { XpBar } from "./XpBar";
 import { StreakBadge } from "./StreakBadge";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
+import { setSyncErrorHandler } from "../lib/storage";
 
 export function Layout() {
   const { user, profile, signOut, isHydrated } = useAuth();
   const location = useLocation();
+  const { pushError } = useToast();
+
+  useEffect(() => {
+    setSyncErrorHandler(pushError);
+    return () => setSyncErrorHandler(null);
+  }, [pushError]);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">

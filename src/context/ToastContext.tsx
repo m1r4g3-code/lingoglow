@@ -8,6 +8,7 @@ interface Toast extends RewardEvent {
 interface ToastContextValue {
   toasts: Toast[];
   pushEvents: (events: RewardEvent[]) => void;
+  pushError: (message: string) => void;
 }
 
 const ToastContext = createContext<ToastContextValue | undefined>(undefined);
@@ -28,7 +29,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  return <ToastContext.Provider value={{ toasts, pushEvents }}>{children}</ToastContext.Provider>;
+  const pushError = useCallback(
+    (message: string) => pushEvents([{ type: "error", message }]),
+    [pushEvents]
+  );
+
+  return <ToastContext.Provider value={{ toasts, pushEvents, pushError }}>{children}</ToastContext.Provider>;
 }
 
 export function useToast(): ToastContextValue {

@@ -7,6 +7,7 @@ import { LessonPage } from "./pages/LessonPage";
 import { ReviewPage } from "./pages/ReviewPage";
 import { AuthPage } from "./pages/AuthPage";
 import { RequireAuth } from "./components/RequireAuth";
+import { RequireRole } from "./components/RequireRole";
 
 // Everything below is visited far less often than the core lesson/review
 // flow above, so it's split into its own chunks loaded on demand instead
@@ -151,7 +152,9 @@ export default function App() {
             path="/teacher"
             element={
               <RequireAuth>
-                <TeacherDashboardPage />
+                <RequireRole role="teacher">
+                  <TeacherDashboardPage />
+                </RequireRole>
               </RequireAuth>
             }
           />
@@ -159,7 +162,9 @@ export default function App() {
             path="/teacher/classes/:classId"
             element={
               <RequireAuth>
-                <TeacherClassDetailPage />
+                <RequireRole role="teacher">
+                  <TeacherClassDetailPage />
+                </RequireRole>
               </RequireAuth>
             }
           />
@@ -167,7 +172,9 @@ export default function App() {
             path="/parent"
             element={
               <RequireAuth>
-                <ParentDashboardPage />
+                <RequireRole role="parent">
+                  <ParentDashboardPage />
+                </RequireRole>
               </RequireAuth>
             }
           />
@@ -175,15 +182,17 @@ export default function App() {
             path="/admin"
             element={
               <RequireAuth>
-                <AdminDashboardPage />
+                <RequireRole role="admin">
+                  <AdminDashboardPage />
+                </RequireRole>
               </RequireAuth>
             }
           />
-          {/* Every route above only requires being logged in — any account
-              gets full access to every dashboard, not just its "natural"
-              role. Nothing sensitive leaks either way: teacher/parent views
-              are scoped by real ownership (teacher_id/parent_id), and the
-              admin page reads tables that were already public-readable. */}
+          {/* Role gating is enforced here at the route level; the RLS
+              policies behind teacher_id/parent_id ownership (and the
+              server-side trigger blocking client-side admin self-grant,
+              see supabase/migrations) remain the real security boundary
+              underneath, as defense-in-depth. */}
         </Route>
       </Routes>
     </Suspense>

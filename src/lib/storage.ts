@@ -16,6 +16,20 @@ export function setSyncUserId(userId: string | null) {
   syncUserId = userId;
 }
 
+// Lets the UI surface a toast when a background Supabase sync fails, without
+// every storage.ts function (most of them plain, non-hook module functions)
+// needing a way to call useToast() directly.
+let onSyncError: ((message: string) => void) | null = null;
+
+export function setSyncErrorHandler(handler: ((message: string) => void) | null) {
+  onSyncError = handler;
+}
+
+function reportSyncError(userMessage: string, consoleLabel: string, error: unknown) {
+  console.error(consoleLabel, error);
+  onSyncError?.(userMessage);
+}
+
 // Lets header UI (XpBar/StreakBadge) live-update as XP is earned mid-session,
 // without every consumer needing to be a route that re-renders on navigation.
 type Listener = () => void;
@@ -58,7 +72,7 @@ function syncCardState(cardId: string, state: SrsState) {
       updated_at: new Date().toISOString(),
     })
     .then(({ error }) => {
-      if (error) console.error("srs_states upsert failed", error);
+      if (error) reportSyncError("Your review progress is saved on this device, but couldn't sync to your account yet.", "srs_states upsert failed", error);
     });
 }
 
@@ -111,7 +125,7 @@ function rowToState(row: SrsRow): SrsState {
 export async function hydrateFromSupabase(userId: string): Promise<void> {
   const { data, error } = await supabase.from("srs_states").select("*").eq("user_id", userId);
   if (error || !data) {
-    console.error("hydrateFromSupabase failed", error);
+    reportSyncError("Couldn't load your saved progress from the server.", "hydrateFromSupabase failed", error);
     return;
   }
   const local = readSrsStore();
@@ -144,7 +158,7 @@ export async function claimLocalProgress(userId: string): Promise<number> {
     .upsert(rows, { onConflict: "user_id,card_id", ignoreDuplicates: true });
 
   if (error) {
-    console.error("claimLocalProgress failed", error);
+    reportSyncError("Couldn't sync your local progress to your account.", "claimLocalProgress failed", error);
     return 0;
   }
   return cardIds.length;
@@ -189,7 +203,7 @@ export function setUserProgress(progress: UserProgress) {
       updated_at: new Date().toISOString(),
     })
     .then(({ error }) => {
-      if (error) console.error("user_progress upsert failed", error);
+      if (error) reportSyncError("Your XP/streak progress is saved on this device, but couldn't sync to your account yet.", "user_progress upsert failed", error);
     });
 }
 
@@ -260,7 +274,7 @@ export function setMissionState(code: string, state: MissionState) {
       updated_at: new Date().toISOString(),
     })
     .then(({ error }) => {
-      if (error) console.error("user_missions upsert failed", error);
+      if (error) reportSyncError("Mission progress is saved on this device, but couldn't sync to your account yet.", "user_missions upsert failed", error);
     });
 }
 
@@ -303,7 +317,7 @@ export function addEarnedBadge(code: string) {
     .from("user_badges")
     .upsert({ user_id: syncUserId, badge_code: code })
     .then(({ error }) => {
-      if (error) console.error("user_badges upsert failed", error);
+      if (error) reportSyncError("Badge saved on this device, but couldn't sync to your account yet.", "user_badges upsert failed", error);
     });
 }
 

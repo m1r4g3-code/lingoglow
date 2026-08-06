@@ -1,6 +1,7 @@
 ﻿import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import { supabase } from "../lib/supabaseClient";
 import type { LeaderboardEntry } from "../types";
 
@@ -16,6 +17,7 @@ interface LeaderboardRow {
 
 export function LeaderboardPage() {
   const { user } = useAuth();
+  const { pushError } = useToast();
   const [scope, setScope] = useState<Scope>("global");
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +31,7 @@ export function LeaderboardPage() {
         if (cancelled) return;
         if (error) {
           console.error("leaderboard fetch failed", error);
+          pushError("Couldn't load the leaderboard. Try again in a moment.");
           setEntries([]);
         } else {
           setEntries(
@@ -46,7 +49,7 @@ export function LeaderboardPage() {
     return () => {
       cancelled = true;
     };
-  }, [scope]);
+  }, [scope, pushError]);
 
   return (
     <div>
