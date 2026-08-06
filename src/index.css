@@ -6,43 +6,47 @@
 
 :root {
   color-scheme: light dark;
-  /* Signature brand accent — used anywhere outside a specific language's
-     color-coded section (hero, header, generic CTAs, feature cards). */
-  --brand-from: #8b5cf6;
-  --brand-to: #22d3ee;
-  --brand-glow: rgba(139, 92, 246, 0.35);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.511 0.096 186.391);
-  --primary-foreground: oklch(0.984 0.014 180.72);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.6 0.118 184.704);
-  --sidebar-primary-foreground: oklch(0.984 0.014 180.72);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Signature brand accent — a restrained two-tone blue used anywhere
+     outside a specific language's color-coded section (hero, header,
+     generic CTAs, feature cards). Deliberately not a high-saturation
+     gradient; Royal Blue → Sky Blue, both from the same palette below. */
+  --brand-from: #2563eb;
+  --brand-to: #60a5fa;
+  --brand-glow: rgba(37, 99, 235, 0.25);
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #eff6ff;
+  --accent-foreground: #2563eb;
+  --success: #22c55e;
+  --success-foreground: #ffffff;
+  --destructive: #dc2626;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #60a5fa;
+  --chart-1: #2563eb;
+  --chart-2: #60a5fa;
+  --chart-3: #22c55e;
+  --chart-4: #94a3b8;
+  --chart-5: #0f172a;
+  --radius: 0.75rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #2563eb;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #0f172a;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #60a5fa;
 }
 
 html,
@@ -53,42 +57,46 @@ body,
 
 body {
   margin: 0;
-  font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Glow utilities: neutral in light mode, neon in dark mode */
+/* Soft, premium-education-platform surface treatment: gentle elevation
+   and lift, no neon halos. Kept as shared utility classes (rather than
+   inlined per component) so the per-language accent color threaded in
+   via --glow-color still reads as a whisper of brand color in the
+   shadow, not a glowing sign — see LanguageCard/Flashcard/etc., which
+   set --glow-color inline per language and rely on these classes. */
 @layer components {
   .glow-card {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
     transition: box-shadow 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
   }
   .dark .glow-card {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 24px 0 var(--glow-color, var(--brand-glow));
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px -4px rgba(0, 0, 0, 0.4);
   }
   .glow-card:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08), 0 8px 24px -4px color-mix(in oklch, var(--glow-color, var(--brand-glow)) 35%, transparent);
   }
   .dark .glow-card:hover {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 40px 4px var(--glow-color, var(--brand-glow));
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 8px 24px -4px color-mix(in oklch, var(--glow-color, var(--brand-glow)) 45%, transparent);
   }
 
   .glow-text {
-    transition: text-shadow 0.25s ease;
-  }
-  .dark .glow-text {
-    text-shadow: 0 0 18px var(--glow-color, var(--brand-glow));
+    /* Intentionally no glow/text-shadow — headings read as clean,
+       high-contrast type, not a neon sign. Class kept for backward
+       compatibility with existing markup. */
   }
 
   .glow-ring {
     transition: box-shadow 0.2s ease;
   }
-  .dark .glow-ring:focus-visible {
-    box-shadow: 0 0 0 3px var(--glow-color, var(--brand-glow));
+  .glow-ring:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--glow-color, var(--brand-glow)) 40%, transparent);
   }
 
-  /* Brand wordmark / hero title: a fixed violet-to-cyan gradient, distinct
-     from the language-specific glow colors used elsewhere in the app. */
+  /* Brand wordmark / hero title: a restrained two-tone blue gradient,
+     distinct from the language-specific accent colors used elsewhere. */
   .brand-gradient-text {
     background: linear-gradient(120deg, var(--brand-from), var(--brand-to));
     -webkit-background-clip: text;
@@ -104,24 +112,23 @@ body {
     color: var(--brand-from);
   }
 
-  /* Soft aurora backdrop for the hero — one blurred gradient orb, not a
-     grid of mismatched card glows. */
+  /* Soft radial backdrop for the hero — a gentle wash of brand blue,
+     not a saturated aurora glow. */
   .aurora-backdrop {
     position: absolute;
     inset: -10% -10% auto -10%;
     height: 32rem;
-    background: radial-gradient(closest-side, var(--brand-from), transparent),
-      radial-gradient(closest-side, var(--brand-to), transparent);
-    background-position: 30% 0%, 80% 20%;
+    background: radial-gradient(closest-side, var(--brand-to), transparent);
+    background-position: 60% 10%;
     background-repeat: no-repeat;
-    background-size: 45% 100%, 40% 90%;
-    opacity: 0;
-    filter: blur(64px);
+    background-size: 55% 100%;
+    opacity: 0.35;
+    filter: blur(80px);
     pointer-events: none;
     z-index: -1;
   }
   .dark .aurora-backdrop {
-    opacity: 0.22;
+    opacity: 0.12;
   }
 
   /* Feedback motion for quiz/review interactions. Disabled entirely under
@@ -139,6 +146,9 @@ body {
     }
     .anim-count-pulse {
       animation: aether-count-pulse 0.3s ease-out;
+    }
+    .anim-fade-up {
+      animation: aether-fade-up 0.5s ease-out both;
     }
   }
 
@@ -160,6 +170,11 @@ body {
     to { opacity: 1; transform: translateY(0); }
   }
 
+  @keyframes aether-fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   @keyframes aether-count-pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.15); }
@@ -169,7 +184,7 @@ body {
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: 'Inter Variable', sans-serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -187,6 +202,8 @@ body {
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -211,37 +228,39 @@ body {
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.437 0.078 188.216);
-  --primary-foreground: oklch(0.984 0.014 180.72);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.704 0.14 182.503);
-  --sidebar-primary-foreground: oklch(0.277 0.046 192.524);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #020617;
+  --foreground: #f1f5f9;
+  --card: #0f172a;
+  --card-foreground: #f1f5f9;
+  --popover: #0f172a;
+  --popover-foreground: #f1f5f9;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #1e293b;
+  --secondary-foreground: #f1f5f9;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #1e293b;
+  --accent-foreground: #60a5fa;
+  --success: #22c55e;
+  --success-foreground: #052e16;
+  --destructive: #f87171;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #3b82f6;
+  --chart-1: #60a5fa;
+  --chart-2: #3b82f6;
+  --chart-3: #22c55e;
+  --chart-4: #64748b;
+  --chart-5: #cbd5e1;
+  --sidebar: #0f172a;
+  --sidebar-foreground: #f1f5f9;
+  --sidebar-primary: #3b82f6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #f1f5f9;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #3b82f6;
 }
 
 @layer base {
@@ -249,7 +268,7 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
   html {
     @apply font-sans;

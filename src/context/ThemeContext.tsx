@@ -11,9 +11,10 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 function getInitialTheme(): Theme {
+  // Light by default — a visitor's system dark-mode preference no longer
+  // overrides this; dark mode is opt-in via the toggle, not automatic.
   const stored = getTheme();
-  if (stored) return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return stored ?? "light";
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

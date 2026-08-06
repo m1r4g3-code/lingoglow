@@ -8,9 +8,12 @@ interface LanguageCardProps {
   lessonCount: number;
   dueCount: number;
   started: boolean;
+  /** e.g. "Beginner" or "Beginner → Intermediate" — derived from the
+   * CEFR levels this language actually has lessons for, not a marketing claim. */
+  difficultyLabel?: string;
 }
 
-export function LanguageCard({ language, lessonCount, dueCount, started }: LanguageCardProps) {
+export function LanguageCard({ language, lessonCount, dueCount, started, difficultyLabel }: LanguageCardProps) {
   return (
     <Link to={`/language/${language.id}`} className="block">
       <Card
@@ -40,7 +43,8 @@ export function LanguageCard({ language, lessonCount, dueCount, started }: Langu
             {language.name}
           </h3>
           <p className="text-sm text-muted-foreground">{language.nativeName}</p>
-          <p className="mt-3 text-xs text-muted-foreground">
+          {difficultyLabel && <p className="mt-2 text-xs font-medium text-primary">{difficultyLabel}</p>}
+          <p className="mt-1 text-xs text-muted-foreground">
             {lessonCount === 0
               ? "No lessons yet"
               : started
