@@ -10,6 +10,19 @@ import {
 } from "../lib/storage";
 import type { Profile } from "../types";
 
+// Supabase's AuthError.message is occasionally unusable directly — a raw
+// network-level failure (e.g. the project cold-starting from being
+// paused) can surface as a bare Error whose message ends up literally
+// "{}" (Error objects stringify to "{}" since `message` isn't
+// enumerable) or as an empty string. Never show that to a user.
+function friendlyAuthError(message: string | undefined): string {
+  const trimmed = message?.trim();
+  if (!trimmed || trimmed === "{}" || trimmed === "[object Object]") {
+    return "Something went wrong reaching the server. Please check your connection and try again.";
+  }
+  return trimmed;
+}
+
 interface AuthContextValue {
   user: User | null;
   profile: Profile | null;
@@ -86,13 +99,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signUp = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    return { error: error?.message ?? null, needsEmailConfirmation: !error && !data.session };
+    try {
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      return { error: error ? friendlyAuthError(error.message) : null, needsEmailConfirmation: !error && !data.session };
+    } catch {
+      // supabase-js can throw (rather than return an error) on a raw
+      // network failure, e.g. mid cold-start of a paused project.
+      return { error: friendlyAuthError(undefined), needsEmailConfirmation: false };
+    }
   };
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error: error?.message ?? null };
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      return { error: error ? friendlyAuthError(error.message) : null };
+    } catch {
+      return { error: friendlyAuthError(undefined) };
+    }
   };
 
   const signOut = async () => {
