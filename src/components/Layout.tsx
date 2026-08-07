@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { Sparkles } from "lucide-react";
+import { LogoMark } from "./LogoMark";
 import { ThemeToggle } from "./ThemeToggle";
 import { ClaimProgressModal } from "./ClaimProgressModal";
 import { RewardToast } from "./RewardToast";
@@ -47,8 +47,8 @@ export function Layout() {
         }`}
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
-          <Link to="/" className="flex items-center gap-1.5 text-xl font-bold tracking-tight">
-            <Sparkles className="brand-icon h-5 w-5" strokeWidth={1.75} />
+          <Link to="/" className="flex items-center gap-2 text-xl font-bold tracking-tight">
+            <LogoMark className="h-7 w-7" />
             <span className="brand-gradient-text">LingoGlow</span>
           </Link>
 
