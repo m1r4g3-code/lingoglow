@@ -21,7 +21,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { AnimatePresence, m } from "framer-motion";
-import { useEffect, useState, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
 import { languages, getLanguage, getLessonsByLevel, getLessons, getAllVocab, LEVEL_LABELS } from "../data/languages";
 import { LanguageCard } from "../components/LanguageCard";
 import { LogoMark } from "../components/LogoMark";
@@ -29,6 +29,11 @@ import { ProgressRing } from "../components/ProgressRing";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { FloatingLanguageCards } from "../components/FloatingLanguageCards";
 import { TiltCard } from "../components/TiltCard";
+
+// react-globe.gl pulls in three.js — kept out of the eager bundle entirely.
+// This is the only lazy-loaded piece of an otherwise-eager page, so a
+// loading skeleton (not a blank gap) covers the brief chunk fetch.
+const LanguageGlobe = lazy(() => import("../components/LanguageGlobe"));
 import { getAllCardStates } from "../lib/storage";
 import { isDue } from "../lib/srs";
 import { useAuth } from "../context/AuthContext";
@@ -459,6 +464,23 @@ export function Home() {
               )}
             </Reveal>
           ))}
+        </div>
+      </div>
+
+      {/* Explore the world — the signature feature */}
+      <div>
+        <SectionHeading eyebrow="Explore" title="Tap the world to hear a language" description="A real, clickable globe — only the countries LingoGlow actually teaches light up." />
+        <div className="mt-14">
+          <Suspense
+            fallback={
+              <div className="flex h-[360px] items-center justify-center rounded-2xl border border-border bg-card sm:h-[440px]">
+                <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" aria-hidden="true" />
+                <span className="sr-only">Loading globe…</span>
+              </div>
+            }
+          >
+            <LanguageGlobe />
+          </Suspense>
         </div>
       </div>
 
